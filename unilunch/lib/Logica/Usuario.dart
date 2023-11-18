@@ -16,7 +16,7 @@ class Usuario {
       this.tipoUsuario
       );
 
-  Usuario.Vacio():
+  Usuario.vacio():
       idUsuario = '',
       nombre = '',
       email = '',
@@ -24,8 +24,8 @@ class Usuario {
   ;
 
   Future<String> login(String email, String contrasenna) async {
-    final SupabaseService _supabaseService = SupabaseService();
-    SupabaseClient cliente = _supabaseService.client;
+    final SupabaseService supabaseService = SupabaseService();
+    SupabaseClient cliente = supabaseService.client;
     try {
       final data = await cliente
           .from('usuario')

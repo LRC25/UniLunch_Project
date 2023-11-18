@@ -7,11 +7,11 @@ class Cliente extends Usuario {
   late BuscarRestaurante _buscarRestaurante;
 
   Cliente({
-    required String id_usuario,
+    required String idUsuario,
     required String nombre,
     required String email,
     required String tipoUsuario,
-  }) : super(id_usuario, nombre, email, tipoUsuario);
+  }) : super(idUsuario, nombre, email, tipoUsuario);
 
   void setBuscarRestaurante(BuscarRestaurante buscarRestaurante) {
     _buscarRestaurante = buscarRestaurante;

@@ -12,7 +12,7 @@ class Horario {
       this.horaCierre
       );
 
-  Horario.Vacio():
+  Horario.vacio():
       idHorario = '',
       dia = '',
       horaApertura = DateTime(0),
