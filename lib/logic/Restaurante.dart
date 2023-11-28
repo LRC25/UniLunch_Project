@@ -1,4 +1,4 @@
-import 'dart:ffi';
+//import 'dart:ffi';
 import 'package:unilunch/logic/Usuario.dart';
 import 'package:unilunch/logic/Horario.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,7 +13,7 @@ class Restaurante extends Usuario {
   String descripcion;
   List<Horario> horario;
   String imagen;
-  Float notaPromedio;
+  double notaPromedio;
 
 
   Restaurante({

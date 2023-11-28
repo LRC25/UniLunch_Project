@@ -1,10 +1,10 @@
-import 'dart:ffi';
+//import 'dart:ffi';
 
 class Plato {
 
   String idPlato;
   String descripcion;
-  Float precio;
+  double precio;
   int stock;
   String imagen;
 
