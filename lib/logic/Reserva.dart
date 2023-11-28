@@ -1,5 +1,5 @@
 import 'dart:ffi';
-import 'package:unilunch/Logica/ReservaPlato.dart';
+import 'package:unilunch/logic/ReservaPlato.dart';
 
 class Reserva {
 

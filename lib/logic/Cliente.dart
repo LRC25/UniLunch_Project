@@ -1,6 +1,6 @@
-import 'package:unilunch/Logica/Usuario.dart';
-import 'package:unilunch/Logica/BuscarRestaurante.dart';
-import 'package:unilunch/Logica/Restaurante.dart';
+import 'package:unilunch/logic/Usuario.dart';
+import 'package:unilunch/logic/BuscarRestaurante.dart';
+import 'package:unilunch/logic/Restaurante.dart';
 
 class Cliente extends Usuario {
 

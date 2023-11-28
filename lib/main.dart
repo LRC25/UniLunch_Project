@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:unilunch/Persistencia/SupabaseConnection.dart';
-import 'package:unilunch/Logica/Usuario.dart';
-import 'package:unilunch/restaurants_page_widget.dart';
+import 'package:unilunch/persistence/SupabaseConnection.dart';
+import 'package:unilunch/logic/Usuario.dart';
+import 'package:unilunch/presentation/common/models/login_page_widget.dart';
 
 void main() async {
   await SupabaseService().initialize();
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const RestaurantsPageWidget(),
+      home: const LoginPageWidget(),
     );
   }
 }

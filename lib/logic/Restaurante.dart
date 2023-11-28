@@ -1,6 +1,6 @@
 import 'dart:ffi';
-import 'package:unilunch/Logica/Usuario.dart';
-import 'package:unilunch/Logica/Horario.dart';
+import 'package:unilunch/logic/Usuario.dart';
+import 'package:unilunch/logic/Horario.dart';
 
 class Restaurante extends Usuario {
 

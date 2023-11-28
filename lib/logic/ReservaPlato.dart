@@ -1,4 +1,4 @@
-import 'package:unilunch/Logica/Plato.dart';
+import 'package:unilunch/logic/Plato.dart';
 
 class ReservaPlato {
 

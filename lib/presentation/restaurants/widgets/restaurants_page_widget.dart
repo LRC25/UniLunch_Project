@@ -1,12 +1,9 @@
-import 'package:flutterflow_widgets/flutterflow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'package:flutterflow_ui/flutterflow_ui.dart';
 
-import 'restaurants_page_model.dart';
-export 'restaurants_page_model.dart';
+import '../models/restaurants_page_model.dart';
+export '../models/restaurants_page_model.dart';
 
 class RestaurantsPageWidget extends StatefulWidget {
   const RestaurantsPageWidget({Key? key}) : super(key: key);

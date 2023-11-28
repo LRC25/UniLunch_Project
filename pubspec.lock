@@ -175,7 +175,7 @@ packages:
     source: sdk
     version: "0.0.0"
   flutter_animate:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_animate
       sha256: f611a67082d4c5ff9b8b7737ec7e675a22af70a94c8c3c22109f14b078d4d2bf
@@ -249,7 +249,7 @@ packages:
     source: sdk
     version: "0.0.0"
   flutterflow_ui:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: flutterflow_ui
       sha256: e753338d1db0e5c8a8c16fcc9086c1938fc8a1eefec00291e47626394b3221c9
