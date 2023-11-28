@@ -39,8 +39,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _incrementCounter() async {
     setState(() {
-      Usuario usuario = Usuario.vacio();
-      Future<String> respuesta = usuario.login("danielxmpb@gmail.com", '123');
       _counter++;
     });
   }
