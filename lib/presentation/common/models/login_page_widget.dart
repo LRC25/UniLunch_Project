@@ -248,8 +248,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget>
                           obscureText: false,
                           decoration: InputDecoration(
                             labelText: 'Email',
-                            labelStyle:
-                                FlutterFlowTheme.of(context).labelMedium,
+                            labelStyle: FlutterFlowTheme.of(context).labelMedium,
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: FlutterFlowTheme.of(context).alternate,
@@ -279,22 +278,24 @@ class _LoginPageWidgetState extends State<LoginPageWidget>
                               borderRadius: BorderRadius.circular(35),
                             ),
                             filled: true,
-                            fillColor: FlutterFlowTheme.of(context)
-                                .secondaryBackground,
-                            contentPadding:
-                                EdgeInsetsDirectional.fromSTEB(24, 24, 24, 24),
+                            fillColor: FlutterFlowTheme.of(context).secondaryBackground,
+                            contentPadding: EdgeInsetsDirectional.fromSTEB(24, 24, 24, 24),
+                            prefixIcon: Icon(
+                              Icons.email,
+                              color: Color(0xFF064244),
+                            ),
                           ),
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Readex Pro',
-                                    color: Color(0xFF064244),
-                                  ),
+                          style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                fontFamily: 'Readex Pro',
+                                color: Color(0xFF064244),
+                              ),
                           keyboardType: TextInputType.emailAddress,
-                          validator: _model.emailAddressControllerValidator
-                              .asValidator(context),
+                          validator: _model.emailAddressControllerValidator.asValidator(context),
                         ),
                       ),
                     ),
+
+
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                       child: Container(
@@ -306,8 +307,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget>
                           obscureText: !_model.passwordVisibility,
                           decoration: InputDecoration(
                             labelText: 'Contraseña',
-                            labelStyle:
-                                FlutterFlowTheme.of(context).labelMedium,
+                            labelStyle: FlutterFlowTheme.of(context).labelMedium,
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: FlutterFlowTheme.of(context).alternate,
@@ -337,36 +337,35 @@ class _LoginPageWidgetState extends State<LoginPageWidget>
                               borderRadius: BorderRadius.circular(35),
                             ),
                             filled: true,
-                            fillColor: FlutterFlowTheme.of(context)
-                                .secondaryBackground,
-                            contentPadding:
-                                EdgeInsetsDirectional.fromSTEB(24, 24, 24, 24),
+                            fillColor: FlutterFlowTheme.of(context).secondaryBackground,
+                            contentPadding: EdgeInsetsDirectional.fromSTEB(24, 24, 24, 24),
+                            prefixIcon: Icon(
+                              Icons.key_rounded,
+                              color: Color(0xFF064244),
+                            ),
                             suffixIcon: InkWell(
                               onTap: () => setState(
-                                () => _model.passwordVisibility =
-                                    !_model.passwordVisibility,
+                                () => _model.passwordVisibility = !_model.passwordVisibility,
                               ),
                               focusNode: FocusNode(skipTraversal: true),
                               child: Icon(
                                 _model.passwordVisibility
                                     ? Icons.visibility_outlined
                                     : Icons.visibility_off_outlined,
-                                color:
-                                    FlutterFlowTheme.of(context).secondaryText,
+                                color: FlutterFlowTheme.of(context).secondaryText,
                                 size: 24,
                               ),
                             ),
                           ),
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Readex Pro',
-                                    color: Color(0xFF064244),
-                                  ),
-                          validator: _model.passwordControllerValidator
-                              .asValidator(context),
+                          style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                fontFamily: 'Readex Pro',
+                                color: Color(0xFF064244),
+                              ),
+                          validator: _model.passwordControllerValidator.asValidator(context),
                         ),
                       ),
                     ),
+
                     Align(
                       alignment: AlignmentDirectional(0.00, 0.00),
                       child: Padding(
