@@ -1,9 +1,9 @@
+import 'package:unilunch/logic/Usuario.dart';
+import 'package:unilunch/logic/BuscarRestaurante.dart';
+import 'package:unilunch/logic/Restaurante.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:unilunch/Persistencia/SupabaseConnection.dart';
+import 'package:unilunch/persistence/SupabaseConnection.dart';
 import 'package:supabase/src/supabase_client.dart';
-import 'package:unilunch/Logica/Usuario.dart';
-import 'package:unilunch/Logica/BuscarRestaurante.dart';
-import 'package:unilunch/Logica/Restaurante.dart';
 
 class Cliente extends Usuario {
 

@@ -1,9 +1,9 @@
-import 'dart:ffi';
+//import 'dart:ffi';
+import 'package:unilunch/logic/Usuario.dart';
+import 'package:unilunch/logic/Horario.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:unilunch/Persistencia/SupabaseConnection.dart';
+import 'package:unilunch/persistence/SupabaseConnection.dart';
 import 'package:supabase/src/supabase_client.dart';
-import 'package:unilunch/Logica/Usuario.dart';
-import 'package:unilunch/Logica/Horario.dart';
 
 class Restaurante extends Usuario {
 
@@ -13,7 +13,7 @@ class Restaurante extends Usuario {
   String descripcion;
   List<Horario> horario;
   String imagen;
-  Float notaPromedio;
+  double notaPromedio;
 
 
   Restaurante({

@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:unilunch/Persistencia/SupabaseConnection.dart';
+import 'package:unilunch/persistence/SupabaseConnection.dart';
 import 'package:supabase/src/supabase_client.dart';
 
 class Horario {

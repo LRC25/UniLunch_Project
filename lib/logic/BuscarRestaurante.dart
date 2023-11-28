@@ -1,4 +1,4 @@
-import 'package:unilunch/Logica/Restaurante.dart';
+import 'package:unilunch/logic/Restaurante.dart';
 
 abstract class BuscarRestaurante {
 

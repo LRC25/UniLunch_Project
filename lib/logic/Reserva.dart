@@ -1,12 +1,12 @@
-import 'dart:ffi';
-import 'package:unilunch/Logica/ReservaPlato.dart';
+//import 'dart:ffi';
+import 'package:unilunch/logic/ReservaPlato.dart';
 
 class Reserva {
 
   String idReserva;
   String nombreUsuario;
   DateTime fecha;
-  Float total;
+  double total;
   List<ReservaPlato> platos;
   String estado;
 

@@ -1,5 +1,5 @@
-import 'package:unilunch/Logica/BuscarRestaurante.dart';
-import 'package:unilunch/Logica/Restaurante.dart';
+import 'package:unilunch/logic/BuscarRestaurante.dart';
+import 'package:unilunch/logic/Restaurante.dart';
 
 class BuscarPorNombre implements BuscarRestaurante {
 
