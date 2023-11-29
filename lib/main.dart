@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:unilunch/persistence/SupabaseConnection.dart';
-import 'package:unilunch/presentation/common/models/login_page_widget.dart';
+import 'package:unilunch/presentation/common/widgets/login_page_widget.dart';
 
 void main() async {
   await SupabaseService().initialize();

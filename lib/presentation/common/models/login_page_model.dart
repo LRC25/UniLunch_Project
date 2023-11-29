@@ -1,5 +1,5 @@
 import 'package:flutterflow_ui/flutterflow_ui.dart';
-import 'login_page_widget.dart' show LoginPageWidget;
+import '../widgets/login_page_widget.dart' show LoginPageWidget;
 import 'package:flutter/material.dart';
 
 class LoginPageModel extends FlutterFlowModel<LoginPageWidget> {
