@@ -65,7 +65,7 @@ class Usuario {
                 descripcion: datoRestarante["descripcion"],
                 horario: horarios,
                 imagen: datoRestarante["imagen"],
-                notaPromedio: dato["nota_prom"]);
+                notaPromedio: datoRestarante["nota_prom"]);
             return usuario;
           } else {
             return "este usuario no es de tipo restaurante";
@@ -75,7 +75,6 @@ class Usuario {
         return "Usuario no econtrado";
       }
     } catch (e) {
-      debugPrint(e.toString());
       return e.toString();
     }
   }

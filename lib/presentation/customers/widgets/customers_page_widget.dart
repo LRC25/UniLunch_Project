@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutterflow_ui/flutterflow_ui.dart';
-import 'package:unilunch/logic/Restaurante.dart';
+import 'package:unilunch/logic/Cliente.dart';
 
-import '../models/restaurants_page_model.dart';
-export '../models/restaurants_page_model.dart';
+import '../models/customers_page_model.dart';
+export '../models/customers_page_model.dart';
 
-class RestaurantsPageWidget extends StatefulWidget {
-  final Restaurante restaurante;
-  const RestaurantsPageWidget({Key? key, required this.restaurante}) : super(key: key);
+class CustomersPageWidget extends StatefulWidget {
+  final Cliente cliente;
+  const CustomersPageWidget({Key? key, required this.cliente}) : super(key: key);
 
   @override
   _RestaurantsPageWidgetState createState() => _RestaurantsPageWidgetState();
 }
 
-class _RestaurantsPageWidgetState extends State<RestaurantsPageWidget> {
-  late RestaurantsPageModel _model;
+class _RestaurantsPageWidgetState extends State<CustomersPageWidget> {
+  late CustomersPageModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => RestaurantsPageModel());
+    _model = createModel(context, () => CustomersPageModel());
   }
 
   @override
@@ -56,7 +56,7 @@ class _RestaurantsPageWidgetState extends State<RestaurantsPageWidget> {
           title: Align(
             alignment: AlignmentDirectional(0.00, 0.00),
             child: Text(
-              'Restaurantes',
+              'Clientes',
               style: FlutterFlowTheme.of(context).headlineMedium.override(
                     fontFamily: 'Outfit',
                     color: Color(0xFF064244),
