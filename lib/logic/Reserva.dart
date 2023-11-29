@@ -1,5 +1,8 @@
-//import 'dart:ffi';
 import 'package:unilunch/logic/ReservaPlato.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:unilunch/persistence/SupabaseConnection.dart';
+import 'package:supabase/src/supabase_client.dart';
+import 'package:unilunch/utils.dart';
 
 class Reserva {
 
@@ -18,5 +21,73 @@ class Reserva {
       this.platos,
       this.estado
       );
+
+  Reserva.registro (
+      this.fecha,
+      this.total,
+      this.platos,
+      this.estado
+      ): idReserva = "", nombreUsuario = "";
+
+  Reserva.vacio(): idReserva = "", nombreUsuario = "", fecha = DateTime(0), total = 0, platos = [], estado = "";
+
+  Future<String> insertarReserva(String idUsuario, String idRestaurante) async {
+    final SupabaseService supabaseService = SupabaseService();
+    SupabaseClient cliente = supabaseService.client;
+    try {
+      String id = randomDigits(10);
+      await cliente
+          .from("reserva")
+          .insert({"id_reserva":id, "id_restaurante":idRestaurante, "id_usuario":idUsuario, "fecha":convertDate(fecha), "precio":total});
+      for (ReservaPlato plato in platos) {
+        plato.insertarReservaPlato(id);
+      }
+      return "correcto";
+    } catch (e) {
+      debugPrint(e.toString());
+      return e.toString();
+    }
+  }
+
+  Future<String> eliminarReserva() async {
+    final SupabaseService supabaseService = SupabaseService();
+    SupabaseClient cliente = supabaseService.client;
+    try {
+      for (ReservaPlato plato in platos) {
+        plato.eliminarReservaPlato();
+      }
+      await cliente.from('reservar').delete().match({"id_reservar": idReserva});
+      return "correcto";
+    } catch (e) {
+      debugPrint(e.toString());
+      return e.toString();
+    }
+  }
+
+  Future<List<Reserva>> listarNotasPorRestaurante(String idRestaurante) async {
+    List<Reserva> reservas = [];
+    final SupabaseService supabaseService = SupabaseService();
+    SupabaseClient cliente = supabaseService.client;
+    try {
+      final data = await cliente
+          .from("reserva")
+          .select('''id_reserva, nombre:id_usuario(nombre), fecha, precio, estado''')
+          .eq("id_restaurante", idRestaurante);
+      if (data.isNotEmpty) {
+        for (var i in data) {
+          Map<String, dynamic> dato = i;
+          List<ReservaPlato> reservaPlatos = await ReservaPlato.vacio().listarPorReserva(dato["id_reserva"]);
+          Reserva reserva = Reserva(dato["id_reserva"], dato["nombre"], dato["fecha"], dato["total"], reservaPlatos, dato["estado"]);
+          reservas.add(reserva);
+        }
+        return reservas;
+      } else {
+        return reservas;
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+      return reservas;
+    }
+  }
 
 }
