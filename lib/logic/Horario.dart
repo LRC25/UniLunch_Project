@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:unilunch/persistence/SupabaseConnection.dart';
 import 'package:supabase/src/supabase_client.dart';
+import 'package:unilunch/utils.dart';
 
 class Horario {
 
@@ -15,6 +16,12 @@ class Horario {
       this.horaApertura,
       this.horaCierre
       );
+
+  Horario.resgistrar (
+      this.dia,
+      this.horaApertura,
+      this.horaCierre
+      ): idHorario = "";
 
   Horario.vacio():
       idHorario = '',
@@ -37,8 +44,8 @@ class Horario {
           Horario horario = Horario(
               dato["id_horario"],
               dato["dia"],
-              dato["hora_apertura"], // Arreglar
-              dato["hora_cierre"]); // Arreglar
+              converDateTime(dato["hora_apertura"]),
+              converDateTime(dato["hora_cierre"]));
           horarios.add(horario);
         }
         return horarios;
@@ -48,6 +55,33 @@ class Horario {
     } catch (e) {
       debugPrint(e.toString());
       return horarios;
+    }
+  }
+
+  Future<String> insertarHorario(String idRestaurante) async {
+    final SupabaseService supabaseService = SupabaseService();
+    SupabaseClient cliente = supabaseService.client;
+    try {
+      String id = randomDigits(10);
+      await cliente
+          .from("horario")
+          .insert({"id_horario":id, "id_restaurante":idRestaurante, "dia":dia, "hora_apertura":horaApertura, "hora_cierre":horaCierre});
+      return "correcto";
+    } catch (e) {
+      debugPrint(e.toString());
+      return e.toString();
+    }
+  }
+
+  Future<String> eliminarHoraio() async {
+    final SupabaseService supabaseService = SupabaseService();
+    SupabaseClient cliente = supabaseService.client;
+    try {
+      await cliente.from('horario').delete().match({"id_horario": idHorario});
+      return "correcto";
+    } catch (e) {
+      debugPrint(e.toString());
+      return e.toString();
     }
   }
 
