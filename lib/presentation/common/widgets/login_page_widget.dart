@@ -5,6 +5,8 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:unilunch/logic/Cliente.dart';
 import 'package:unilunch/logic/Restaurante.dart';
 import 'package:unilunch/logic/Usuario.dart';
+import 'package:unilunch/presentation/common/widgets/registration_page_widget.dart';
+import '../../Codigo Imagenes/Avatar.dart';
 import '../../customers/widgets/customers_page_widget.dart';
 import '../../restaurants/widgets/restaurants_page_widget.dart';
 
@@ -433,20 +435,16 @@ class _LoginPageWidgetState extends State<LoginPageWidget>
                             padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                             child: FFButtonWidget(
                               onPressed: () {
-                                print('Button pressed ...');
+                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => RegistrationPageWidget()));
                               },
                               text: '¿No tienes cuenta? Registrate aquí.',
                               options: FFButtonOptions(
                                 width: MediaQuery.sizeOf(context).width * 0.8,
                                 height: 44,
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                                iconPadding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .bodyMedium
+                                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                                iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                                color: FlutterFlowTheme.of(context).secondaryBackground,
+                                textStyle: FlutterFlowTheme.of(context).bodyMedium
                                     .override(
                                       fontFamily: 'Readex Pro',
                                       color: Color(0xFF064244),
@@ -479,13 +477,12 @@ class _LoginPageWidgetState extends State<LoginPageWidget>
     String email = _model.emailAddressController.text;
     String contrasenna = _model.passwordController.text;
     dynamic usuario = await Usuario.vacio().login(email, contrasenna);
-    debugPrint(usuario.toString());
     if (usuario is Cliente) {
       Cliente cliente = usuario as Cliente;
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CustomersPageWidget(cliente: cliente)));
     } else if (usuario is Restaurante) {
       Restaurante restaurante = usuario as Restaurante;
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => RestaurantsPageWidget(restaurante: restaurante)));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Avatar(restaurante: restaurante)));
     } else {
       showDialog(
           context: context,
