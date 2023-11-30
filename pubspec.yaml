@@ -39,6 +39,7 @@ dependencies:
   flutterflow_widgets: ^0.0.7
   flutter_animate: ^4.1.1+1
   flutterflow_ui: ^0.2.0+1
+  image_picker: ^1.0.2
 
 dev_dependencies:
   flutter_test:

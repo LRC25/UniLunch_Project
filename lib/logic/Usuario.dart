@@ -13,8 +13,8 @@ class Usuario {
 
   Usuario (
       this.idUsuario,
-      this.email,
       this.nombre,
+      this.email,
       this.tipoUsuario
       );
 
