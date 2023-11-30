@@ -80,6 +80,26 @@ class _RegistrationPageWidgetState extends State<RegistrationPageWidget>
         ),
       ],
     ),
+    'textOnPageLoadAnimation3': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        VisibilityEffect(duration: 150.ms),
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 150.ms,
+          duration: 400.ms,
+          begin: 0,
+          end: 1,
+        ),
+        MoveEffect(
+          curve: Curves.easeInOut,
+          delay: 150.ms,
+          duration: 400.ms,
+          begin: Offset(0, 30),
+          end: Offset(0, 0),
+        ),
+      ],
+    ),
   };
 
   @override
@@ -87,8 +107,8 @@ class _RegistrationPageWidgetState extends State<RegistrationPageWidget>
     super.initState();
     _model = createModel(context, () => RegistrationPageModel());
 
-    _model.nameController ??= TextEditingController();
-    _model.nameFocusNode ??= FocusNode();
+    _model.nameController1 ??= TextEditingController();
+    _model.nameFocusNode1 ??= FocusNode();
 
     _model.emailAddressController ??= TextEditingController();
     _model.emailAddressFocusNode ??= FocusNode();
@@ -98,6 +118,18 @@ class _RegistrationPageWidgetState extends State<RegistrationPageWidget>
 
     _model.confirmPasswordController ??= TextEditingController();
     _model.confirmPasswordFocusNode ??= FocusNode();
+
+    _model.nameController2 ??= TextEditingController();
+    _model.nameFocusNode2 ??= FocusNode();
+
+    _model.descriptionController ??= TextEditingController();
+    _model.descriptionFocusNode ??= FocusNode();
+
+    _model.addressController1 ??= TextEditingController();
+    _model.addressFocusNode1 ??= FocusNode();
+
+    _model.addressController2 ??= TextEditingController();
+    _model.addressFocusNode2 ??= FocusNode();
   }
 
   @override
@@ -135,7 +167,11 @@ class _RegistrationPageWidgetState extends State<RegistrationPageWidget>
                   height: 300,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [Color(0xFFC6E8DA), Color(0xFFC6E8DA), Color(0xFFE4F4ED)],
+                      colors: [
+                        Color(0xFFC6E8DA),
+                        Color(0xFFC6E8DA),
+                        Color(0xFFE4F4ED)
+                      ],
                       stops: [0, 0.8, 1],
                       begin: AlignmentDirectional(0.88, -1),
                       end: AlignmentDirectional(-0.88, 1),
@@ -189,7 +225,7 @@ class _RegistrationPageWidgetState extends State<RegistrationPageWidget>
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(8),
                               child: Image.asset(
-                                'assets/image/Logo_nobackground.png',
+                                'assets/images/Logo_nobackground.png',
                                 width: MediaQuery.sizeOf(context).width,
                                 height: MediaQuery.sizeOf(context).height * 1,
                                 fit: BoxFit.cover,
@@ -198,15 +234,17 @@ class _RegistrationPageWidgetState extends State<RegistrationPageWidget>
                           ).animateOnPageLoad(
                               animationsMap['containerOnPageLoadAnimation']!),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
                             child: Text(
                               'Registro',
-                              style:
-                                  FlutterFlowTheme.of(context).headlineSmall.override(
-                                        fontFamily: 'Outfit',
-                                        color: Color(0xFF064244),
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                              style: FlutterFlowTheme.of(context)
+                                  .headlineSmall
+                                  .override(
+                                    fontFamily: 'Outfit',
+                                    color: Color(0xFF064244),
+                                    fontWeight: FontWeight.bold,
+                                  ),
                             ).animateOnPageLoad(
                                 animationsMap['textOnPageLoadAnimation1']!),
                           ),
@@ -214,7 +252,9 @@ class _RegistrationPageWidgetState extends State<RegistrationPageWidget>
                             padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                             child: Text(
                               'Completa los campos para completar tu registro.',
-                              style: FlutterFlowTheme.of(context).labelMedium.override(
+                              style: FlutterFlowTheme.of(context)
+                                  .labelMedium
+                                  .override(
                                     fontFamily: 'Readex Pro',
                                     color: Color(0xFF064244),
                                   ),
@@ -229,7 +269,7 @@ class _RegistrationPageWidgetState extends State<RegistrationPageWidget>
                 Align(
                   alignment: AlignmentDirectional(0.00, 0.00),
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 16),
+                    padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -239,16 +279,18 @@ class _RegistrationPageWidgetState extends State<RegistrationPageWidget>
                           child: Container(
                             width: double.infinity,
                             child: TextFormField(
-                              controller: _model.nameController,
-                              focusNode: _model.nameFocusNode,
+                              controller: _model.nameController1,
+                              focusNode: _model.nameFocusNode1,
                               autofillHints: [AutofillHints.name],
                               obscureText: false,
                               decoration: InputDecoration(
                                 labelText: 'Nombres',
-                                labelStyle: FlutterFlowTheme.of(context).labelMedium,
+                                labelStyle:
+                                    FlutterFlowTheme.of(context).labelMedium,
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context).alternate,
+                                    color:
+                                        FlutterFlowTheme.of(context).alternate,
                                     width: 2,
                                   ),
                                   borderRadius: BorderRadius.circular(35),
@@ -275,21 +317,23 @@ class _RegistrationPageWidgetState extends State<RegistrationPageWidget>
                                   borderRadius: BorderRadius.circular(35),
                                 ),
                                 filled: true,
-                                fillColor:
-                                    FlutterFlowTheme.of(context).secondaryBackground,
-                                contentPadding:
-                                    EdgeInsetsDirectional.fromSTEB(24, 24, 24, 24),
+                                fillColor: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                                contentPadding: EdgeInsetsDirectional.fromSTEB(
+                                    24, 24, 24, 24),
                                 prefixIcon: Icon(
                                   Icons.account_circle_rounded,
                                   color: Color(0xFF064244),
                                 ),
                               ),
-                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
                                     fontFamily: 'Readex Pro',
                                     color: Color(0xFF064244),
                                   ),
-                              validator:
-                                  _model.nameControllerValidator.asValidator(context),
+                              validator: _model.nameController1Validator
+                                  .asValidator(context),
                             ),
                           ),
                         ),
@@ -304,10 +348,12 @@ class _RegistrationPageWidgetState extends State<RegistrationPageWidget>
                               obscureText: false,
                               decoration: InputDecoration(
                                 labelText: 'Email',
-                                labelStyle: FlutterFlowTheme.of(context).labelMedium,
+                                labelStyle:
+                                    FlutterFlowTheme.of(context).labelMedium,
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context).alternate,
+                                    color:
+                                        FlutterFlowTheme.of(context).alternate,
                                     width: 2,
                                   ),
                                   borderRadius: BorderRadius.circular(35),
@@ -334,16 +380,18 @@ class _RegistrationPageWidgetState extends State<RegistrationPageWidget>
                                   borderRadius: BorderRadius.circular(35),
                                 ),
                                 filled: true,
-                                fillColor:
-                                    FlutterFlowTheme.of(context).secondaryBackground,
-                                contentPadding:
-                                    EdgeInsetsDirectional.fromSTEB(24, 24, 24, 24),
+                                fillColor: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                                contentPadding: EdgeInsetsDirectional.fromSTEB(
+                                    24, 24, 24, 24),
                                 prefixIcon: Icon(
                                   Icons.email,
                                   color: Color(0xFF064244),
                                 ),
                               ),
-                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
                                     fontFamily: 'Readex Pro',
                                     color: Color(0xFF064244),
                                   ),
@@ -364,10 +412,12 @@ class _RegistrationPageWidgetState extends State<RegistrationPageWidget>
                               obscureText: !_model.passwordVisibility,
                               decoration: InputDecoration(
                                 labelText: 'Contraseña',
-                                labelStyle: FlutterFlowTheme.of(context).labelMedium,
+                                labelStyle:
+                                    FlutterFlowTheme.of(context).labelMedium,
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context).alternate,
+                                    color:
+                                        FlutterFlowTheme.of(context).alternate,
                                     width: 2,
                                   ),
                                   borderRadius: BorderRadius.circular(35),
@@ -394,10 +444,10 @@ class _RegistrationPageWidgetState extends State<RegistrationPageWidget>
                                   borderRadius: BorderRadius.circular(35),
                                 ),
                                 filled: true,
-                                fillColor:
-                                    FlutterFlowTheme.of(context).secondaryBackground,
-                                contentPadding:
-                                    EdgeInsetsDirectional.fromSTEB(24, 24, 24, 24),
+                                fillColor: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                                contentPadding: EdgeInsetsDirectional.fromSTEB(
+                                    24, 24, 24, 24),
                                 prefixIcon: Icon(
                                   Icons.key_rounded,
                                   color: Color(0xFF064244),
@@ -417,7 +467,9 @@ class _RegistrationPageWidgetState extends State<RegistrationPageWidget>
                                   ),
                                 ),
                               ),
-                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
                                     fontFamily: 'Readex Pro',
                                     color: Color(0xFF064244),
                                   ),
@@ -437,10 +489,12 @@ class _RegistrationPageWidgetState extends State<RegistrationPageWidget>
                               obscureText: !_model.confirmPasswordVisibility,
                               decoration: InputDecoration(
                                 labelText: 'Confirmar Contraseña',
-                                labelStyle: FlutterFlowTheme.of(context).labelMedium,
+                                labelStyle:
+                                    FlutterFlowTheme.of(context).labelMedium,
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context).alternate,
+                                    color:
+                                        FlutterFlowTheme.of(context).alternate,
                                     width: 2,
                                   ),
                                   borderRadius: BorderRadius.circular(35),
@@ -467,10 +521,10 @@ class _RegistrationPageWidgetState extends State<RegistrationPageWidget>
                                   borderRadius: BorderRadius.circular(35),
                                 ),
                                 filled: true,
-                                fillColor:
-                                    FlutterFlowTheme.of(context).secondaryBackground,
-                                contentPadding:
-                                    EdgeInsetsDirectional.fromSTEB(24, 24, 24, 24),
+                                fillColor: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                                contentPadding: EdgeInsetsDirectional.fromSTEB(
+                                    24, 24, 24, 24),
                                 prefixIcon: Icon(
                                   Icons.key_rounded,
                                   color: Color(0xFF064244),
@@ -490,11 +544,14 @@ class _RegistrationPageWidgetState extends State<RegistrationPageWidget>
                                   ),
                                 ),
                               ),
-                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
                                     fontFamily: 'Readex Pro',
                                     color: Color(0xFF064244),
                                   ),
-                              validator: _model.confirmPasswordControllerValidator
+                              validator: _model
+                                  .confirmPasswordControllerValidator
                                   .asValidator(context),
                             ),
                           ),
@@ -502,7 +559,8 @@ class _RegistrationPageWidgetState extends State<RegistrationPageWidget>
                         Align(
                           alignment: AlignmentDirectional(0.00, 0.00),
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                             child: FFButtonWidget(
                               onPressed: () {
                                 print('Button pressed ...');
@@ -511,19 +569,23 @@ class _RegistrationPageWidgetState extends State<RegistrationPageWidget>
                               options: FFButtonOptions(
                                 width: MediaQuery.sizeOf(context).width * 0.8,
                                 height: 44,
-                                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                                iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                                color: FlutterFlowTheme.of(context).secondaryBackground,
-                                textStyle:
-                                    FlutterFlowTheme.of(context).bodyMedium.override(
-                                          fontFamily: 'Readex Pro',
-                                          color: Color(0xFF064244),
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                                iconPadding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                                color: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Readex Pro',
+                                      color: Color(0xFF064244),
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                 elevation: 0,
                                 borderSide: BorderSide(
-                                  color:
-                                      FlutterFlowTheme.of(context).secondaryBackground,
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
                                   width: 2,
                                 ),
                                 borderRadius: BorderRadius.circular(12),
@@ -534,17 +596,20 @@ class _RegistrationPageWidgetState extends State<RegistrationPageWidget>
                         Align(
                           alignment: AlignmentDirectional(0.00, 0.00),
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                             child: Container(
                               decoration: BoxDecoration(),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
                                   Expanded(
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
                                       children: [
                                         Icon(
                                           Icons.groups_rounded,
@@ -565,9 +630,10 @@ class _RegistrationPageWidgetState extends State<RegistrationPageWidget>
                                     ),
                                   ),
                                   Switch.adaptive(
-                                    value: _model.switchValue ??= false,
+                                    value: _model.isRestaurant,
                                     onChanged: (newValue) async {
-                                      setState(() => _model.switchValue = newValue!);
+                                      setState(
+                                          () => _model.isRestaurant = newValue);
                                     },
                                     activeColor: Color(0xFF064244),
                                     activeTrackColor: Color(0xFFC6E8DA),
@@ -577,7 +643,8 @@ class _RegistrationPageWidgetState extends State<RegistrationPageWidget>
                                   Expanded(
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
                                       children: [
                                         Text(
                                           'Restaurante',
@@ -601,37 +668,348 @@ class _RegistrationPageWidgetState extends State<RegistrationPageWidget>
                             ),
                           ),
                         ),
-                        Align(
-                          alignment: AlignmentDirectional(0.00, 0.00),
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                            child: FFButtonWidget(
-                              onPressed: () {
-                                print('Button pressed ...');
-                              },
-                              text: 'Siguiente',
-                              options: FFButtonOptions(
-                                width: 230,
-                                height: 52,
-                                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                                iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                                color: Color(0xFF064244),
-                                textStyle:
-                                    FlutterFlowTheme.of(context).titleSmall.override(
-                                          fontFamily: 'Readex Pro',
-                                          color: Colors.white,
-                                        ),
-                                elevation: 3,
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1,
+                      ],
+                    ),
+                  ),
+                ),
+                Visibility(
+                  visible: _model.isRestaurant,
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 16),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                          child: Text(
+                            'Ingresa los datos de tu restaurante.',
+                            style:
+                                FlutterFlowTheme.of(context).labelMedium.override(
+                                      fontFamily: 'Readex Pro',
+                                      color: Color(0xFF064244),
+                                    ),
+                          ).animateOnPageLoad(
+                              animationsMap['textOnPageLoadAnimation3']!),
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                          child: Container(
+                            width: double.infinity,
+                            child: TextFormField(
+                              controller: _model.nameController2,
+                              focusNode: _model.nameFocusNode2,
+                              autofillHints: [AutofillHints.name],
+                              obscureText: false,
+                              decoration: InputDecoration(
+                                labelText: 'Nombre del Restaurante',
+                                labelStyle:
+                                    FlutterFlowTheme.of(context).labelMedium,
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).alternate,
+                                    width: 2,
+                                  ),
+                                  borderRadius: BorderRadius.circular(35),
                                 ),
-                                borderRadius: BorderRadius.circular(35),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0xFF064244),
+                                    width: 2,
+                                  ),
+                                  borderRadius: BorderRadius.circular(35),
+                                ),
+                                errorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).error,
+                                    width: 2,
+                                  ),
+                                  borderRadius: BorderRadius.circular(35),
+                                ),
+                                focusedErrorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).error,
+                                    width: 2,
+                                  ),
+                                  borderRadius: BorderRadius.circular(35),
+                                ),
+                                filled: true,
+                                fillColor: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                                contentPadding: EdgeInsetsDirectional.fromSTEB(
+                                    24, 24, 24, 24),
+                                prefixIcon: Icon(
+                                  Icons.drive_file_rename_outline_rounded,
+                                  color: Color(0xFF064244),
+                                ),
                               ),
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Readex Pro',
+                                    color: Color(0xFF064244),
+                                  ),
+                              validator: _model.nameController2Validator
+                                  .asValidator(context),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                          child: Container(
+                            width: double.infinity,
+                            child: TextFormField(
+                              controller: _model.descriptionController,
+                              focusNode: _model.descriptionFocusNode,
+                              autofillHints: [AutofillHints.name],
+                              obscureText: false,
+                              decoration: InputDecoration(
+                                labelText: 'Descripción',
+                                labelStyle:
+                                    FlutterFlowTheme.of(context).labelMedium,
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).alternate,
+                                    width: 2,
+                                  ),
+                                  borderRadius: BorderRadius.circular(35),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0xFF064244),
+                                    width: 2,
+                                  ),
+                                  borderRadius: BorderRadius.circular(35),
+                                ),
+                                errorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).error,
+                                    width: 2,
+                                  ),
+                                  borderRadius: BorderRadius.circular(35),
+                                ),
+                                focusedErrorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).error,
+                                    width: 2,
+                                  ),
+                                  borderRadius: BorderRadius.circular(35),
+                                ),
+                                filled: true,
+                                fillColor: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                                contentPadding: EdgeInsetsDirectional.fromSTEB(
+                                    24, 24, 24, 24),
+                                prefixIcon: Icon(
+                                  Icons.short_text_rounded,
+                                  color: Color(0xFF064244),
+                                ),
+                              ),
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Readex Pro',
+                                    color: Color(0xFF064244),
+                                  ),
+                              validator: _model.descriptionControllerValidator
+                                  .asValidator(context),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                          child: Container(
+                            width: double.infinity,
+                            child: TextFormField(
+                              controller: _model.addressController1,
+                              focusNode: _model.addressFocusNode1,
+                              autofillHints: [AutofillHints.name],
+                              obscureText: false,
+                              decoration: InputDecoration(
+                                labelText: 'Dirección',
+                                labelStyle:
+                                    FlutterFlowTheme.of(context).labelMedium,
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).alternate,
+                                    width: 2,
+                                  ),
+                                  borderRadius: BorderRadius.circular(35),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0xFF064244),
+                                    width: 2,
+                                  ),
+                                  borderRadius: BorderRadius.circular(35),
+                                ),
+                                errorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).error,
+                                    width: 2,
+                                  ),
+                                  borderRadius: BorderRadius.circular(35),
+                                ),
+                                focusedErrorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).error,
+                                    width: 2,
+                                  ),
+                                  borderRadius: BorderRadius.circular(35),
+                                ),
+                                filled: true,
+                                fillColor: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                                contentPadding: EdgeInsetsDirectional.fromSTEB(
+                                    24, 24, 24, 24),
+                                prefixIcon: Icon(
+                                  Icons.location_pin,
+                                  color: Color(0xFF064244),
+                                ),
+                              ),
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Readex Pro',
+                                    color: Color(0xFF064244),
+                                  ),
+                              validator: _model.addressController1Validator
+                                  .asValidator(context),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                          child: Container(
+                            width: double.infinity,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                FFButtonWidget(
+                                  onPressed: () async {
+                                    final _openingTime = await showTimePicker(
+                                      context: context,
+                                      initialTime: TimeOfDay.fromDateTime(getCurrentTimestamp),
+                                    );
+                                    if (_openingTime != null) {
+                                      safeSetState(() {
+                                        _model.openingTime = DateTime(
+                                          getCurrentTimestamp.year,
+                                          getCurrentTimestamp.month,
+                                          getCurrentTimestamp.day,
+                                          _openingTime.hour,
+                                          _openingTime.minute,
+                                        );
+
+                                        final formattedTime = '${_openingTime.format(context)}';
+                                        _model.openingText = formattedTime;
+                                      });
+                                    }
+                                  },
+                                  text: _model.openingText,
+                                  icon: Icon(
+                                    Icons.alarm_rounded,
+                                    size: 15,
+                                  ),
+                                  options: FFButtonOptions(
+                                    width: MediaQuery.sizeOf(context).width * 0.45,
+                                    height: 40,
+                                    padding: EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
+                                    iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                                    color: Color(0x00FFFFFF),
+                                    textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                                          fontFamily: 'Readex Pro',
+                                          color: Color(0xFF064244),
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                    elevation: 0,
+                                    borderSide: BorderSide(
+                                      color: Colors.transparent,
+                                      width: 0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                ),
+                                FFButtonWidget(
+                                  onPressed: () async {
+                                    final _closingTime = await showTimePicker(
+                                      context: context,
+                                      initialTime: TimeOfDay.fromDateTime(getCurrentTimestamp),
+                                    );
+                                    if (_closingTime != null) {
+                                      safeSetState(() {
+                                        _model.closingTime = DateTime(
+                                          getCurrentTimestamp.year,
+                                          getCurrentTimestamp.month,
+                                          getCurrentTimestamp.day,
+                                          _closingTime.hour,
+                                          _closingTime.minute,
+                                        );
+
+                                        final formattedTime = '${_closingTime.format(context)}';
+                                        _model.closingText = formattedTime;
+                                      });
+                                    }
+                                  },
+                                  text: _model.closingText,
+                                  icon: Icon(
+                                    Icons.alarm_off_rounded,
+                                    size: 15,
+                                  ),
+                                  options: FFButtonOptions(
+                                    width: MediaQuery.sizeOf(context).width * 0.45,
+                                    height: 40,
+                                    padding: EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
+                                    iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                                    color: Color(0x00FFFFFF),
+                                    textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                                          fontFamily: 'Readex Pro',
+                                          color: Color(0xFF064244),
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                    elevation: 0,
+                                    borderSide: BorderSide(
+                                      color: Colors.transparent,
+                                      width: 0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
                       ],
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: AlignmentDirectional(0.00, 0.00),
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                    child: FFButtonWidget(
+                      onPressed: () {
+                        print('Button pressed ...');
+                      },
+                      text: 'Registrar',
+                      options: FFButtonOptions(
+                        width: 230,
+                        height: 52,
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                        iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                        color: Color(0xFF064244),
+                        textStyle:
+                            FlutterFlowTheme.of(context).titleSmall.override(
+                                  fontFamily: 'Readex Pro',
+                                  color: Colors.white,
+                                ),
+                        elevation: 3,
+                        borderSide: BorderSide(
+                          color: Colors.transparent,
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(35),
+                      ),
                     ),
                   ),
                 ),
