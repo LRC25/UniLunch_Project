@@ -130,6 +130,9 @@ class _RegistrationPageWidgetState extends State<RegistrationPageWidget>
 
     _model.addressController2 ??= TextEditingController();
     _model.addressFocusNode2 ??= FocusNode();
+
+    _model.logoController ??= TextEditingController();
+    _model.logoFocusNode ??= FocusNode();
   }
 
   @override
