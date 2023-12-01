@@ -5,8 +5,8 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:unilunch/logic/Cliente.dart';
 import 'package:unilunch/logic/Restaurante.dart';
 import 'package:unilunch/logic/Usuario.dart';
-import '../../customers/widgets/customers_page_widget.dart';
-import '../../restaurants/widgets/restaurants_page_widget.dart';
+import 'package:unilunch/presentation/customers/widgets/navbar_customer_page_widget.dart';
+import 'package:unilunch/presentation/restaurants/widgets/navbar_restaurant_page_widget.dart';
 
 import '../models/login_page_model.dart';
 export '../models/login_page_model.dart';
@@ -482,10 +482,10 @@ class _LoginPageWidgetState extends State<LoginPageWidget>
     debugPrint(usuario.toString());
     if (usuario is Cliente) {
       Cliente cliente = usuario as Cliente;
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CustomersPageWidget(cliente: cliente)));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => NavbarCustomerPage(cliente: cliente)));
     } else if (usuario is Restaurante) {
       Restaurante restaurante = usuario as Restaurante;
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => RestaurantsPageWidget(restaurante: restaurante)));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => NavbarRestaurantPage(restaurante: restaurante)));
     } else {
       showDialog(
           context: context,
