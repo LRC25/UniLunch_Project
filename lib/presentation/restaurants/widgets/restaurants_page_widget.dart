@@ -60,7 +60,6 @@ class _RestaurantsPageWidgetState extends State<RestaurantsPageWidget> {
           title: Align(
             alignment: AlignmentDirectional(0.00, 0.00),
             child: Text(
-              widget.restaurante.nombre,
               style: FlutterFlowTheme.of(context).headlineMedium.override(
                     fontFamily: 'Outfit',
                     color: Color(0xFF064244),
@@ -214,16 +213,7 @@ class _RestaurantsPageWidgetState extends State<RestaurantsPageWidget> {
                                               ),
                                             ],
                                           ),
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ]);
-                              }).toList(),
-                          );
-                        }
-                      })
-                ],
+
               ),
             )),
       ),
