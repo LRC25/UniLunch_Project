@@ -9,7 +9,8 @@ export '../models/restaurants_page_model.dart';
 
 class RestaurantsPageWidget extends StatefulWidget {
   final Restaurante restaurante;
-  const RestaurantsPageWidget({Key? key, required this.restaurante}) : super(key: key);
+  const RestaurantsPageWidget({Key? key, required this.restaurante})
+      : super(key: key);
 
   @override
   _RestaurantsPageWidgetState createState() => _RestaurantsPageWidgetState();
@@ -224,10 +225,9 @@ class _RestaurantsPageWidgetState extends State<RestaurantsPageWidget> {
                       })
                 ],
               ),
-            ),
-          )
-        ),
+            )),
       ),
+    )
     );
   }
 }
