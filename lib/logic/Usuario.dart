@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:unilunch/persistence/SupabaseConnection.dart';
 import 'package:supabase/src/supabase_client.dart';
 import 'package:unilunch/logic/Cliente.dart';
@@ -14,8 +13,8 @@ class Usuario {
 
   Usuario (
       this.idUsuario,
-      this.email,
       this.nombre,
+      this.email,
       this.tipoUsuario
       );
 
@@ -60,6 +59,7 @@ class Usuario {
                 email: dato["email"],
                 tipoUsuario: dato["tipo_usuario"],
                 idRestaurante: datoRestarante["id_restaurante"],
+                nombreRestaurante: datoRestarante["nombre_resetaurante"],
                 ubicacion: datoRestarante["ubicacion"],
                 direccion: datoRestarante["direccion"],
                 descripcion: datoRestarante["descripcion"],
