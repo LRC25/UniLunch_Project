@@ -63,9 +63,9 @@ class Restaurante extends Usuario {
     }
   }
 
-  Future<String> registrarPlato(String imagen, double precio, String descripcion, int stock) async {
+  Future<String> registrarPlato(String imagen, String nombre, int precio, String descripcion, int stock) async {
     try {
-      Plato plato = Plato.registrar(imagen, precio, descripcion, stock);
+      Plato plato = Plato.registrar(nombre, descripcion, precio, stock, imagen);
       String response = await plato.insertarPlato(idRestaurante);
       if (response == "correcto"){
         return "correcto";

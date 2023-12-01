@@ -6,13 +6,15 @@ import 'package:unilunch/utils.dart';
 class Plato {
 
   String idPlato;
+  String nombre;
   String descripcion;
-  double precio;
+  int precio;
   int stock;
   String imagen;
 
   Plato(
       this.idPlato,
+      this.nombre,
       this.descripcion,
       this.precio,
       this.stock,
@@ -20,13 +22,14 @@ class Plato {
       );
 
   Plato.registrar(
-      this.imagen,
-      this.precio,
+      this.nombre,
       this.descripcion,
-      this.stock
+      this.precio,
+      this.stock,
+      this.imagen
       ): idPlato = "";
 
-  Plato.vacio(): idPlato = "", descripcion = "", precio = 0, stock = 0, imagen = "";
+  Plato.vacio(): idPlato = "", nombre = "", descripcion = "", precio = 0, stock = 0, imagen = "";
 
   Future<String> insertarPlato(String idRestaurante) async {
     final SupabaseService supabaseService = SupabaseService();
@@ -81,7 +84,7 @@ class Plato {
       if (data.isNotEmpty) {
         for (var i in data) {
           Map<String, dynamic> dato = i;
-          Plato plato = Plato(dato["id_plato"], dato["descripcion"], dato["precio"], dato["stock"], dato["imagen"]);
+          Plato plato = Plato(dato["id_plato"], dato["nombre"], dato["descripcion"], dato["precio"], dato["stock"], dato["imagen"]);
           platos.add(plato);
         }
         return platos;
@@ -104,7 +107,7 @@ class Plato {
           .eq("id_plato", idPlato);
       if (data.isNotEmpty) {
         Map<String, dynamic> dato = data[0];
-        plato = Plato(dato["id_plato"], dato["descripcion"], dato["precio"], dato["stock"], dato["imagen"]);
+        plato = Plato(dato["id_plato"], dato["nombre"], dato["descripcion"], dato["precio"], dato["stock"], dato["imagen"]);
         return plato;
       } else {
         return plato;

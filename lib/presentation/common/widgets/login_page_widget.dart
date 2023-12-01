@@ -6,7 +6,6 @@ import 'package:unilunch/logic/Cliente.dart';
 import 'package:unilunch/logic/Restaurante.dart';
 import 'package:unilunch/logic/Usuario.dart';
 import 'package:unilunch/presentation/common/widgets/registration_page_widget.dart';
-import '../../Codigo Imagenes/Avatar.dart';
 import '../../customers/widgets/customers_page_widget.dart';
 import '../../restaurants/widgets/restaurants_page_widget.dart';
 
@@ -482,7 +481,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget>
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CustomersPageWidget(cliente: cliente)));
     } else if (usuario is Restaurante) {
       Restaurante restaurante = usuario as Restaurante;
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Avatar(restaurante: restaurante)));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => RestaurantsPageWidget(restaurante: restaurante)));
     } else {
       showDialog(
           context: context,
