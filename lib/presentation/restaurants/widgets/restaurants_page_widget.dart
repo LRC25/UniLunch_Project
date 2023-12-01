@@ -211,6 +211,7 @@ class _RestaurantsPageWidgetState extends State<RestaurantsPageWidget> {
               ),
             )),
       ),
+    )
     );
   }
 }
