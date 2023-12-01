@@ -7,9 +7,9 @@ class RegistrationPageModel extends FlutterFlowModel<RegistrationPageWidget> {
 
   final unfocusNode = FocusNode();
   // State field(s) for name widget.
-  FocusNode? nameFocusNode;
-  TextEditingController? nameController;
-  String? Function(BuildContext, String?)? nameControllerValidator;
+  FocusNode? nameFocusNode1;
+  TextEditingController? nameController1;
+  String? Function(BuildContext, String?)? nameController1Validator;
   // State field(s) for emailAddress widget.
   FocusNode? emailAddressFocusNode;
   TextEditingController? emailAddressController;
@@ -25,7 +25,28 @@ class RegistrationPageModel extends FlutterFlowModel<RegistrationPageWidget> {
   late bool confirmPasswordVisibility;
   String? Function(BuildContext, String?)? confirmPasswordControllerValidator;
   // State field(s) for Switch widget.
-  bool? switchValue;
+  bool isRestaurant = false;
+  // State field(s) for name widget.
+  FocusNode? nameFocusNode2;
+  TextEditingController? nameController2;
+  String? Function(BuildContext, String?)? nameController2Validator;
+  // State field(s) for description widget.
+  FocusNode? descriptionFocusNode;
+  TextEditingController? descriptionController;
+  String? Function(BuildContext, String?)? descriptionControllerValidator;
+  // State field(s) for address widget.
+  FocusNode? addressFocusNode1;
+  TextEditingController? addressController1;
+  String? Function(BuildContext, String?)? addressController1Validator;
+  // State field(s) for address widget.
+  FocusNode? addressFocusNode2;
+  TextEditingController? addressController2;
+  String? Function(BuildContext, String?)? addressController2Validator;
+
+  String openingText = "Hora de Apertura";
+  String closingText = "Hora de Cierre";
+  DateTime? openingTime;
+  DateTime? closingTime;
 
   /// Initialization and disposal methods.
 
@@ -36,8 +57,8 @@ class RegistrationPageModel extends FlutterFlowModel<RegistrationPageWidget> {
 
   void dispose() {
     unfocusNode.dispose();
-    nameFocusNode?.dispose();
-    nameController?.dispose();
+    nameFocusNode1?.dispose();
+    nameController1?.dispose();
 
     emailAddressFocusNode?.dispose();
     emailAddressController?.dispose();
@@ -47,6 +68,18 @@ class RegistrationPageModel extends FlutterFlowModel<RegistrationPageWidget> {
 
     confirmPasswordFocusNode?.dispose();
     confirmPasswordController?.dispose();
+
+    nameFocusNode2?.dispose();
+    nameController2?.dispose();
+
+    descriptionFocusNode?.dispose();
+    descriptionController?.dispose();
+
+    addressFocusNode1?.dispose();
+    addressController1?.dispose();
+
+    addressFocusNode2?.dispose();
+    addressController2?.dispose();
   }
 
   /// Action blocks are added here.

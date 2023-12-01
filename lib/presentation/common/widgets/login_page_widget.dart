@@ -173,7 +173,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget>
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(8),
                             child: Image.asset(
-                              'assets/image/Logo_nobackground.png',
+                              'assets/images/Logo_nobackground.png',
                               width: MediaQuery.sizeOf(context).width,
                               height: MediaQuery.sizeOf(context).height * 1,
                               fit: BoxFit.cover,
