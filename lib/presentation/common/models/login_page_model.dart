@@ -1,4 +1,9 @@
 import 'package:flutterflow_ui/flutterflow_ui.dart';
+import '../../../logic/Cliente.dart';
+import '../../../logic/Restaurante.dart';
+import '../../../logic/Usuario.dart';
+import '../../customers/widgets/customers_page_widget.dart';
+import '../../restaurants/widgets/restaurants_page_widget.dart';
 import '../widgets/login_page_widget.dart' show LoginPageWidget;
 import 'package:flutter/material.dart';
 
@@ -33,5 +38,35 @@ class LoginPageModel extends FlutterFlowModel<LoginPageWidget> {
 
   /// Action blocks are added here.
 
+  void iniciarSesion(BuildContext context) async {
+    String email = emailAddressController.text;
+    String contrasenna = passwordController.text;
+    dynamic usuario = await Usuario.vacio().login(email, contrasenna);
+    if (usuario is Cliente) {
+      Cliente cliente = usuario as Cliente;
+      Navigator.pushReplacement(context, MaterialPageRoute(
+          builder: (context) => CustomersPageWidget(cliente: cliente)));
+    } else if (usuario is Restaurante) {
+      Restaurante restaurante = usuario as Restaurante;
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>
+          RestaurantsPageWidget(restaurante: restaurante)));
+    } else {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return const AlertDialog(
+              title: Text("No se puede ingresar"),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: [
+                    Text("Verificar sus datos")
+                  ],
+                ),
+              ),
+            );
+          }
+      );
+    }
+  }
   /// Additional helper methods are added here.
 }

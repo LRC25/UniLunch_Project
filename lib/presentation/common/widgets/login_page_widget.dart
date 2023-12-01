@@ -2,12 +2,7 @@ import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:unilunch/logic/Cliente.dart';
-import 'package:unilunch/logic/Restaurante.dart';
-import 'package:unilunch/logic/Usuario.dart';
 import 'package:unilunch/presentation/common/widgets/registration_page_widget.dart';
-import '../../customers/widgets/customers_page_widget.dart';
-import '../../restaurants/widgets/restaurants_page_widget.dart';
 
 import '../models/login_page_model.dart';
 export '../models/login_page_model.dart';
@@ -401,7 +396,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget>
                             padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                             child: FFButtonWidget(
                               onPressed: () {
-                                iniciarSesion();
+                                _model.iniciarSesion(context);
                               },
                               text: 'Iniciar Sesión',
                               options: FFButtonOptions(
@@ -472,32 +467,4 @@ class _LoginPageWidgetState extends State<LoginPageWidget>
     );
   }
 
-  void iniciarSesion() async {
-    String email = _model.emailAddressController.text;
-    String contrasenna = _model.passwordController.text;
-    dynamic usuario = await Usuario.vacio().login(email, contrasenna);
-    if (usuario is Cliente) {
-      Cliente cliente = usuario as Cliente;
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CustomersPageWidget(cliente: cliente)));
-    } else if (usuario is Restaurante) {
-      Restaurante restaurante = usuario as Restaurante;
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => RestaurantsPageWidget(restaurante: restaurante)));
-    } else {
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return const AlertDialog(
-              title: Text("No se puede ingresar"),
-              content: SingleChildScrollView(
-                child: ListBody(
-                  children: [
-                    Text("Verificar sus datos")
-                  ],
-                ),
-              ),
-            );
-          }
-      );
-    }
-  }
 }

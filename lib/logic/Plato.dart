@@ -38,7 +38,7 @@ class Plato {
       String id = randomDigits(10);
       await cliente
           .from("plato")
-          .insert({"id_plato":id, "id_restaurante":idRestaurante, "descripcion":descripcion, "precio":precio, "imagen":imagen});
+          .insert({"id_plato":id, "id_restaurante":idRestaurante, "nombre":nombre, "descripcion":descripcion, "precio":precio, "imagen":imagen});
       return "correcto";
     } catch (e) {
       debugPrint(e.toString());

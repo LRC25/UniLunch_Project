@@ -1,4 +1,6 @@
 import 'package:flutterflow_ui/flutterflow_ui.dart';
+import 'package:unilunch/logic/Restaurante.dart';
+import '../../../logic/Cliente.dart';
 import '../widgets/registration_page_widget.dart' show RegistrationPageWidget;
 import 'package:flutter/material.dart';
 
@@ -38,10 +40,6 @@ class RegistrationPageModel extends FlutterFlowModel<RegistrationPageWidget> {
   FocusNode? addressFocusNode1;
   TextEditingController? addressController1;
   String? Function(BuildContext, String?)? addressController1Validator;
-  // State field(s) for address widget.
-  FocusNode? addressFocusNode2;
-  TextEditingController? addressController2;
-  String? Function(BuildContext, String?)? addressController2Validator;
   // State field(s) for logo widget.
   FocusNode? logoFocusNode;
   TextEditingController? logoController;
@@ -81,14 +79,48 @@ class RegistrationPageModel extends FlutterFlowModel<RegistrationPageWidget> {
     addressFocusNode1?.dispose();
     addressController1?.dispose();
 
-    addressFocusNode2?.dispose();
-    addressController2?.dispose();
-
     logoFocusNode?.dispose();
     logoController?.dispose();
   }
 
   /// Action blocks are added here.
+
+  void registrarUsuario() async {
+    if (isRestaurant == false) {
+      if (passwordController.text == confirmPasswordController.text) {
+        Cliente cliente = Cliente.registrar(nombre: nameController1.text, email: emailAddressController.text, tipoUsuario: "Cliente");
+        String response = await cliente.resgistrarCliente(passwordController.text);
+        if (response == "correcto") {
+          debugPrint("Se ha registrado correctamente");
+        } else {
+          debugPrint(response);
+        }
+      } else {
+        debugPrint("Verificar contraseña");
+      }
+    } else {
+      if (passwordController.text == confirmPasswordController.text) {
+        print(logoController.text);
+        Restaurante restaurante = Restaurante.registro(
+            nombre: nameController1.text,
+            email: emailAddressController.text,
+            tipoUsuario: "Restaurante",
+            ubicacion: "a",
+            nombreRestaurante: nameController2.text,
+            direccion: addressController1.text,
+            descripcion: descriptionController.text,
+            imagen: logoController.text);
+        String response = await restaurante.resgistrarRestaurante(passwordController.text);
+        if (response == "correcto") {
+          debugPrint("Se ha registrado correctamente");
+        } else {
+          debugPrint(response);
+        }
+      } else {
+        debugPrint("Verificar contraseña");
+      }
+    }
+  }
 
   /// Additional helper methods are added here.
 }

@@ -59,6 +59,7 @@ class Usuario {
                 email: dato["email"],
                 tipoUsuario: dato["tipo_usuario"],
                 idRestaurante: datoRestarante["id_restaurante"],
+                nombreRestaurante: datoRestarante["nombre_resetaurante"],
                 ubicacion: datoRestarante["ubicacion"],
                 direccion: datoRestarante["direccion"],
                 descripcion: datoRestarante["descripcion"],

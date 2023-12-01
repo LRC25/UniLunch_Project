@@ -11,6 +11,7 @@ import '../utils.dart';
 class Restaurante extends Usuario {
 
   String idRestaurante;
+  String nombreRestaurante;
   String ubicacion;
   String direccion;
   String descripcion;
@@ -24,6 +25,7 @@ class Restaurante extends Usuario {
     required String email,
     required String tipoUsuario,
     required this.idRestaurante,
+    required this.nombreRestaurante,
     required this.ubicacion,
     required this.direccion,
     required this.descripcion,
@@ -38,6 +40,7 @@ class Restaurante extends Usuario {
     required String email,
     required String tipoUsuario,
     required this.ubicacion,
+    required this.nombreRestaurante,
     required this.direccion,
     required this.descripcion,
     required this.imagen
@@ -54,7 +57,7 @@ class Restaurante extends Usuario {
           .insert({"id_usuario":idUsuario, "nombre":nombre, "email":email, "contrasenna":contrasenna, "tipo_usuario":tipoUsuario});
       await cliente
           .from("restaurante")
-          .insert({"id_restaurante":idRestaurante, "id_usuario":idUsuario, "ubicacion":ubicacion, "direccion":direccion,
+          .insert({"id_restaurante":idRestaurante, "id_usuario":idUsuario, "nombre_restaurante":nombreRestaurante,"ubicacion":ubicacion, "direccion":direccion,
         "descripcion":descripcion, "imagen":imagen, "nota_prom":0});
       return "correcto";
     } catch (e) {
