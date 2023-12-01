@@ -1,28 +1,27 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutterflow_ui/flutterflow_ui.dart';
-import 'package:unilunch/logic/Cliente.dart';
 
-import '../models/customers_page_model.dart';
-export '../models/customers_page_model.dart';
+import '../models/reservations_page_model.dart';
+export '../models/reservations_page_model.dart';
 
-class CustomersPageWidget extends StatefulWidget {
-  final Cliente cliente;
-  const CustomersPageWidget({Key? key, required this.cliente}) : super(key: key);
+class CustomerReservationsPageWidget extends StatefulWidget {
+  const CustomerReservationsPageWidget({Key? key}) : super(key: key);
 
   @override
-  _RestaurantsPageWidgetState createState() => _RestaurantsPageWidgetState();
+  _CustomerReservationsPageWidgetState createState() => _CustomerReservationsPageWidgetState();
 }
 
-class _RestaurantsPageWidgetState extends State<CustomersPageWidget> {
-  late CustomersPageModel _model;
+class _CustomerReservationsPageWidgetState extends State<CustomerReservationsPageWidget> {
+  late CustomerReservationsPageModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => CustomersPageModel());
+    _model = createModel(context, () => CustomerReservationsPageModel());
   }
 
   @override
@@ -49,14 +48,14 @@ class _RestaurantsPageWidgetState extends State<CustomersPageWidget> {
           : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Color(0xFFC6E8DA),
           automaticallyImplyLeading: false,
           title: Align(
             alignment: AlignmentDirectional(0.00, 0.00),
             child: Text(
-              'Restaurantes',
+              'Reservas',
               style: FlutterFlowTheme.of(context).headlineMedium.override(
                     fontFamily: 'Outfit',
                     color: Color(0xFF064244),
@@ -108,16 +107,20 @@ class _RestaurantsPageWidgetState extends State<CustomersPageWidget> {
                               width: MediaQuery.sizeOf(context).width * 0.7,
                               height: 100,
                               decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context).secondaryBackground,
+                                color: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
                               ),
                               child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Align(
-                                      alignment: AlignmentDirectional(-1.00, 0.00),
+                                      alignment:
+                                          AlignmentDirectional(-1.00, 0.00),
                                       child: Text(
                                         'Milanesa de Pollo',
                                         style: FlutterFlowTheme.of(context)
@@ -132,13 +135,15 @@ class _RestaurantsPageWidgetState extends State<CustomersPageWidget> {
                                     Text(
                                       'Deliciosa milanesa con pollo y papas y arroz y me lo chupa',
                                       textAlign: TextAlign.justify,
-                                      style: FlutterFlowTheme.of(context).bodyMedium,
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium,
                                     ),
                                     Row(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Align(
-                                          alignment: AlignmentDirectional(-1.00, 0.00),
+                                          alignment:
+                                              AlignmentDirectional(-1.00, 0.00),
                                           child: Text(
                                             '\$15.000',
                                             style: FlutterFlowTheme.of(context)
@@ -153,11 +158,13 @@ class _RestaurantsPageWidgetState extends State<CustomersPageWidget> {
                                         ),
                                         Flexible(
                                           child: Align(
-                                            alignment: AlignmentDirectional(1.00, 0.00),
+                                            alignment: AlignmentDirectional(
+                                                1.00, 0.00),
                                             child: Text(
                                               '15 disponibles',
                                               textAlign: TextAlign.start,
-                                              style: FlutterFlowTheme.of(context)
+                                              style: FlutterFlowTheme.of(
+                                                      context)
                                                   .bodyMedium
                                                   .override(
                                                     fontFamily: 'Readex Pro',
@@ -181,7 +188,8 @@ class _RestaurantsPageWidgetState extends State<CustomersPageWidget> {
                                   borderRadius: BorderRadius.circular(8),
                                   child: Image.network(
                                     'https://picsum.photos/seed/203/600',
-                                    width: MediaQuery.sizeOf(context).width * 0.108,
+                                    width: MediaQuery.sizeOf(context).width *
+                                        0.108,
                                     height: 200,
                                     fit: BoxFit.cover,
                                   ),
@@ -196,7 +204,7 @@ class _RestaurantsPageWidgetState extends State<CustomersPageWidget> {
                 ],
               ),
             ),
-          )
+          ),
         ),
       ),
     );
