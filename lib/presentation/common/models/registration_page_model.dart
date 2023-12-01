@@ -42,7 +42,10 @@ class RegistrationPageModel extends FlutterFlowModel<RegistrationPageWidget> {
   FocusNode? addressFocusNode2;
   TextEditingController? addressController2;
   String? Function(BuildContext, String?)? addressController2Validator;
-
+  // State field(s) for logo widget.
+  FocusNode? logoFocusNode;
+  TextEditingController? logoController;
+  String? Function(BuildContext, String?)? logoControllerValidator;
   String openingText = "Hora de Apertura";
   String closingText = "Hora de Cierre";
   DateTime? openingTime;
@@ -80,6 +83,9 @@ class RegistrationPageModel extends FlutterFlowModel<RegistrationPageWidget> {
 
     addressFocusNode2?.dispose();
     addressController2?.dispose();
+
+    logoFocusNode?.dispose();
+    logoController?.dispose();
   }
 
   /// Action blocks are added here.

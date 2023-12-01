@@ -881,6 +881,62 @@ class _RegistrationPageWidgetState extends State<RegistrationPageWidget>
                           padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                           child: Container(
                             width: double.infinity,
+                            child: TextFormField(
+                              controller: _model.logoController,
+                              focusNode: _model.logoFocusNode,
+                              autofillHints: [AutofillHints.name],
+                              obscureText: false,
+                              decoration: InputDecoration(
+                                labelText: 'Logo',
+                                labelStyle: FlutterFlowTheme.of(context).labelMedium,
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).alternate,
+                                    width: 2,
+                                  ),
+                                  borderRadius: BorderRadius.circular(35),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0xFF064244),
+                                    width: 2,
+                                  ),
+                                  borderRadius: BorderRadius.circular(35),
+                                ),
+                                errorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).error,
+                                    width: 2,
+                                  ),
+                                  borderRadius: BorderRadius.circular(35),
+                                ),
+                                focusedErrorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).error,
+                                    width: 2,
+                                  ),
+                                  borderRadius: BorderRadius.circular(35),
+                                ),
+                                filled: true,
+                                fillColor: FlutterFlowTheme.of(context).secondaryBackground,
+                                contentPadding: EdgeInsetsDirectional.fromSTEB(24, 24, 24, 24),
+                                prefixIcon: Icon(
+                                  Icons.image_rounded,
+                                  color: Color(0xFF064244),
+                                ),
+                              ),
+                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                    fontFamily: 'Readex Pro',
+                                    color: Color(0xFF064244),
+                                  ),
+                              validator: _model.logoControllerValidator.asValidator(context),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                          child: Container(
+                            width: double.infinity,
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
