@@ -260,7 +260,7 @@ class _CustomerSettingsPageWidgetState
                     height: 52,
                     padding: EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
                     iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                    color: Color(0xFFBD0000),
+                    color: Color(0xFFE72828),
                     textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                           fontFamily: 'Readex Pro',
                           color: Colors.white,

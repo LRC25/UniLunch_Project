@@ -13,12 +13,6 @@ class CustomersPageModel extends FlutterFlowModel<CustomersPageWidget> {
   TextEditingController? searchRestaurantController;
   String? Function(BuildContext, String?)? searchRestaurantControllerValidator;
 
-  // Google Maps elements
-  google_maps_dart.CameraPosition initialCameraPosition = google_maps_dart.CameraPosition(
-    target: google_maps_dart.LatLng(37.77, -122.43),
-    zoom: 11.5
-  );
-
   /// Initialization and disposal methods.
 
   void initState(BuildContext context) {}
