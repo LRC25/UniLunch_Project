@@ -68,7 +68,6 @@ class Horario {
           .insert({"id_horario":id, "id_restaurante":idRestaurante, "dia":dia, "hora_apertura":horaApertura, "hora_cierre":horaCierre});
       return "correcto";
     } catch (e) {
-      debugPrint(e.toString());
       return e.toString();
     }
   }
@@ -80,7 +79,6 @@ class Horario {
       await cliente.from('horario').delete().match({"id_horario": idHorario});
       return "correcto";
     } catch (e) {
-      debugPrint(e.toString());
       return e.toString();
     }
   }

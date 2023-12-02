@@ -33,7 +33,6 @@ class Nota {
           .insert({"id_nota":id, "id_restaurante":idRestaurante, "id_usuario":idUsuario, "calificacion":calificacion, "descripcion":descripcion});
       return "correcto";
     } catch (e) {
-      debugPrint(e.toString());
       return e.toString();
     }
   }
@@ -45,7 +44,6 @@ class Nota {
       await cliente.from('nota').delete().match({"id_nota": idNota});
       return "correcto";
     } catch (e) {
-      debugPrint(e.toString());
       return e.toString();
     }
   }

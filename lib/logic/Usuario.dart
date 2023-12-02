@@ -49,7 +49,6 @@ class Usuario {
               .from("restaurante")
               .select('''id_restaurante,nombre_restaurante,ubicacion,descripcion,direccion,imagen,nota_prom''')
               .eq("id_usuario", dato["id_usuario"]);
-          debugPrint(dataRestarante.toString());
           if (dataRestarante.isNotEmpty) {
             Map<String, dynamic> datoRestarante = dataRestarante[0];
             List<Horario> horarios = [];

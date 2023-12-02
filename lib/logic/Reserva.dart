@@ -44,7 +44,6 @@ class Reserva {
       }
       return "correcto";
     } catch (e) {
-      debugPrint(e.toString());
       return e.toString();
     }
   }
@@ -59,7 +58,6 @@ class Reserva {
       await cliente.from('reservar').delete().match({"id_reservar": idReserva});
       return "correcto";
     } catch (e) {
-      debugPrint(e.toString());
       return e.toString();
     }
   }
