@@ -17,20 +17,20 @@ void registrationAcceptMessage(BuildContext context, String mensaje) {
                     Icons.check,
                     color: Color(0xFF064244),
                   ),
-                  SizedBox(width: 10), // Espacio entre el icono y el texto
+                  SizedBox(width: 10),
                   Text(mensaje),
                 ],
               ),
-              SizedBox(height: 20), // Espacio entre el texto y el botón
+              SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   Navigator.pushReplacement(context, MaterialPageRoute(builder:
                       (context) => LoginPageWidget()));
                 },
                 style: ElevatedButton.styleFrom(
-                  minimumSize: Size(150, 50), // Tamaño del botón
+                  minimumSize: Size(150, 50),
                   primary: Color(0xFF064244),
-                  padding: EdgeInsets.symmetric(vertical: 15), // Padding del botón
+                  padding: EdgeInsets.symmetric(vertical: 15),
                 ),
                 child: Text(
                   'Aceptar',
@@ -64,19 +64,19 @@ void warningMessage(BuildContext context, String mensaje) {
                     Icons.warning,
                     color: Color(0xFF064244),
                   ),
-                  SizedBox(width: 10), // Espacio entre el icono y el texto
+                  SizedBox(width: 10),
                   Text(mensaje),
                 ],
               ),
-              SizedBox(height: 20), // Espacio entre el texto y el botón
+              SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
                 style: ElevatedButton.styleFrom(
-                  minimumSize: Size(150, 50), // Tamaño del botón
+                  minimumSize: Size(150, 50),
                   primary: Color(0xFF064244),
-                  padding: EdgeInsets.symmetric(vertical: 15), // Padding del botón
+                  padding: EdgeInsets.symmetric(vertical: 15),
                 ),
                 child: Text(
                   'Aceptar',
@@ -110,19 +110,19 @@ void errorMessage(BuildContext context, String mensaje) {
                     Icons.error,
                     color: Color(0xFF064244),
                   ),
-                  SizedBox(width: 10), // Espacio entre el icono y el texto
+                  SizedBox(width: 10),
                   Text(mensaje),
                 ],
               ),
-              SizedBox(height: 20), // Espacio entre el texto y el botón
+              SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
                 style: ElevatedButton.styleFrom(
-                  minimumSize: Size(150, 50), // Tamaño del botón
+                  minimumSize: Size(150, 50),
                   primary: Color(0xFF064244),
-                  padding: EdgeInsets.symmetric(vertical: 15), // Padding del botón
+                  padding: EdgeInsets.symmetric(vertical: 15),
                 ),
                 child: Text(
                   'Aceptar',
