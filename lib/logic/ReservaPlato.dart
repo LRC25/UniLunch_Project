@@ -33,7 +33,6 @@ class ReservaPlato {
           .insert({"id_reserva_plato":id, "id_reserva":idReserva, "id_plato":plato.idPlato, "cantidad":cantidad});
       return "correcto";
     } catch (e) {
-      debugPrint(e.toString());
       return e.toString();
     }
   }
@@ -45,7 +44,6 @@ class ReservaPlato {
       await cliente.from('reserva_plato').delete().match({"id_reserva_plato": idReservaPlato});
       return "correcto";
     } catch (e) {
-      debugPrint(e.toString());
       return e.toString();
     }
   }

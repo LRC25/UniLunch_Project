@@ -41,7 +41,6 @@ class Plato {
           .insert({"id_plato":id, "id_restaurante":idRestaurante, "nombre":nombre, "descripcion":descripcion, "precio":precio, "imagen":imagen});
       return "correcto";
     } catch (e) {
-      debugPrint(e.toString());
       return e.toString();
     }
   }
@@ -56,7 +55,6 @@ class Plato {
       stock = nuevoStock;
       return "correcto";
     } catch (e) {
-      debugPrint(e.toString());
       return e.toString();
     }
   }
@@ -68,7 +66,6 @@ class Plato {
       await cliente.from('plato').delete().match({"id_plato": idPlato});
       return "correcto";
     } catch (e) {
-      debugPrint(e.toString());
       return e.toString();
     }
   }

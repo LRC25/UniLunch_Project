@@ -21,10 +21,11 @@ class _RestaurantsPageWidgetState extends State<RestaurantsPageWidget> {
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  late List<Plato> platos;
+  late List<Plato> platos = [];
 
   @override
   void initState() {
+    _loadMenu();
     super.initState();
     _model = createModel(context, () => RestaurantsPageModel());
   }
@@ -32,8 +33,14 @@ class _RestaurantsPageWidgetState extends State<RestaurantsPageWidget> {
   @override
   void dispose() {
     _model.dispose();
-
     super.dispose();
+  }
+
+  void _loadMenu() async {
+    List<Plato> platosTemp = await widget.restaurante.mostrarMenu();
+    setState(() {
+      platos = platosTemp;
+    });
   }
 
   @override
@@ -60,7 +67,7 @@ class _RestaurantsPageWidgetState extends State<RestaurantsPageWidget> {
             title: Align(
               alignment: AlignmentDirectional(0.00, 0.00),
               child: Text(
-                widget.restaurante.nombre,
+                widget.restaurante.nombreRestaurante,
                 style: FlutterFlowTheme.of(context).headlineMedium.override(
                   fontFamily: 'Outfit',
                   color: Color(0xFF064244),
@@ -85,145 +92,9 @@ class _RestaurantsPageWidgetState extends State<RestaurantsPageWidget> {
                   ),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
-                    children: [
-                      FutureBuilder<List<Plato>>(
-                          future: widget.restaurante.mostrarMenu(),
-                          builder: (context, snapshot) {
-                            if(snapshot.connectionState==ConnectionState.waiting){
-                              return CircularProgressIndicator();
-                            } else if (snapshot.hasError) {
-                              return Text("Error al cargar los datos");
-                            } else {
-                              List<Plato> listaPlatos = snapshot.data!;
-                              return DataTable(
-                                dividerThickness: 0,
-                                dataRowHeight: 100,
-                                headingRowHeight: 0,
-                                columnSpacing: 15,
-                                columns: const [
-                                  DataColumn(label: Text(""))
-                                ],
-                                rows: listaPlatos.map((plato) {
-                                  return DataRow(cells: [
-                                    DataCell(
-                                      Flexible(
-                                        child: Container(
-                                          width: MediaQuery.sizeOf(context).width,
-                                          height: 100,
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            boxShadow: [
-                                              BoxShadow(
-                                                blurRadius: 4,
-                                                color: Color(0x33000000),
-                                                offset: Offset(0, 2),
-                                              )
-                                            ],
-                                            borderRadius: BorderRadius.circular(15),
-                                            shape: BoxShape.rectangle,
-                                          ),
-                                          child: Padding(
-                                            padding: EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment: MainAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                  width: MediaQuery.sizeOf(context).width * 0.7,
-                                                  height: 100,
-                                                  decoration: BoxDecoration(
-                                                    color: FlutterFlowTheme.of(context).secondaryBackground,
-                                                  ),
-                                                  child: Padding(
-                                                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
-                                                    child: Column(
-                                                      mainAxisSize: MainAxisSize.max,
-                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                      children: [
-                                                        Align(
-                                                          alignment: AlignmentDirectional(-1.00, 0.00),
-                                                          child: Text(
-                                                            'Milanesa de Pollo',
-                                                            style: FlutterFlowTheme.of(context)
-                                                                .bodyMedium
-                                                                .override(
-                                                              fontFamily: 'Readex Pro',
-                                                              fontSize: 16,
-                                                              fontWeight: FontWeight.bold,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          'Deliciosa milanesa con pollo y papas y arroz y me lo chupa',
-                                                          textAlign: TextAlign.justify,
-                                                          style: FlutterFlowTheme.of(context).bodyMedium,
-                                                        ),
-                                                        Row(
-                                                          mainAxisSize: MainAxisSize.max,
-                                                          children: [
-                                                            Align(
-                                                              alignment: AlignmentDirectional(-1.00, 0.00),
-                                                              child: Text(
-                                                                '\$15.000',
-                                                                style: FlutterFlowTheme.of(context)
-                                                                    .bodyMedium
-                                                                    .override(
-                                                                  fontFamily: 'Readex Pro',
-                                                                  color: Color(0xFF138D20),
-                                                                  fontSize: 16,
-                                                                  fontWeight: FontWeight.w300,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Flexible(
-                                                              child: Align(
-                                                                alignment: AlignmentDirectional(1.00, 0.00),
-                                                                child: Text(
-                                                                  '15 disponibles',
-                                                                  textAlign: TextAlign.start,
-                                                                  style: FlutterFlowTheme.of(context)
-                                                                      .bodyMedium
-                                                                      .override(
-                                                                    fontFamily: 'Readex Pro',
-                                                                    fontWeight: FontWeight.w300,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  child: Container(
-                                                    width: MediaQuery.sizeOf(context).width * 0.3,
-                                                    height: 100,
-                                                    decoration: BoxDecoration(),
-                                                    child: ClipRRect(
-                                                      borderRadius: BorderRadius.circular(8),
-                                                      child: Image.network(
-                                                        'https://picsum.photos/seed/203/600',
-                                                        width: MediaQuery.sizeOf(context).width * 0.108,
-                                                        height: 200,
-                                                        fit: BoxFit.cover,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                  ]);
-                                }).toList(),
-                              );
-                            }
-                          })
-                    ],
+                    children: (platos.isEmpty) ? [Center(child: CircularProgressIndicator())] : platos.map((plato) {
+                      return _model.mostrarMenu(context, plato);
+                    }).toList(),
                   ),
                 )),
           ),

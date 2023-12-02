@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:unilunch/persistence/SupabaseConnection.dart';
 import 'package:supabase/src/supabase_client.dart';
 import 'package:unilunch/logic/Cliente.dart';
@@ -46,7 +47,7 @@ class Usuario {
         } else if (dato["tipo_usuario"] == "Restaurante") {
           final dataRestarante = await cliente
               .from("restaurante")
-              .select('''id_restaurante,ubicacion,descripcion,direccion,imagen,nota_prom''')
+              .select('''id_restaurante,nombre_restaurante,ubicacion,descripcion,direccion,imagen,nota_prom''')
               .eq("id_usuario", dato["id_usuario"]);
           if (dataRestarante.isNotEmpty) {
             Map<String, dynamic> datoRestarante = dataRestarante[0];
@@ -59,13 +60,13 @@ class Usuario {
                 email: dato["email"],
                 tipoUsuario: dato["tipo_usuario"],
                 idRestaurante: datoRestarante["id_restaurante"],
-                nombreRestaurante: datoRestarante["nombre_resetaurante"],
+                nombreRestaurante: datoRestarante["nombre_restaurante"],
                 ubicacion: datoRestarante["ubicacion"],
                 direccion: datoRestarante["direccion"],
                 descripcion: datoRestarante["descripcion"],
                 horario: horarios,
                 imagen: datoRestarante["imagen"],
-                notaPromedio: datoRestarante["nota_prom"]);
+                notaPromedio: datoRestarante["nota_prom"].toDouble());
             return usuario;
           } else {
             return "este usuario no es de tipo restaurante";

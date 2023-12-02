@@ -61,7 +61,6 @@ class Restaurante extends Usuario {
         "descripcion":descripcion, "imagen":imagen, "nota_prom":0});
       return "correcto";
     } catch (e) {
-      debugPrint(e.toString());
       return e.toString();
     }
   }
@@ -76,7 +75,6 @@ class Restaurante extends Usuario {
         return response;
       }
     } catch (e) {
-      debugPrint(e.toString());
       return e.toString();
     }
   }
@@ -90,7 +88,6 @@ class Restaurante extends Usuario {
         return response;
       }
     } catch (e) {
-      debugPrint(e.toString());
       return e.toString();
     }
   }
