@@ -16,8 +16,7 @@ class RestaurantReservationsPageModel
     unfocusNode.dispose();
   }
 
-/// Action blocks are added here.
+  /// Action blocks are added here.
 
-/// Additional helper methods are added here.
+  /// Additional helper methods are added here.
 }
-
