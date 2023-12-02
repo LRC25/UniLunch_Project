@@ -2,8 +2,8 @@ import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-
 import '../models/registration_page_model.dart';
+import 'login_page_widget.dart';
 export '../models/registration_page_model.dart';
 
 class RegistrationPageWidget extends StatefulWidget {
@@ -211,7 +211,8 @@ class _RegistrationPageWidgetState extends State<RegistrationPageWidget>
                                 size: 24,
                               ),
                               onPressed: () {
-                                print('IconButton pressed ...');
+                                Navigator.pushReplacement(context, MaterialPageRoute(builder:
+                                    (context) => LoginPageWidget()));
                               },
                             ),
                           ),
@@ -1045,7 +1046,7 @@ class _RegistrationPageWidgetState extends State<RegistrationPageWidget>
                     padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                     child: FFButtonWidget(
                       onPressed: () {
-                        _model.registrarUsuario();
+                        _model.registrarUsuario(context);
                       },
                       text: 'Registrar',
                       options: FFButtonOptions(

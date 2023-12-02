@@ -1,6 +1,8 @@
 import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'package:unilunch/logic/Restaurante.dart';
+import '../../../alerts.dart';
 import '../../../logic/Cliente.dart';
+import '../widgets/login_page_widget.dart';
 import '../widgets/registration_page_widget.dart' show RegistrationPageWidget;
 import 'package:flutter/material.dart';
 
@@ -85,39 +87,48 @@ class RegistrationPageModel extends FlutterFlowModel<RegistrationPageWidget> {
 
   /// Action blocks are added here.
 
-  void registrarUsuario() async {
+  void registrarUsuario(BuildContext context) async {
     if (isRestaurant == false) {
-      if (passwordController.text == confirmPasswordController.text) {
-        Cliente cliente = Cliente.registrar(nombre: nameController1.text, email: emailAddressController.text, tipoUsuario: "Cliente");
-        String response = await cliente.resgistrarCliente(passwordController.text);
-        if (response == "correcto") {
-          debugPrint("Se ha registrado correctamente");
+      if (nameController1.text != "" && emailAddressController.text != "" && passwordController.text != "" && passwordControllerValidator != "") {
+        if (passwordController.text == confirmPasswordController.text) {
+          Cliente cliente = Cliente.registrar(nombre: nameController1.text, email: emailAddressController.text, tipoUsuario: "Cliente");
+          String response = await cliente.resgistrarCliente(passwordController.text);
+          if (response == "correcto") {
+            registrationAcceptMessage(context, "Se ha registrado correctamente");
+          } else {
+            errorMessage(context, "Ha ocurrido un error, no se pudo registrar");
+          }
         } else {
-          debugPrint(response);
+          warningMessage(context, "Verificar contraseña");
         }
       } else {
-        debugPrint("Verificar contraseña");
+        warningMessage(context, "Por favor llenar todos los campos");
       }
     } else {
-      if (passwordController.text == confirmPasswordController.text) {
-        print(logoController.text);
-        Restaurante restaurante = Restaurante.registro(
-            nombre: nameController1.text,
-            email: emailAddressController.text,
-            tipoUsuario: "Restaurante",
-            ubicacion: "a",
-            nombreRestaurante: nameController2.text,
-            direccion: addressController1.text,
-            descripcion: descriptionController.text,
-            imagen: logoController.text);
-        String response = await restaurante.resgistrarRestaurante(passwordController.text);
-        if (response == "correcto") {
-          debugPrint("Se ha registrado correctamente");
+      if (nameController1.text != "" && emailAddressController.text != "" && passwordController.text != "" && passwordControllerValidator != ""
+      && nameController2.text != "" && addressController1 != "" && descriptionController != "" && logoController != "" ) {
+        if (passwordController.text == confirmPasswordController.text) {
+          print(logoController.text);
+          Restaurante restaurante = Restaurante.registro(
+              nombre: nameController1.text,
+              email: emailAddressController.text,
+              tipoUsuario: "Restaurante",
+              ubicacion: "a",
+              nombreRestaurante: nameController2.text,
+              direccion: addressController1.text,
+              descripcion: descriptionController.text,
+              imagen: logoController.text);
+          String response = await restaurante.resgistrarRestaurante(passwordController.text);
+          if (response == "correcto") {
+            registrationAcceptMessage(context, "Se ha registrado correctamente");
+          } else {
+            errorMessage(context, "Ha ocurrido un error, no se pudo registrar");
+          }
         } else {
-          debugPrint(response);
+          warningMessage(context, "Verificar contraseña");
         }
       } else {
-        debugPrint("Verificar contraseña");
+        warningMessage(context, "Por favor llenar todos los campos");
       }
     }
   }

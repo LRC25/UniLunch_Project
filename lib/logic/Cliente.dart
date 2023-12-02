@@ -46,7 +46,6 @@ class Cliente extends Usuario {
           .insert({"id_usuario":idUsuario, "nombre":nombre, "email":email, "contrasenna":contrasenna, "tipo_usuario":tipoUsuario});
       return "correcto";
     } catch (e) {
-      debugPrint(e.toString());
       return e.toString();
     }
   }
@@ -61,7 +60,6 @@ class Cliente extends Usuario {
         return response;
       }
     } catch (e) {
-      debugPrint(e.toString());
       return e.toString();
     }
   }
@@ -75,7 +73,6 @@ class Cliente extends Usuario {
         return response;
       }
     } catch (e) {
-      debugPrint(e.toString());
       return e.toString();
     }
   }
@@ -90,7 +87,6 @@ class Cliente extends Usuario {
         return response;
       }
     } catch (e) {
-      debugPrint(e.toString());
       return e.toString();
     }
   }
@@ -104,7 +100,6 @@ class Cliente extends Usuario {
         return response;
       }
     } catch (e) {
-      debugPrint(e.toString());
       return e.toString();
     }
   }
