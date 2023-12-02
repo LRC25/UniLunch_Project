@@ -2,8 +2,9 @@ import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import '../models/registration_page_model.dart';
 import 'login_page_widget.dart';
+
+import '../models/registration_page_model.dart';
 export '../models/registration_page_model.dart';
 
 class RegistrationPageWidget extends StatefulWidget {

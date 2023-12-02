@@ -1,10 +1,9 @@
 import 'package:flutterflow_ui/flutterflow_ui.dart';
-
 import '../widgets/reservations_page_widget.dart' show RestaurantReservationsPageWidget;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
-class RestaurantReservationsPageModel extends FlutterFlowModel<RestaurantReservationsPageWidget> {
+class RestaurantReservationsPageModel
+    extends FlutterFlowModel<RestaurantReservationsPageWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
@@ -17,7 +16,8 @@ class RestaurantReservationsPageModel extends FlutterFlowModel<RestaurantReserva
     unfocusNode.dispose();
   }
 
-  /// Action blocks are added here.
+/// Action blocks are added here.
 
-  /// Additional helper methods are added here.
+/// Additional helper methods are added here.
 }
+
