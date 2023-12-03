@@ -1,7 +1,6 @@
 import 'package:unilunch/logic/Plato.dart';
 import 'package:unilunch/logic/Reserva.dart';
 import 'package:unilunch/logic/Usuario.dart';
-import 'package:unilunch/logic/Horario.dart';
 import 'package:unilunch/logic/Nota.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:unilunch/persistence/SupabaseConnection.dart';
@@ -15,7 +14,8 @@ class Restaurante extends Usuario {
   String ubicacion;
   String direccion;
   String descripcion;
-  List<Horario> horario;
+  DateTime horaApertura;
+  DateTime horaCierre;
   String imagen;
   double notaPromedio;
 
@@ -29,7 +29,8 @@ class Restaurante extends Usuario {
     required this.ubicacion,
     required this.direccion,
     required this.descripcion,
-    required this.horario,
+    required this.horaApertura,
+    required this.horaCierre,
     required this.imagen,
     required this.notaPromedio
   }) : super(idUsuario, nombre, email, tipoUsuario);
@@ -43,8 +44,10 @@ class Restaurante extends Usuario {
     required this.nombreRestaurante,
     required this.direccion,
     required this.descripcion,
+    required this.horaApertura,
+    required this.horaCierre,
     required this.imagen
-  }): idRestaurante = "", horario = [], notaPromedio = 0, super(idUsuario, nombre, email, tipoUsuario);
+  }): idRestaurante = "", notaPromedio = 0, super(idUsuario, nombre, email, tipoUsuario);
 
   Future<String> resgistrarRestaurante(String contrasenna) async {
     final SupabaseService supabaseService = SupabaseService();
@@ -58,7 +61,7 @@ class Restaurante extends Usuario {
       await cliente
           .from("restaurante")
           .insert({"id_restaurante":idRestaurante, "id_usuario":idUsuario, "nombre_restaurante":nombreRestaurante,"ubicacion":ubicacion, "direccion":direccion,
-        "descripcion":descripcion, "imagen":imagen, "nota_prom":0});
+        "descripcion":descripcion, "hora_apertura": convertTimeSQL(horaApertura), "hora_cierre": convertTimeSQL(horaCierre), "imagen":imagen, "nota_prom":0});
       return "correcto";
     } catch (e) {
       return e.toString();
