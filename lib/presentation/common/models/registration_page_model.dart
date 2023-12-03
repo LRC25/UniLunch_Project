@@ -106,7 +106,8 @@ class RegistrationPageModel extends FlutterFlowModel<RegistrationPageWidget> {
       }
     } else {
       if (nameController1.text != "" && emailAddressController.text != "" && passwordController.text != "" && passwordControllerValidator != ""
-      && nameController2.text != "" && addressController1 != "" && descriptionController != "" && logoController != "" ) {
+          && nameController2.text != "" && addressController1 != "" && descriptionController != "" && logoController != "" && openingTime != null
+          && closingTime != null) {
         if (passwordController.text == confirmPasswordController.text) {
           print(logoController.text);
           Restaurante restaurante = Restaurante.registro(
@@ -117,6 +118,8 @@ class RegistrationPageModel extends FlutterFlowModel<RegistrationPageWidget> {
               nombreRestaurante: nameController2.text,
               direccion: addressController1.text,
               descripcion: descriptionController.text,
+              horaApertura: openingTime as DateTime,
+              horaCierre: closingTime as DateTime,
               imagen: logoController.text);
           String response = await restaurante.resgistrarRestaurante(passwordController.text);
           if (response == "correcto") {
