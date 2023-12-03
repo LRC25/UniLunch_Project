@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:unilunch/logic/Restaurante.dart';
+import 'package:unilunch/presentation/restaurants/widgets/ratings_page_widget.dart';
 import 'package:unilunch/presentation/restaurants/widgets/reservations_page_widget.dart';
 import 'package:unilunch/presentation/restaurants/widgets/restaurants_page_widget.dart';
 import 'package:unilunch/presentation/restaurants/widgets/settings_page_widget.dart';
@@ -20,8 +21,7 @@ class _NavbarRestaurantPageState extends State<NavbarRestaurantPage> {
   Widget build(BuildContext context) => SafeArea(
         child: Scaffold(
             body: getSelectedWidget(
-                index: index, restaurante: widget.restaurante
-            ),
+                index: index, restaurante: widget.restaurante),
             bottomNavigationBar: NavigationBarTheme(
               data: NavigationBarThemeData(
                   indicatorColor: const Color.fromARGB(255, 198, 232, 218),
@@ -36,14 +36,19 @@ class _NavbarRestaurantPageState extends State<NavbarRestaurantPage> {
                 selectedIndex: index,
                 onDestinationSelected: (index) =>
                     setState(() => this.index = index),
-                destinations: [
+                destinations: const [
                   NavigationDestination(
                       icon: Icon(Icons.fastfood_rounded),
                       label: 'Menú del Día'),
                   NavigationDestination(
-                      icon: Icon(Icons.menu_book_rounded), label: 'Reservas'),
+                      icon: Icon(Icons.menu_book_rounded),
+                      label: 'Reservas'),
                   NavigationDestination(
-                      icon: Icon(Icons.settings_rounded), label: 'Opciones'),
+                      icon: Icon(Icons.star_rounded),
+                      label: 'Calificaciones'),
+                  NavigationDestination(
+                      icon: Icon(Icons.settings_rounded),
+                      label: 'Opciones'),
                 ],
               ),
             )),
@@ -57,11 +62,14 @@ class _NavbarRestaurantPageState extends State<NavbarRestaurantPage> {
         widget = RestaurantsPageWidget(restaurante: restaurante);
         break;
       case 1:
-        widget = RestaurantReservationsPageWidget();
+        widget = RestaurantReservationsPageWidget(restaurante: restaurante);
         break;
       case 2:
         widget = RestaurantSettingsPageWidget(restaurante: restaurante);
+        widget = RestaurantRatingsPageWidget(restaurante: restaurante);
         break;
+      case 3:
+        widget = RestaurantSettingsPageWidget();
       default:
         widget = RestaurantsPageWidget(restaurante: restaurante);
         break;

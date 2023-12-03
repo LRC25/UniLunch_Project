@@ -1,7 +1,6 @@
 import 'package:unilunch/logic/Plato.dart';
 import 'package:unilunch/logic/Reserva.dart';
 import 'package:unilunch/logic/Usuario.dart';
-import 'package:unilunch/logic/Horario.dart';
 import 'package:unilunch/logic/Nota.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:unilunch/persistence/SupabaseConnection.dart';
@@ -11,10 +10,12 @@ import '../utils.dart';
 class Restaurante extends Usuario {
 
   String idRestaurante;
+  String nombreRestaurante;
   String ubicacion;
   String direccion;
   String descripcion;
-  List<Horario> horario;
+  DateTime horaApertura;
+  DateTime horaCierre;
   String imagen;
   double notaPromedio;
 
@@ -24,10 +25,12 @@ class Restaurante extends Usuario {
     required String email,
     required String tipoUsuario,
     required this.idRestaurante,
+    required this.nombreRestaurante,
     required this.ubicacion,
     required this.direccion,
     required this.descripcion,
-    required this.horario,
+    required this.horaApertura,
+    required this.horaCierre,
     required this.imagen,
     required this.notaPromedio
   }) : super(idUsuario, nombre, email, tipoUsuario);
@@ -38,10 +41,13 @@ class Restaurante extends Usuario {
     required String email,
     required String tipoUsuario,
     required this.ubicacion,
+    required this.nombreRestaurante,
     required this.direccion,
     required this.descripcion,
+    required this.horaApertura,
+    required this.horaCierre,
     required this.imagen
-  }): idRestaurante = "", horario = [], notaPromedio = 0, super(idUsuario, nombre, email, tipoUsuario);
+  }): idRestaurante = "", notaPromedio = 0, super(idUsuario, nombre, email, tipoUsuario);
 
   Future<String> resgistrarRestaurante(String contrasenna) async {
     final SupabaseService supabaseService = SupabaseService();
@@ -54,18 +60,17 @@ class Restaurante extends Usuario {
           .insert({"id_usuario":idUsuario, "nombre":nombre, "email":email, "contrasenna":contrasenna, "tipo_usuario":tipoUsuario});
       await cliente
           .from("restaurante")
-          .insert({"id_restaurante":idRestaurante, "id_usuario":idUsuario, "ubicacion":ubicacion, "direccion":direccion,
-        "descripcion":descripcion, "imagen":imagen, "nota_prom":0});
+          .insert({"id_restaurante":idRestaurante, "id_usuario":idUsuario, "nombre_restaurante":nombreRestaurante,"ubicacion":ubicacion, "direccion":direccion,
+        "descripcion":descripcion, "hora_apertura": convertTimeSQL(horaApertura), "hora_cierre": convertTimeSQL(horaCierre), "imagen":imagen, "nota_prom":0});
       return "correcto";
     } catch (e) {
-      debugPrint(e.toString());
       return e.toString();
     }
   }
 
-  Future<String> registrarPlato(String imagen, double precio, String descripcion, int stock) async {
+  Future<String> registrarPlato(String imagen, String nombre, int precio, String descripcion, int stock) async {
     try {
-      Plato plato = Plato.registrar(imagen, precio, descripcion, stock);
+      Plato plato = Plato.registrar(nombre, descripcion, precio, stock, imagen);
       String response = await plato.insertarPlato(idRestaurante);
       if (response == "correcto"){
         return "correcto";
@@ -73,7 +78,6 @@ class Restaurante extends Usuario {
         return response;
       }
     } catch (e) {
-      debugPrint(e.toString());
       return e.toString();
     }
   }
@@ -87,7 +91,6 @@ class Restaurante extends Usuario {
         return response;
       }
     } catch (e) {
-      debugPrint(e.toString());
       return e.toString();
     }
   }
@@ -108,7 +111,19 @@ class Restaurante extends Usuario {
     Reserva reserva = Reserva.vacio();
     List<Reserva> reservas = [];
     try {
-      reservas = await reserva.listarNotasPorRestaurante(idRestaurante);
+      reservas = await reserva.listarResevaPendietePorRestaurante(idRestaurante);
+      return reservas;
+    } catch (e) {
+      debugPrint(e.toString());
+      return reservas;
+    }
+  }
+
+  Future<List<Reserva>> monitorearReservaCompleta() async {
+    Reserva reserva = Reserva.vacio();
+    List<Reserva> reservas = [];
+    try {
+      reservas = await reserva.listarResevaCompletaPorRestaurante(idRestaurante);
       return reservas;
     } catch (e) {
       debugPrint(e.toString());

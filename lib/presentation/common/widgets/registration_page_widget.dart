@@ -2,6 +2,7 @@ import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'login_page_widget.dart';
 
 import '../models/registration_page_model.dart';
 export '../models/registration_page_model.dart';
@@ -128,8 +129,8 @@ class _RegistrationPageWidgetState extends State<RegistrationPageWidget>
     _model.addressController1 ??= TextEditingController();
     _model.addressFocusNode1 ??= FocusNode();
 
-    _model.addressController2 ??= TextEditingController();
-    _model.addressFocusNode2 ??= FocusNode();
+    _model.logoController ??= TextEditingController();
+    _model.logoFocusNode ??= FocusNode();
   }
 
   @override
@@ -211,7 +212,8 @@ class _RegistrationPageWidgetState extends State<RegistrationPageWidget>
                                 size: 24,
                               ),
                               onPressed: () {
-                                print('IconButton pressed ...');
+                                Navigator.pushReplacement(context, MaterialPageRoute(builder:
+                                    (context) => LoginPageWidget()));
                               },
                             ),
                           ),
@@ -926,9 +928,9 @@ class _RegistrationPageWidgetState extends State<RegistrationPageWidget>
                                 ),
                               ),
                               style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Readex Pro',
-                                    color: Color(0xFF064244),
-                                  ),
+                                fontFamily: 'Readex Pro',
+                                color: Color(0xFF064244),
+                              ),
                               validator: _model.logoControllerValidator.asValidator(context),
                             ),
                           ),
@@ -1045,7 +1047,7 @@ class _RegistrationPageWidgetState extends State<RegistrationPageWidget>
                     padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                     child: FFButtonWidget(
                       onPressed: () {
-                        print('Button pressed ...');
+                        _model.registrarUsuario(context);
                       },
                       text: 'Registrar',
                       options: FFButtonOptions(
@@ -1076,4 +1078,5 @@ class _RegistrationPageWidgetState extends State<RegistrationPageWidget>
       ),
     );
   }
+
 }

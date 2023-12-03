@@ -292,18 +292,22 @@ void errorMessage(BuildContext context, String mensaje) {
     );
   }
 
+
 void updateMessage(BuildContext context, String campo, String informacionActual) {
+
   TextEditingController _textFieldController = TextEditingController(text: informacionActual);
 
   showDialog(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
+
         title: Text("Actualizar $campo"),
         backgroundColor: Color(0xFFC6E8DA),
         content: SingleChildScrollView(
           child: ListBody(
             children: [
+
 
               SizedBox(height: 20),
 
@@ -335,8 +339,15 @@ void updateMessage(BuildContext context, String campo, String informacionActual)
               ElevatedButton(
                 onPressed: () {
 
+
                   String nuevoValor = _textFieldController.text;
                   Navigator.of(context).pop();
+
+                  String nuevoValor = _textFieldController.text;
+                  print('Nuevo valor ingresado: $nuevoValor');
+
+                  Navigator.of(context).pop(); // Cerrar el cuadro de diálogo
+
                 },
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size(150, 50),

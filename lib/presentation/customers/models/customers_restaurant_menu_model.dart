@@ -1,9 +1,10 @@
 import 'package:flutterflow_ui/flutterflow_ui.dart';
-
-import '../widgets/reservations_page_widget.dart' show CustomerReservationsPageWidget;
 import 'package:flutter/material.dart';
 
-class CustomerReservationsPageModel extends FlutterFlowModel<CustomerReservationsPageWidget> {
+import '../widgets/customers_restaurant_menu_widget.dart';
+
+class CustomerRestaurantMenuModel
+    extends FlutterFlowModel<CustomerRestaurantMenuWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();

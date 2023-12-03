@@ -50,7 +50,7 @@ class _CustomerSettingsPageWidgetState
           : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        backgroundColor: FlutterFlowTheme.of(context).info,
         appBar: AppBar(
           backgroundColor: Color(0xFFC6E8DA),
           automaticallyImplyLeading: false,
@@ -73,15 +73,206 @@ class _CustomerSettingsPageWidgetState
         body: SafeArea(
           top: true,
           child: Column(
-            mainAxisSize: MainAxisSize.max,
+            mainAxisSize: MainAxisSize.min,
             children: [
               Expanded(
-                child: Container(
-                  width: MediaQuery.sizeOf(context).width,
-                  height: MediaQuery.sizeOf(context).height * 1,
-                  decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).secondaryBackground,
-                    shape: BoxShape.rectangle,
+                child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(32, 16, 32, 0),
+                  child: Container(
+                    width: MediaQuery.sizeOf(context).width,
+                    height: MediaQuery.sizeOf(context).height * 1,
+                    decoration: BoxDecoration(
+                      color: FlutterFlowTheme.of(context).secondaryBackground,
+                      shape: BoxShape.rectangle,
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                          child: Text(
+                            'Información',
+                            textAlign: TextAlign.center,
+                            style: FlutterFlowTheme.of(context)
+                                .headlineMedium
+                                .override(
+                                  fontFamily: 'Outfit',
+                                  color: Color(0xFF064244),
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
+                                child: Icon(
+                                  Icons.account_circle_rounded,
+                                  color: Color(0xFF064244),
+                                  size: 35,
+                                ),
+                              ),
+                              Text(
+                                'Nombre',
+                                textAlign: TextAlign.center,
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Readex Pro',
+                                      color: Color(0xFF064244),
+                                      fontSize: 15,
+                                    ),
+                              ),
+                              FlutterFlowIconButton(
+                                borderColor: Colors.white,
+                                borderRadius: 0,
+                                borderWidth: 0,
+                                buttonSize: 50,
+                                fillColor: Colors.white,
+                                icon: Icon(
+                                  Icons.edit_square,
+                                  color: Color(0xFFFF7A00),
+                                  size: 35,
+                                ),
+                                onPressed: () {
+
+                                  print('IconButton pressed ...');
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                          child: Text(
+                            'Seguridad',
+                            style: FlutterFlowTheme.of(context)
+                                .headlineMedium
+                                .override(
+                                  fontFamily: 'Outfit',
+                                  color: Color(0xFF064244),
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          ),
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
+                              child: Icon(
+                                Icons.email,
+                                color: Color(0xFF064244),
+                                size: 35,
+                              ),
+                            ),
+                            Text(
+                              'Email',
+                              textAlign: TextAlign.center,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Readex Pro',
+                                    color: Color(0xFF064244),
+                                    fontSize: 15,
+                                  ),
+                            ),
+                            FlutterFlowIconButton(
+                              borderColor: Colors.white,
+                              borderRadius: 0,
+                              borderWidth: 0,
+                              buttonSize: 50,
+                              fillColor: Colors.white,
+                              icon: Icon(
+                                Icons.edit_square,
+                                color: Color(0xFFFF7A00),
+                                size: 35,
+                              ),
+                              onPressed: () {
+                                print('IconButton pressed ...');
+                              },
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
+                              child: Icon(
+                                Icons.vpn_key_rounded,
+                                color: Color(0xFF064244),
+                                size: 35,
+                              ),
+                            ),
+                            Text(
+                              'Contraseña',
+                              textAlign: TextAlign.center,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Readex Pro',
+                                    color: Color(0xFF064244),
+                                  ),
+                            ),
+                            FlutterFlowIconButton(
+                              borderColor: Colors.white,
+                              borderRadius: 0,
+                              borderWidth: 0,
+                              buttonSize: 50,
+                              fillColor: Colors.white,
+                              icon: Icon(
+                                Icons.edit_square,
+                                color: Color(0xFFFF7A00),
+                                size: 35,
+                              ),
+                              onPressed: () {
+                                print('IconButton pressed ...');
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                child: FFButtonWidget(
+                  onPressed: () {
+                    print('Button pressed ...');
+                  },
+                  text: 'Cerrar Sesión',
+                  options: FFButtonOptions(
+                    width: 230,
+                    height: 52,
+                    padding: EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
+                    iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                    color: Color(0xFFE72828),
+                    textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                          fontFamily: 'Readex Pro',
+                          color: Colors.white,
+                          fontSize: 20,
+                        ),
+                    elevation: 3,
+                    borderSide: BorderSide(
+                      color: Colors.transparent,
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(35),
                   ),
                 ),
               ),

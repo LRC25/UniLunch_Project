@@ -1,4 +1,8 @@
 import 'package:flutterflow_ui/flutterflow_ui.dart';
+import 'package:unilunch/logic/Restaurante.dart';
+import '../../../alerts.dart';
+import '../../../logic/Cliente.dart';
+import '../widgets/login_page_widget.dart';
 import '../widgets/registration_page_widget.dart' show RegistrationPageWidget;
 import 'package:flutter/material.dart';
 
@@ -38,10 +42,6 @@ class RegistrationPageModel extends FlutterFlowModel<RegistrationPageWidget> {
   FocusNode? addressFocusNode1;
   TextEditingController? addressController1;
   String? Function(BuildContext, String?)? addressController1Validator;
-  // State field(s) for address widget.
-  FocusNode? addressFocusNode2;
-  TextEditingController? addressController2;
-  String? Function(BuildContext, String?)? addressController2Validator;
   // State field(s) for logo widget.
   FocusNode? logoFocusNode;
   TextEditingController? logoController;
@@ -81,14 +81,60 @@ class RegistrationPageModel extends FlutterFlowModel<RegistrationPageWidget> {
     addressFocusNode1?.dispose();
     addressController1?.dispose();
 
-    addressFocusNode2?.dispose();
-    addressController2?.dispose();
-
     logoFocusNode?.dispose();
     logoController?.dispose();
   }
 
   /// Action blocks are added here.
+
+  void registrarUsuario(BuildContext context) async {
+    if (isRestaurant == false) {
+      if (nameController1.text != "" && emailAddressController.text != "" && passwordController.text != "" && passwordControllerValidator != "") {
+        if (passwordController.text == confirmPasswordController.text) {
+          Cliente cliente = Cliente.registrar(nombre: nameController1.text, email: emailAddressController.text, tipoUsuario: "Cliente");
+          String response = await cliente.resgistrarCliente(passwordController.text);
+          if (response == "correcto") {
+            registrationAcceptMessage(context, "Se ha registrado correctamente");
+          } else {
+            errorMessage(context, "Ha ocurrido un error, no se pudo registrar");
+          }
+        } else {
+          warningMessage(context, "Verificar contraseña");
+        }
+      } else {
+        warningMessage(context, "Por favor llenar todos los campos");
+      }
+    } else {
+      if (nameController1.text != "" && emailAddressController.text != "" && passwordController.text != "" && passwordControllerValidator != ""
+          && nameController2.text != "" && addressController1 != "" && descriptionController != "" && logoController != "" && openingTime != null
+          && closingTime != null) {
+        if (passwordController.text == confirmPasswordController.text) {
+          print(logoController.text);
+          Restaurante restaurante = Restaurante.registro(
+              nombre: nameController1.text,
+              email: emailAddressController.text,
+              tipoUsuario: "Restaurante",
+              ubicacion: "a",
+              nombreRestaurante: nameController2.text,
+              direccion: addressController1.text,
+              descripcion: descriptionController.text,
+              horaApertura: openingTime as DateTime,
+              horaCierre: closingTime as DateTime,
+              imagen: logoController.text);
+          String response = await restaurante.resgistrarRestaurante(passwordController.text);
+          if (response == "correcto") {
+            registrationAcceptMessage(context, "Se ha registrado correctamente");
+          } else {
+            errorMessage(context, "Ha ocurrido un error, no se pudo registrar");
+          }
+        } else {
+          warningMessage(context, "Verificar contraseña");
+        }
+      } else {
+        warningMessage(context, "Por favor llenar todos los campos");
+      }
+    }
+  }
 
   /// Additional helper methods are added here.
 }

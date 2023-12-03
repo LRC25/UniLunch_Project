@@ -1,4 +1,10 @@
 import 'package:flutterflow_ui/flutterflow_ui.dart';
+import 'package:unilunch/alerts.dart';
+import '../../../logic/Cliente.dart';
+import '../../../logic/Restaurante.dart';
+import '../../../logic/Usuario.dart';
+import '../../customers/widgets/navbar_customer_page_widget.dart';
+import '../../restaurants/widgets/navbar_restaurant_page_widget.dart';
 import '../widgets/login_page_widget.dart' show LoginPageWidget;
 import 'package:flutter/material.dart';
 
@@ -33,5 +39,25 @@ class LoginPageModel extends FlutterFlowModel<LoginPageWidget> {
 
   /// Action blocks are added here.
 
+  void iniciarSesion(BuildContext context) async {
+    if (emailAddressController.text != "" && passwordController.text != "") {
+      String email = emailAddressController.text;
+      String contrasenna = passwordController.text;
+      dynamic usuario = await Usuario.vacio().login(email, contrasenna);
+      if (usuario is Cliente) {
+        Cliente cliente = usuario as Cliente;
+        Navigator.pushReplacement(context, MaterialPageRoute(
+            builder: (context) => NavbarCustomerPage(cliente: cliente)));
+      } else if (usuario is Restaurante) {
+        Restaurante restaurante = usuario as Restaurante;
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>
+            NavbarRestaurantPage(restaurante: restaurante)));
+      } else {
+        warningMessage(context, "Verificar sus datos");
+      }
+    } else {
+      warningMessage(context, "Por favor llenar todos los campos");
+    }
+  }
   /// Additional helper methods are added here.
 }

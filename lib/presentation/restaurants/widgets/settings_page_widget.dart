@@ -1,5 +1,7 @@
 import 'package:flutterflow_ui/flutterflow_ui.dart';
+
 import '../../../logic/Restaurante.dart';
+
 import '../../../logic/Usuario.dart';
 
 import 'package:flutter/material.dart';
@@ -141,6 +143,7 @@ class _RestaurantSettingsPageWidgetState
                               ),
                               onPressed: () {
                                 updateMessage(context, "Nombre", widget.restaurante.nombre);
+
                               },
                             ),
                           ],
@@ -195,7 +198,9 @@ class _RestaurantSettingsPageWidgetState
                               size: 35,
                             ),
                             onPressed: () {
+
                               updateMessage(context, "Nombre del restaurante", widget.restaurante.nombre);
+
                             },
                           ),
                         ],
@@ -238,6 +243,7 @@ class _RestaurantSettingsPageWidgetState
                             onPressed: () async {
 
                               updateMessage(context, "Descripción", widget.restaurante.descripcion);
+
                             },
                           ),
                         ],
@@ -279,6 +285,7 @@ class _RestaurantSettingsPageWidgetState
                             ),
                             onPressed: () {
                               updateMessage(context, "Dirección", widget.restaurante.direccion);
+
                             },
                           ),
                         ],

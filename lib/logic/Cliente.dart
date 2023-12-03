@@ -46,12 +46,11 @@ class Cliente extends Usuario {
           .insert({"id_usuario":idUsuario, "nombre":nombre, "email":email, "contrasenna":contrasenna, "tipo_usuario":tipoUsuario});
       return "correcto";
     } catch (e) {
-      debugPrint(e.toString());
       return e.toString();
     }
   }
 
-  Future<String> hacerReservar(DateTime fecha, double total, List<ReservaPlato> platos, String estado, String idRestaurante) async {
+  Future<String> hacerReservar(DateTime fecha, int total, List<ReservaPlato> platos, String estado, String idRestaurante) async {
     try {
       Reserva reserva = Reserva.registro(fecha, total, platos, estado);
       String response = await reserva.insertarReserva(idUsuario, idRestaurante);
@@ -61,7 +60,6 @@ class Cliente extends Usuario {
         return response;
       }
     } catch (e) {
-      debugPrint(e.toString());
       return e.toString();
     }
   }
@@ -75,7 +73,6 @@ class Cliente extends Usuario {
         return response;
       }
     } catch (e) {
-      debugPrint(e.toString());
       return e.toString();
     }
   }
@@ -90,7 +87,6 @@ class Cliente extends Usuario {
         return response;
       }
     } catch (e) {
-      debugPrint(e.toString());
       return e.toString();
     }
   }
@@ -104,7 +100,6 @@ class Cliente extends Usuario {
         return response;
       }
     } catch (e) {
-      debugPrint(e.toString());
       return e.toString();
     }
   }
