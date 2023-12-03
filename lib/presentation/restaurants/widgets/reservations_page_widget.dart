@@ -112,7 +112,11 @@ class _RestaurantReservationsPageWidgetState
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: (reservas.isEmpty) ? [Center(child: CircularProgressIndicator())] : reservas.map((reserva) {
+                      children: (reservas.isEmpty) ? [const Center(
+                        child: CircularProgressIndicator(
+                          color: Color(0xFF064244),
+                        )
+                      )] : reservas.map((reserva) {
                         return _model.mostrarReservas(context, reserva);
                       }).toList(),
                     ),
@@ -139,7 +143,11 @@ class _RestaurantReservationsPageWidgetState
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: (reservasCompletas.isEmpty) ? [Center(child: CircularProgressIndicator())] : reservasCompletas.map((reserva) {
+                      children: (reservasCompletas.isEmpty) ? [const Center(
+                        child: CircularProgressIndicator(
+                          color: Color(0xFF064244),
+                        )
+                      )] : reservasCompletas.map((reserva) {
                         return _model.mostrarReservas(context, reserva);
                       }).toList(),
                     ),

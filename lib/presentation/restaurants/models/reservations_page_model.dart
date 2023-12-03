@@ -22,125 +22,115 @@ class RestaurantReservationsPageModel
 
   /// Action blocks are added here.
 
-  Center mostrarReservas(BuildContext context, Reserva reserva) {
+  Padding mostrarReservas(BuildContext context, Reserva reserva) {
     int cantidad = 0;
     for (ReservaPlato plato in reserva.platos) {
       cantidad = cantidad + plato.cantidad;
     }
 
-    return Center(
-      child: GestureDetector(
-        onTap: () {
+    return Padding(
+      padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 5),
+      child: InkWell(
+        splashColor: Colors.transparent,
+        focusColor: Colors.transparent,
+        hoverColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        onTap: () async {
           //detallesReservaPendiente(context, reserva);
+          print("Presionada reserva");
         },
-        child: Flexible(
-          child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 5),
-            child: Container(
-              width: MediaQuery.sizeOf(context).width,
-              height: 80,
-              decoration: BoxDecoration(
-                color: FlutterFlowTheme.of(context)
-                    .secondaryBackground,
-                boxShadow: [
-                  BoxShadow(
-                    blurRadius: 4,
-                    color: Color(0x33000000),
-                    offset: Offset(0, 2),
-                  )
-                ],
-                borderRadius: BorderRadius.circular(15),
-                shape: BoxShape.rectangle,
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Align(
-                    alignment: AlignmentDirectional(0.00, 0.00),
-                    child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          15, 0, 15, 0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment:
-                        MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.account_circle,
-                            color: Color(0xFF064244),
-                            size: 32,
-                          ),
-                          Icon(
-                            Icons.access_time,
-                            color: Color(0xFF064244),
-                            size: 32,
-                          ),
-                        ].divide(SizedBox(height: 5)),
+        child: Container(
+          width: MediaQuery.sizeOf(context).width,
+          height: 80,
+          decoration: BoxDecoration(
+            color: FlutterFlowTheme.of(context).secondaryBackground,
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 4,
+                color: Color(0x33000000),
+                offset: Offset(0, 2),
+              )
+            ],
+            borderRadius: BorderRadius.circular(15),
+            shape: BoxShape.rectangle,
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Align(
+                alignment: AlignmentDirectional(0.00, 0.00),
+                child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(15, 0, 15, 0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.account_circle,
+                        color: Color(0xFF064244),
+                        size: 32,
                       ),
-                    ),
+                      Icon(
+                        Icons.access_time,
+                        color: Color(0xFF064244),
+                        size: 32,
+                      ),
+                    ].divide(SizedBox(height: 5)),
                   ),
-                  Flexible(
-                    child: Align(
-                      alignment: AlignmentDirectional(0.00, 0.00),
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            20, 0, 20, 0),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment:
-                          MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment:
-                          CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              reserva.nombreUsuario,
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
+                ),
+              ),
+              Flexible(
+                child: Align(
+                  alignment: AlignmentDirectional(0.00, 0.00),
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          reserva.nombreUsuario,
+                          style: FlutterFlowTheme.of(context).bodyMedium.override(
                                 fontFamily: 'Readex Pro',
                                 color: Color(0xFF064244),
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
                               ),
-                            ),
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Text(
-                                  '$cantidad platos - ',
-                                  style: FlutterFlowTheme.of(
-                                      context)
-                                      .bodyMedium
-                                      .override(
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Text(
+                              '$cantidad platos - ',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
                                     fontFamily: 'Readex Pro',
                                     color: Color(0xFF064244),
                                     fontSize: 15,
                                   ),
-                                ),
-                                estodoReserva(context, reserva)
-                              ],
                             ),
-                            Text(
-                              DateFormat('yyyy-MM-dd HH:mm').format(reserva.fecha),
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
+                            estodoReserva(context, reserva)
+                          ],
+                        ),
+                        Text(
+                          DateFormat('yyyy-MM-dd HH:mm').format(reserva.fecha),
+                          style: FlutterFlowTheme.of(context).bodyMedium.override(
                                 fontFamily: 'Readex Pro',
                                 color: Color(0xFF064244),
                                 fontSize: 15,
                                 fontWeight: FontWeight.w500,
                                 fontStyle: FontStyle.italic,
                               ),
-                            ),
-                          ],
                         ),
-                      ),
+                      ],
                     ),
                   ),
-                ],
+                ),
               ),
-            ),
+            ],
           ),
         ),
       ),
