@@ -342,11 +342,7 @@ void updateMessage(BuildContext context, String campo, String informacionActual)
 
                   String nuevoValor = _textFieldController.text;
                   Navigator.of(context).pop();
-
-                  String nuevoValor = _textFieldController.text;
-                  print('Nuevo valor ingresado: $nuevoValor');
-
-                  Navigator.of(context).pop(); // Cerrar el cuadro de diálogo
+                  
 
                 },
                 style: ElevatedButton.styleFrom(
