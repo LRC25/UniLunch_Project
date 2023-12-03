@@ -1,4 +1,5 @@
 import 'package:flutterflow_ui/flutterflow_ui.dart';
+import 'package:unilunch/alerts.dart';
 import 'package:unilunch/logic/Reserva.dart';
 import 'package:unilunch/logic/ReservaPlato.dart';
 import '../widgets/reservations_page_widget.dart' show RestaurantReservationsPageWidget;
@@ -48,10 +49,6 @@ class RestaurantReservationsPageModel
           borderRadius: BorderRadius.circular(15),
           color: FlutterFlowTheme.of(context).secondaryBackground,
           child: InkWell(
-            // splashColor: Colors.transparent,
-            // focusColor: Colors.transparent,
-            // hoverColor: Colors.transparent,
-            // highlightColor: Colors.transparent,
             onTap: () async {
               detallesReservaPendiente(context, reserva);
             },
@@ -184,6 +181,7 @@ class RestaurantReservationsPageModel
           ),
           backgroundColor: Color(0xFFC6E8DA),
           content: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Flexible(
                 child: Padding(
@@ -276,7 +274,9 @@ class RestaurantReservationsPageModel
               SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
-                  children: (reserva.platos.isEmpty) ? [Center(child: CircularProgressIndicator())] : reserva.platos.map((reservaPlato) {
+                  children: (reserva.platos.isEmpty)
+                      ? [const Center(child: CircularProgressIndicator(color: Color(0xFF064244)))]
+                      : reserva.platos.map((reservaPlato) {
                     return listaPlato(context, reservaPlato);
                   }).toList(),
                 ),
@@ -293,7 +293,7 @@ class RestaurantReservationsPageModel
                   ),
                 ),
               ),
-              Align(
+              (reserva.estado!="Pendiente") ? Container() : Align(
                 alignment: AlignmentDirectional(0.00, 0.00),
                 child: Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
@@ -301,9 +301,9 @@ class RestaurantReservationsPageModel
                     onPressed: () async {
                       String respuesta = await reserva.completarReserva();
                       if(respuesta=="Correto") {
-                        debugPrint("Correcto");
+                        completeReservationAcceptMessage(context, "Se ha completado corretamente la reserva");
                       } else {
-                        debugPrint("Correcto");
+                        errorMessage(context, "Ha ocurrido un error");
                       }
                     },
                     text: 'Completar Reserva',
@@ -445,7 +445,7 @@ class RestaurantReservationsPageModel
                   height: 100,
                   decoration: BoxDecoration(),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(16),
                     child: Image.network(
                       reservaPlato.plato.imagen,
                       width: MediaQuery.sizeOf(context).width * 0.108,

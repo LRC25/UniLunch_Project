@@ -22,6 +22,7 @@ class _RestaurantReservationsPageWidgetState
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
+  var reservaCargada = false;
   late List<Reserva> reservas = [];
   late List<Reserva> reservasCompletas = [];
 
@@ -42,6 +43,7 @@ class _RestaurantReservationsPageWidgetState
     List<Reserva> reservasTemp = await widget.restaurante.monitorearReserva();
     List<Reserva> reservasComTemp = await widget.restaurante.monitorearReservaCompleta();
     setState(() {
+      reservaCargada = true;
       reservas = reservasTemp;
       reservasCompletas = reservasComTemp;
     });
@@ -112,10 +114,15 @@ class _RestaurantReservationsPageWidgetState
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: (reservas.isEmpty) ? [const Center(
-                        child: CircularProgressIndicator(
-                          color: Color(0xFF064244),
-                        )
+                      children: (reservaCargada==false)
+                          ? [const Center(child: CircularProgressIndicator(color: Color(0xFF064244)))]
+                          : (reservas.isEmpty) ? [Center(child: Text(
+                          "No hay reservas pendientes",
+                          style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Readex Pro',
+                            color: Color(0xFF064244),
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,))
                       )] : reservas.map((reserva) {
                         return _model.mostrarReservas(context, reserva);
                       }).toList(),
@@ -143,10 +150,15 @@ class _RestaurantReservationsPageWidgetState
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: (reservasCompletas.isEmpty) ? [const Center(
-                        child: CircularProgressIndicator(
-                          color: Color(0xFF064244),
-                        )
+                      children: (reservaCargada==false)
+                          ? [const Center(child: CircularProgressIndicator(color: Color(0xFF064244)))]
+                          : (reservasCompletas.isEmpty) ? [Center(child: Text(
+                          "No hay reservas",
+                          style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Readex Pro',
+                            color: Color(0xFF064244),
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,))
                       )] : reservasCompletas.map((reserva) {
                         return _model.mostrarReservas(context, reserva);
                       }).toList(),
