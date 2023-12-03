@@ -3,7 +3,6 @@ import 'package:unilunch/logic/Cliente.dart';
 import 'package:unilunch/presentation/customers/widgets/customers_page_widget.dart';
 import 'package:unilunch/presentation/customers/widgets/reservations_page_widget.dart';
 import 'package:unilunch/presentation/customers/widgets/settings_page_widget.dart';
-import 'package:unilunch/presentation/restaurants/widgets/restaurants_page_widget.dart';
 
 class NavbarCustomerPage extends StatefulWidget {
   final Cliente cliente;
