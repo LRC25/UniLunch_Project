@@ -1,12 +1,10 @@
 import 'package:flutterflow_ui/flutterflow_ui.dart';
-<<<<<<< Updated upstream
-=======
 import '../../../logic/Restaurante.dart';
 import '../../../logic/Usuario.dart';
->>>>>>> Stashed changes
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../../../alerts.dart';
 
 import '../models/settings_page_model.dart';
 export '../models/settings_page_model.dart';
@@ -24,6 +22,7 @@ class _RestaurantSettingsPageWidgetState
     extends State<RestaurantSettingsPageWidget> {
   late RestaurantSettingsPageModel _model;
 
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -37,9 +36,7 @@ class _RestaurantSettingsPageWidgetState
     _model.dispose();
 
     super.dispose();
-  }
-
-  @override
+  }  @override
   Widget build(BuildContext context) {
     if (isiOS) {
       SystemChrome.setSystemUIOverlayStyle(
@@ -51,12 +48,13 @@ class _RestaurantSettingsPageWidgetState
     }
 
     return GestureDetector(
+
       onTap: () => _model.unfocusNode.canRequestFocus
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
           : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        backgroundColor: FlutterFlowTheme.of(context).info,
         appBar: AppBar(
           backgroundColor: Color(0xFFC6E8DA),
           automaticallyImplyLeading: false,
@@ -65,11 +63,11 @@ class _RestaurantSettingsPageWidgetState
             child: Text(
               'Opciones',
               style: FlutterFlowTheme.of(context).headlineMedium.override(
-                    fontFamily: 'Outfit',
-                    color: Color(0xFF064244),
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                  ),
+                fontFamily: 'Outfit',
+                color: Color(0xFF064244),
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
           actions: [],
@@ -78,18 +76,6 @@ class _RestaurantSettingsPageWidgetState
         ),
         body: SafeArea(
           top: true,
-<<<<<<< Updated upstream
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Expanded(
-                child: Container(
-                  width: MediaQuery.sizeOf(context).width,
-                  height: MediaQuery.sizeOf(context).height * 1,
-                  decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).secondaryBackground,
-                    shape: BoxShape.rectangle,
-=======
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -209,7 +195,7 @@ class _RestaurantSettingsPageWidgetState
                               size: 35,
                             ),
                             onPressed: () {
-                              updateMessage(context, "Nombre del restaurante", widget.restaurante.nombreRestaurante);
+                              updateMessage(context, "Nombre del restaurante", widget.restaurante.nombre);
                             },
                           ),
                         ],
@@ -475,11 +461,38 @@ class _RestaurantSettingsPageWidgetState
                         ],
                       ),
                     ],
->>>>>>> Stashed changes
                   ),
                 ),
-              ),
-            ],
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 16),
+                  child: FFButtonWidget(
+                    onPressed: () {
+                      print('Button pressed ...');
+                    },
+                    text: 'Cerrar Sesión',
+                    options: FFButtonOptions(
+                      width: 230,
+                      height: 52,
+                      padding: EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
+                      iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                      color: Color(0xFFE72828),
+                      textStyle:
+                      FlutterFlowTheme.of(context).titleSmall.override(
+                        fontFamily: 'Readex Pro',
+                        color: Colors.white,
+                        fontSize: 20,
+                      ),
+                      elevation: 3,
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.circular(35),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
