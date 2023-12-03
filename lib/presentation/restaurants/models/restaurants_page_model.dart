@@ -95,7 +95,7 @@ class RestaurantsPageModel extends FlutterFlowModel<RestaurantsPageWidget> {
                             child: Align(
                               alignment: AlignmentDirectional(1.00, 0.00),
                               child: Text(
-                                plato.stock.toString() + ' disponibles',
+                                '${plato.stock} disponibles',
                                 textAlign: TextAlign.start,
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium

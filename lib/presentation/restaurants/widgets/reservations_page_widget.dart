@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutterflow_ui/flutterflow_ui.dart';
+import 'package:unilunch/logic/Reserva.dart';
+import '../../../logic/Restaurante.dart';
 
 import '../models/reservations_page_model.dart';
 export '../widgets/reservations_page_widget.dart';
 
 class RestaurantReservationsPageWidget extends StatefulWidget {
-  const RestaurantReservationsPageWidget({Key? key}) : super(key: key);
+  final Restaurante restaurante;
+  const RestaurantReservationsPageWidget({Key? key, required this.restaurante}) : super(key: key);
 
   @override
   _RestaurantReservationsPageWidgetState createState() =>
@@ -19,8 +22,13 @@ class _RestaurantReservationsPageWidgetState
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
+  var reservaCargada = false;
+  late List<Reserva> reservas = [];
+  late List<Reserva> reservasCompletas = [];
+
   @override
   void initState() {
+    _loadReservas();
     super.initState();
     _model = createModel(context, () => RestaurantReservationsPageModel());
   }
@@ -28,8 +36,17 @@ class _RestaurantReservationsPageWidgetState
   @override
   void dispose() {
     _model.dispose();
-
     super.dispose();
+  }
+
+  void _loadReservas() async {
+    List<Reserva> reservasTemp = await widget.restaurante.monitorearReserva();
+    List<Reserva> reservasComTemp = await widget.restaurante.monitorearReservaCompleta();
+    setState(() {
+      reservaCargada = true;
+      reservas = reservasTemp;
+      reservasCompletas = reservasComTemp;
+    });
   }
 
   @override
@@ -97,262 +114,55 @@ class _RestaurantReservationsPageWidgetState
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 5),
-                          child: Container(
-                            width: MediaQuery.sizeOf(context).width,
-                            height: 80,
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 4,
-                                  color: Color(0x33000000),
-                                  offset: Offset(0, 2),
-                                )
-                              ],
-                              borderRadius: BorderRadius.circular(15),
-                              shape: BoxShape.rectangle,
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Align(
-                                  alignment: AlignmentDirectional(0.00, 0.00),
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        15, 0, 15, 0),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.account_circle,
-                                          color: Color(0xFF064244),
-                                          size: 32,
-                                        ),
-                                        Icon(
-                                          Icons.access_time,
-                                          color: Color(0xFF064244),
-                                          size: 32,
-                                        ),
-                                      ].divide(SizedBox(height: 5)),
-                                    ),
-                                  ),
-                                ),
-                                Flexible(
-                                  child: Align(
-                                    alignment: AlignmentDirectional(0.00, 0.00),
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          20, 0, 20, 0),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'Juan David',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Readex Pro',
-                                                  color: Color(0xFF064244),
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                          ),
-                                          Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Text(
-                                                '2 platos - ',
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .bodyMedium
-                                                    .override(
-                                                      fontFamily: 'Readex Pro',
-                                                      color: Color(0xFF064244),
-                                                      fontSize: 15,
-                                                    ),
-                                              ),
-                                              Text(
-                                                '\$24.000',
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .bodyMedium
-                                                    .override(
-                                                      fontFamily: 'Readex Pro',
-                                                      color: Color(0xFF29A814),
-                                                    ),
-                                              ),
-                                            ],
-                                          ),
-                                          Text(
-                                            'Hoy, 2:00 pm',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Readex Pro',
-                                                  color: Color(0xFF064244),
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.w500,
-                                                  fontStyle: FontStyle.italic,
-                                                ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
+                      children: (reservaCargada==false)
+                          ? [const Center(child: CircularProgressIndicator(color: Color(0xFF064244)))]
+                          : (reservas.isEmpty) ? [Center(child: Text(
+                          "No hay reservas pendientes",
+                          style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Readex Pro',
+                            color: Color(0xFF064244),
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,))
+                      )] : reservas.map((reserva) {
+                        return _model.mostrarReservas(context, reserva);
+                      }).toList(),
                     ),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
-                  child: Text(
-                    'Reservas Completadas',
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Readex Pro',
-                          color: Color(0xFF064244),
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                        ),
+                Flexible(
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                    child: Text(
+                      'Reservas Completadas',
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                        fontFamily: 'Readex Pro',
+                        color: Color(0xFF064244),
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 10),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 5),
-                        child: Container(
-                          width: MediaQuery.sizeOf(context).width,
-                          height: 80,
-                          decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context)
-                                .secondaryBackground,
-                            boxShadow: [
-                              BoxShadow(
-                                blurRadius: 4,
-                                color: Color(0x33000000),
-                                offset: Offset(0, 2),
-                              )
-                            ],
-                            borderRadius: BorderRadius.circular(15),
-                            shape: BoxShape.rectangle,
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Align(
-                                alignment: AlignmentDirectional(0.00, 0.00),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      15, 0, 15, 0),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.account_circle,
-                                        color: Color(0xFF064244),
-                                        size: 32,
-                                      ),
-                                      Icon(
-                                        Icons.access_time,
-                                        color: Color(0xFF064244),
-                                        size: 32,
-                                      ),
-                                    ].divide(SizedBox(height: 5)),
-                                  ),
-                                ),
-                              ),
-                              Flexible(
-                                child: Align(
-                                  alignment: AlignmentDirectional(0.00, 0.00),
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        20, 0, 20, 0),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Daniel',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Readex Pro',
-                                                color: Color(0xFF064244),
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                        ),
-                                        Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Text(
-                                              '2 platos - ',
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .bodyMedium
-                                                  .override(
-                                                    fontFamily: 'Readex Pro',
-                                                    color: Color(0xFF064244),
-                                                    fontSize: 15,
-                                                  ),
-                                            ),
-                                            Text(
-                                              '\$24.000',
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .bodyMedium
-                                                  .override(
-                                                    fontFamily: 'Readex Pro',
-                                                    color: Color(0xFF29A814),
-                                                  ),
-                                            ),
-                                          ],
-                                        ),
-                                        Text(
-                                          '1/12/2023, 2:00 pm',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Readex Pro',
-                                                color: Color(0xFF064244),
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.w500,
-                                                fontStyle: FontStyle.italic,
-                                              ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
+                Flexible(
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 10),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: (reservaCargada==false)
+                          ? [const Center(child: CircularProgressIndicator(color: Color(0xFF064244)))]
+                          : (reservasCompletas.isEmpty) ? [Center(child: Text(
+                          "No hay reservas",
+                          style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Readex Pro',
+                            color: Color(0xFF064244),
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,))
+                      )] : reservasCompletas.map((reserva) {
+                        return _model.mostrarReservas(context, reserva);
+                      }).toList(),
+                    ),
                   ),
                 ),
               ],

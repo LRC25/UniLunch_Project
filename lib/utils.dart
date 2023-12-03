@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:flutter/cupertino.dart';
+
 String randomDigits(int length) {
   final random = Random();
   String result = '';
@@ -15,8 +17,10 @@ String convertDate(DateTime fecha) {
   return fechaPostgres;
 }
 
-DateTime converDateTime(String fecha) {
+DateTime converDateTime(String fecha, String hora) {
   List<String> partes = fecha.split('-');
-  DateTime fechaDateTime = DateTime(int.parse(partes[0]), int.parse(partes[1]), int.parse(partes[2]), 0, 0, 0);
+  List<String> partesHora = hora.split(':');
+  DateTime fechaDateTime = DateTime(int.parse(partes[0]), int.parse(partes[1]), int.parse(partes[2]),
+      int.parse(partesHora[0]), int.parse(partesHora[1]), int.parse(partesHora[2]));
   return fechaDateTime;
 }

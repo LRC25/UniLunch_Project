@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'package:unilunch/presentation/common/widgets/login_page_widget.dart';
 
 void registrationAcceptMessage(BuildContext context, String mensaje) {
@@ -6,42 +7,140 @@ void registrationAcceptMessage(BuildContext context, String mensaje) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text("Correcto"),
         backgroundColor: Color(0xFFC6E8DA),
         content: SingleChildScrollView(
-          child: ListBody(
-            children: [
-              Row(
+            child: Container(
+              width: MediaQuery.sizeOf(context).width,
+              height: 217,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Icon(
-                    Icons.check,
-                    color: Color(0xFF064244),
+                    Icons.check_circle,
+                    color: Color(0xFF29A814),
+                    size: 100,
                   ),
-                  SizedBox(width: 10),
-                  Text(mensaje),
+                  Align(
+                    alignment: AlignmentDirectional(0.00, 0.00),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                      child: Text(
+                        mensaje,
+                        style: FlutterFlowTheme.of(context).headlineMedium.override(
+                          fontFamily: 'Outfit',
+                          color: Color(0xFF064244),
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Align(
+                    alignment: AlignmentDirectional(0.00, 0.00),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(10, 5, 10, 10),
+                      child: FFButtonWidget(
+                        onPressed: () {
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder:
+                              (context) => LoginPageWidget()));
+                        },
+                        text: 'Aceptar',
+                        options: FFButtonOptions(
+                          width: 140,
+                          height: 52,
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                          iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                          color: Color(0xFF064244),
+                          textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                            fontFamily: 'Readex Pro',
+                            color: Colors.white,
+                          ),
+                          elevation: 3,
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(35),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder:
-                      (context) => LoginPageWidget()));
-                },
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size(150, 50),
-                  primary: Color(0xFF064244),
-                  padding: EdgeInsets.symmetric(vertical: 15),
-                ),
-                child: Text(
-                  'Aceptar',
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.white,
+            )
+        ),
+      );
+    },
+  );
+}
+
+void completeReservationAcceptMessage(BuildContext context, String mensaje) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        backgroundColor: Color(0xFFC6E8DA),
+        content: SingleChildScrollView(
+            child: Container(
+              width: MediaQuery.sizeOf(context).width,
+              height: 217,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Icon(
+                    Icons.check_circle,
+                    color: Color(0xFF29A814),
+                    size: 100,
                   ),
-                ),
+                  Align(
+                    alignment: AlignmentDirectional(0.00, 0.00),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                      child: Text(
+                        mensaje,
+                        style: FlutterFlowTheme.of(context).headlineMedium.override(
+                          fontFamily: 'Outfit',
+                          color: Color(0xFF064244),
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Align(
+                    alignment: AlignmentDirectional(0.00, 0.00),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(10, 5, 10, 10),
+                      child: FFButtonWidget(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        text: 'Aceptar',
+                        options: FFButtonOptions(
+                          width: 140,
+                          height: 52,
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                          iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                          color: Color(0xFF064244),
+                          textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                            fontFamily: 'Readex Pro',
+                            color: Colors.white,
+                          ),
+                          elevation: 3,
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(35),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            )
         ),
       );
     },
@@ -53,41 +152,67 @@ void warningMessage(BuildContext context, String mensaje) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text("No se puede ingresar"),
         backgroundColor: Color(0xFFC6E8DA),
         content: SingleChildScrollView(
-          child: ListBody(
-            children: [
-              Row(
+            child: Container(
+              width: MediaQuery.sizeOf(context).width,
+              height: 217,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Icon(
-                    Icons.warning,
-                    color: Color(0xFF064244),
+                    Icons.warning_sharp,
+                    color: FlutterFlowTheme.of(context).warning,
+                    size: 100,
                   ),
-                  SizedBox(width: 10),
-                  Text(mensaje),
+                  Align(
+                    alignment: AlignmentDirectional(0.00, 0.00),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                      child: Text(
+                        mensaje,
+                        style: FlutterFlowTheme.of(context).headlineMedium.override(
+                          fontFamily: 'Outfit',
+                          color: Color(0xFF064244),
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Align(
+                    alignment: AlignmentDirectional(0.00, 0.00),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(10, 5, 10, 10),
+                      child: FFButtonWidget(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        text: 'Aceptar',
+                        options: FFButtonOptions(
+                          width: 140,
+                          height: 52,
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                          iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                          color: Color(0xFF064244),
+                          textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                            fontFamily: 'Readex Pro',
+                            color: Colors.white,
+                          ),
+                          elevation: 3,
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(35),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size(150, 50),
-                  primary: Color(0xFF064244),
-                  padding: EdgeInsets.symmetric(vertical: 15),
-                ),
-                child: Text(
-                  'Aceptar',
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ],
-          ),
+            )
         ),
       );
     },
@@ -99,41 +224,67 @@ void errorMessage(BuildContext context, String mensaje) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text("Error"),
         backgroundColor: Color(0xFFC6E8DA),
         content: SingleChildScrollView(
-          child: ListBody(
-            children: [
-              Row(
+            child: Container(
+              width: MediaQuery.sizeOf(context).width,
+              height: 217,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Icon(
-                    Icons.error,
-                    color: Color(0xFF064244),
+                    Icons.error_sharp,
+                    color: Color(0xFFD31717),
+                    size: 100,
                   ),
-                  SizedBox(width: 10),
-                  Text(mensaje),
+                  Align(
+                    alignment: AlignmentDirectional(0.00, 0.00),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                      child: Text(
+                        mensaje,
+                        style: FlutterFlowTheme.of(context).headlineMedium.override(
+                          fontFamily: 'Outfit',
+                          color: Color(0xFF064244),
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Align(
+                    alignment: AlignmentDirectional(0.00, 0.00),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(10, 5, 10, 10),
+                      child: FFButtonWidget(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        text: 'Aceptar',
+                        options: FFButtonOptions(
+                          width: 140,
+                          height: 52,
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                          iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                          color: Color(0xFF064244),
+                          textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                            fontFamily: 'Readex Pro',
+                            color: Colors.white,
+                          ),
+                          elevation: 3,
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(35),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size(150, 50),
-                  primary: Color(0xFF064244),
-                  padding: EdgeInsets.symmetric(vertical: 15),
-                ),
-                child: Text(
-                  'Aceptar',
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ],
-          ),
+            )
         ),
       );
     },
