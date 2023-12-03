@@ -288,5 +288,90 @@ void errorMessage(BuildContext context, String mensaje) {
         ),
       );
     },
+
+    );
+  }
+
+void updateMessage(BuildContext context, String mensaje, String informacionActual) {
+  TextEditingController _textFieldController = TextEditingController(text: informacionActual);
+
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text("Actualizar $mensaje"),
+        backgroundColor: Color(0xFFC6E8DA),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: [
+              Row(
+                children: [
+                  Icon(
+                    Icons.error,
+                    color: Color(0xFF064244),
+                  ),
+                  SizedBox(width: 10),
+                  Text(mensaje),
+                ],
+              ),
+
+              SizedBox(height: 20),
+
+              TextField(
+                controller: _textFieldController,
+                decoration: InputDecoration(hintText: 'Ingrese $mensaje'),
+              ),
+              SizedBox(height: 20),
+
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                style: ElevatedButton.styleFrom(
+                  minimumSize: Size(150, 50),
+                  primary: Color(0xFF064244),
+                  padding: EdgeInsets.symmetric(vertical: 15),
+                ),
+                child: Text(
+                  'Cancelar',
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
+
+              ElevatedButton(
+                onPressed: () {
+                  // Obtener el nuevo valor del TextField
+                  String nuevoValor = _textFieldController.text;
+                  // Realizar la acción deseada con el nuevo valor
+                  print('Nuevo valor ingresado: $nuevoValor');
+                  // Puedes llamar a una función para actualizar la información
+                  // updateData(nuevoValor);
+                  Navigator.of(context).pop(); // Cerrar el cuadro de diálogo
+                },
+                style: ElevatedButton.styleFrom(
+                  minimumSize: Size(150, 50),
+                  primary: Color(0xFF064244),
+                  padding: EdgeInsets.symmetric(vertical: 15),
+                ),
+                child: Text(
+                  'Guardar',
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    },
   );
 }
+
+
+
