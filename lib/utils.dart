@@ -1,7 +1,5 @@
 import 'dart:math';
 
-import 'package:flutter/cupertino.dart';
-
 String randomDigits(int length) {
   final random = Random();
   String result = '';

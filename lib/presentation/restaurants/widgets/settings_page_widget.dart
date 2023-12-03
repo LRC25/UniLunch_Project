@@ -234,7 +234,6 @@ class _RestaurantSettingsPageWidgetState
                               size: 35,
                             ),
                             onPressed: () async {
-
                               updateMessage(context, "Descripción", "sdsed");
                             },
                           ),
