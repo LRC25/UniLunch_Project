@@ -65,6 +65,7 @@ class _NavbarRestaurantPageState extends State<NavbarRestaurantPage> {
         widget = RestaurantReservationsPageWidget(restaurante: restaurante);
         break;
       case 2:
+        widget = RestaurantSettingsPageWidget(restaurante: restaurante);
         widget = RestaurantRatingsPageWidget(restaurante: restaurante);
         break;
       case 3:

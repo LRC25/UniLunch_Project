@@ -292,34 +292,28 @@ void errorMessage(BuildContext context, String mensaje) {
     );
   }
 
-void updateMessage(BuildContext context, String mensaje, String informacionActual) {
+
+void updateMessage(BuildContext context, String campo, String informacionActual) {
+
   TextEditingController _textFieldController = TextEditingController(text: informacionActual);
 
   showDialog(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text("Actualizar $mensaje"),
+
+        title: Text("Actualizar $campo"),
         backgroundColor: Color(0xFFC6E8DA),
         content: SingleChildScrollView(
           child: ListBody(
             children: [
-              Row(
-                children: [
-                  Icon(
-                    Icons.error,
-                    color: Color(0xFF064244),
-                  ),
-                  SizedBox(width: 10),
-                  Text(mensaje),
-                ],
-              ),
+
 
               SizedBox(height: 20),
 
               TextField(
                 controller: _textFieldController,
-                decoration: InputDecoration(hintText: 'Ingrese $mensaje'),
+                decoration: InputDecoration(hintText: 'Ingrese $campo'),
               ),
               SizedBox(height: 20),
 
@@ -344,13 +338,16 @@ void updateMessage(BuildContext context, String mensaje, String informacionActua
 
               ElevatedButton(
                 onPressed: () {
-                  // Obtener el nuevo valor del TextField
+
+
                   String nuevoValor = _textFieldController.text;
-                  // Realizar la acción deseada con el nuevo valor
+                  Navigator.of(context).pop();
+
+                  String nuevoValor = _textFieldController.text;
                   print('Nuevo valor ingresado: $nuevoValor');
-                  // Puedes llamar a una función para actualizar la información
-                  // updateData(nuevoValor);
+
                   Navigator.of(context).pop(); // Cerrar el cuadro de diálogo
+
                 },
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size(150, 50),
