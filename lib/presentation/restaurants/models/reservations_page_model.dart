@@ -36,8 +36,7 @@ class RestaurantReservationsPageModel
         hoverColor: Colors.transparent,
         highlightColor: Colors.transparent,
         onTap: () async {
-          //detallesReservaPendiente(context, reserva);
-          print("Presionada reserva");
+          detallesReservaPendiente(context, reserva);
         },
         child: Container(
           width: MediaQuery.sizeOf(context).width,
@@ -176,13 +175,282 @@ class RestaurantReservationsPageModel
               ),
           ),
           backgroundColor: Color(0xFFC6E8DA),
-          content: ListBody(
+          content: Column(
             children: [
-
+              Flexible(
+                child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 15),
+                  child: Text(
+                    'Detalles de Reserva',
+                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                      fontFamily: 'Readex Pro',
+                      color: Color(0xFF064244),
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Align(
+                    alignment: AlignmentDirectional(0.00, 0.00),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(50, 0, 15, 0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.account_circle,
+                            color: Color(0xFF064244),
+                            size: 32,
+                          ),
+                          Icon(
+                            Icons.access_time,
+                            color: Color(0xFF064244),
+                            size: 32,
+                          ),
+                        ].divide(SizedBox(height: 5)),
+                      ),
+                    ),
+                  ),
+                  Flexible(
+                    child: Align(
+                      alignment: AlignmentDirectional(0.00, 0.00),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(10, 0, 50, 0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              reserva.nombreUsuario,
+                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                fontFamily: 'Readex Pro',
+                                color: Color(0xFF064244),
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            Text(
+                              DateFormat('yyyy-MM-dd HH:mm').format(reserva.fecha),
+                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                fontFamily: 'Readex Pro',
+                                color: Color(0xFF064244),
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500,
+                                fontStyle: FontStyle.italic,
+                              ),
+                            ),
+                          ].divide(SizedBox(height: 15)),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 10),
+                child: Text(
+                  'Platos Reservados',
+                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                    fontFamily: 'Readex Pro',
+                    color: Color(0xFF064244),
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: (reserva.platos.isEmpty) ? [Center(child: CircularProgressIndicator())] : reserva.platos.map((reservaPlato) {
+                    return listaPlato(context, reservaPlato);
+                  }).toList(),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 5),
+                child: Text(
+                  'Total: ${currencyFormat.format(reserva.total)}',
+                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                    fontFamily: 'Readex Pro',
+                    color: Color(0xFF138D20),
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+              Align(
+                alignment: AlignmentDirectional(0.00, 0.00),
+                child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                  child: FFButtonWidget(
+                    onPressed: () async {
+                      String respuesta = await reserva.completarReserva();
+                      if(respuesta=="Correto") {
+                        debugPrint("Correcto");
+                      } else {
+                        debugPrint("Correcto");
+                      }
+                    },
+                    text: 'Completar Reserva',
+                    options: FFButtonOptions(
+                      width: 258,
+                      height: 52,
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                      iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                      color: Color(0xFF064244),
+                      textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                        fontFamily: 'Readex Pro',
+                        color: Colors.white,
+                      ),
+                      elevation: 3,
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.circular(35),
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         );
       },
+    );
+  }
+
+  Padding listaPlato (BuildContext context, ReservaPlato reservaPlato) {
+    return Padding(
+      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+      child: Container(
+        width: MediaQuery.sizeOf(context).width * 0.9,
+        height: 100,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 4,
+              color: Color(0x33000000),
+              offset: Offset(0, 2),
+            )
+          ],
+          borderRadius: BorderRadius.circular(15),
+          shape: BoxShape.rectangle,
+        ),
+        child: Padding(
+          padding: EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                width: MediaQuery.sizeOf(context).width * 0.50,
+                height: 100,
+                decoration: BoxDecoration(
+                  color:
+                  FlutterFlowTheme.of(context).secondaryBackground,
+                ),
+                child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Align(
+                        alignment: AlignmentDirectional(-1.00, 0.00),
+                        child: Text(
+                          reservaPlato.plato.nombre,
+                          style: FlutterFlowTheme.of(context)
+                              .bodyMedium
+                              .override(
+                            fontFamily: 'Readex Pro',
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: AlignmentDirectional(-1.00, 0.00),
+                        child: Text(
+                          '${currencyFormat.format(reservaPlato.plato.precio)} c/u',
+                          style: FlutterFlowTheme.of(context)
+                              .bodyMedium
+                              .override(
+                            fontFamily: 'Readex Pro',
+                            fontSize: 15,
+                            fontWeight: FontWeight.w200,
+                          ),
+                        ),
+                      ),
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Align(
+                            alignment:
+                            AlignmentDirectional(-1.00, 0.00),
+                            child: Text(
+                              currencyFormat.format(reservaPlato.plato.precio*reservaPlato.cantidad),
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                fontFamily: 'Readex Pro',
+                                color: Color(0xFF138D20),
+                                fontSize: 15,
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+                          ),
+                          Flexible(
+                            child: Align(
+                              alignment:
+                              AlignmentDirectional(1.00, 0.00),
+                              child: Text(
+                                'Cantidad: ${reservaPlato.cantidad}',
+                                textAlign: TextAlign.start,
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                  fontFamily: 'Readex Pro',
+                                  fontWeight: FontWeight.w300,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  width: MediaQuery.sizeOf(context).width * 0.3,
+                  height: 100,
+                  decoration: BoxDecoration(),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.network(
+                      reservaPlato.plato.imagen,
+                      width: MediaQuery.sizeOf(context).width * 0.108,
+                      height: 200,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 

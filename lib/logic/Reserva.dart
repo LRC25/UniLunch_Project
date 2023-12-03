@@ -55,7 +55,7 @@ class Reserva {
       for (ReservaPlato plato in platos) {
         plato.eliminarReservaPlato();
       }
-      await cliente.from('reservar').delete().match({"id_reservar": idReserva});
+      await cliente.from('reserva').delete().match({"id_reservar": idReserva});
       return "correcto";
     } catch (e) {
       return e.toString();
@@ -125,6 +125,15 @@ class Reserva {
     }
   }
 
-  
+  Future<String> completarReserva() async {
+    final SupabaseService supabaseService = SupabaseService();
+    SupabaseClient cliente = supabaseService.client;
+    try {
+      await cliente.from('reserva').update({"estado": "Completado"}).match({"id_reservar": idReserva});
+      return "correcto";
+    } catch (e) {
+      return e.toString();
+    }
+  }
 
 }
