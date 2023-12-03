@@ -44,8 +44,8 @@ class Horario {
           Horario horario = Horario(
               dato["id_horario"],
               dato["dia"],
-              converDateTime(dato["hora_apertura"]),
-              converDateTime(dato["hora_cierre"]));
+              converDateTime("00-00-00" ,dato["hora_apertura"]),
+              converDateTime("00-00-00", dato["hora_cierre"]));
           horarios.add(horario);
         }
         return horarios;

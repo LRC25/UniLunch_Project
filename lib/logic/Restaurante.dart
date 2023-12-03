@@ -108,7 +108,19 @@ class Restaurante extends Usuario {
     Reserva reserva = Reserva.vacio();
     List<Reserva> reservas = [];
     try {
-      reservas = await reserva.listarNotasPorRestaurante(idRestaurante);
+      reservas = await reserva.listarResevaPendietePorRestaurante(idRestaurante);
+      return reservas;
+    } catch (e) {
+      debugPrint(e.toString());
+      return reservas;
+    }
+  }
+
+  Future<List<Reserva>> monitorearReservaCompleta() async {
+    Reserva reserva = Reserva.vacio();
+    List<Reserva> reservas = [];
+    try {
+      reservas = await reserva.listarResevaCompletaPorRestaurante(idRestaurante);
       return reservas;
     } catch (e) {
       debugPrint(e.toString());
