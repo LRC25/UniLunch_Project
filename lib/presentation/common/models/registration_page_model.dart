@@ -108,7 +108,6 @@ class RegistrationPageModel extends FlutterFlowModel<RegistrationPageWidget> {
           && nameController2.text != "" && addressController1 != "" && descriptionController != "" && logoController != "" && openingTime != null
           && closingTime != null) {
         if (passwordController.text == confirmPasswordController.text) {
-          print(logoController.text);
           Restaurante restaurante = Restaurante.registro(
               nombre: nameController1.text,
               email: emailAddressController.text,

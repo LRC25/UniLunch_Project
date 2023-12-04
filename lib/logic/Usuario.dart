@@ -46,12 +46,12 @@ class Usuario {
               tipoUsuario: dato["tipo_usuario"]);
           return usuario;
         } else if (dato["tipo_usuario"] == "Restaurante") {
-          final dataRestarante = await cliente
+          final dataRestaurante = await cliente
               .from("restaurante")
               .select('''id_restaurante,nombre_restaurante,ubicacion,descripcion,direccion,hora_apertura,hora_cierre,imagen,nota_prom''')
               .eq("id_usuario", dato["id_usuario"]);
-          if (dataRestarante.isNotEmpty) {
-            Map<String, dynamic> datoRestarante = dataRestarante[0];
+          if (dataRestaurante.isNotEmpty) {
+            Map<String, dynamic> datoRestarante = dataRestaurante[0];
             Restaurante usuario = Restaurante(
                 idUsuario: dato["id_usuario"],
                 nombre: dato["nombre"],

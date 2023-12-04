@@ -49,6 +49,22 @@ class Restaurante extends Usuario {
     required this.imagen
   }): idRestaurante = "", notaPromedio = 0, super(idUsuario, nombre, email, tipoUsuario);
 
+  Restaurante.cliente({
+    String idUsuario = "",
+    String nombre = "",
+    String email = "",
+    String tipoUsuario = "",
+    required this.idRestaurante,
+    required this.ubicacion,
+    required this.nombreRestaurante,
+    required this.direccion,
+    required this.descripcion,
+    required this.horaApertura,
+    required this.horaCierre,
+    required this.imagen,
+    required this.notaPromedio
+  }) : super(idUsuario, nombre, email, tipoUsuario);
+
   Restaurante.vacio({
     String idUsuario = "",
     String nombre = "",
