@@ -45,7 +45,7 @@ class Plato {
     }
   }
 
-  Future<String> actualizarStok(int nuevoStock) async {
+  Future<String> actualizarStock(int nuevoStock) async {
     final SupabaseService supabaseService = SupabaseService();
     SupabaseClient cliente = supabaseService.client;
     try {

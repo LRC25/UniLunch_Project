@@ -84,7 +84,7 @@ class Restaurante extends Usuario {
 
   Future<String> actualizarStock(Plato plato, int nuevoStock) async {
     try {
-      String response = await plato.actualizarStok(nuevoStock);
+      String response = await plato.actualizarStock(nuevoStock);
       if (response == "correcto"){
         return "correcto";
       } else {

@@ -1,4 +1,6 @@
 import 'package:flutter/services.dart';
+import 'package:unilunch/alerts.dart';
+import 'package:unilunch/logic/Restaurante.dart';
 
 import '../../../logic/Plato.dart';
 import '../widgets/restaurants_page_widget.dart' show RestaurantsPageWidget;
@@ -7,6 +9,7 @@ import 'package:flutterflow_ui/flutterflow_ui.dart';
 
 class RestaurantsPageModel extends FlutterFlowModel<RestaurantsPageWidget> {
   ///  State fields for stateful widgets in this page.
+  /// 
 
   final unfocusNode = FocusNode();
 
@@ -304,7 +307,7 @@ class RestaurantsPageModel extends FlutterFlowModel<RestaurantsPageWidget> {
     );
   }
 
-  void addPlateAlert(BuildContext context) {
+  void addPlateAlert(BuildContext context, Restaurante restaurante) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -567,7 +570,20 @@ class RestaurantsPageModel extends FlutterFlowModel<RestaurantsPageWidget> {
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                       child: FFButtonWidget(
                         onPressed: () {
-                          Navigator.of(context).pop();
+                          if(nameController.text != "" && descriptionController.text != "" && priceController.text != "" && imageController.text != ""){
+                            Plato newPlato = Plato.vacio();
+                            newPlato.nombre = nameController.text;
+                            newPlato.descripcion = descriptionController.text;
+                            newPlato.precio = int.parse(priceController.text);
+                            newPlato.imagen = imageController.text;
+
+                            newPlato.insertarPlato(restaurante.idRestaurante);
+
+                            //warningMessage(context, "Ha sido agregado con éxito.");
+                            Navigator.of(context).pop();
+                          } else {
+                            warningMessage(context, "Es necesario llenar todos los campos.");
+                          }
                         },
                         text: 'Agregar Plato',
                         options: FFButtonOptions(

@@ -150,7 +150,7 @@ class _RestaurantsPageWidgetState extends State<RestaurantsPageWidget> {
                                     size: 24,
                                   ),
                                   onPressed: () {
-                                    _model.addPlateAlert(context);
+                                    _model.addPlateAlert(context, widget.restaurante);
                                   },
                                 ),
                               ),
