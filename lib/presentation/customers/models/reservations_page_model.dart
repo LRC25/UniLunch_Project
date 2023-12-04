@@ -626,7 +626,7 @@ class CustomerReservationsPageModel extends FlutterFlowModel<CustomerReservation
                             String respuesta = await reserva.cancelarReserva();
                             if(respuesta=="correcto") {
                               Navigator.of(context).pop();
-                              completeReservationAcceptMessage(context, "Se ha cancelado corretamente la reserva");
+                              accceptMessage(context, "Se ha cancelado corretamente la reserva");
                             } else {
                               Navigator.of(context).pop();
                               errorMessage(context, "Ha ocurrido un error");
@@ -922,7 +922,7 @@ class CustomerReservationsPageModel extends FlutterFlowModel<CustomerReservation
                               String response = await cliente.calificarRestaurante("", valorActual.toInt(), reserva);
                               if (response=="correcto") {
                                 Navigator.of(context).pop();
-                                completeReservationAcceptMessage(context, "Se ha calificado corretamente la reserva");
+                                accceptMessage(context, "Se ha calificado corretamente la reserva");
                               } else {
                                 Navigator.of(context).pop();
                                 errorMessage(context, "Ha ocurrido un error");
@@ -931,7 +931,7 @@ class CustomerReservationsPageModel extends FlutterFlowModel<CustomerReservation
                               String response = await cliente.calificarRestaurante(textController.text, valorActual.toInt(), reserva);
                               if (response=="correcto") {
                                 Navigator.of(context).pop();
-                                completeReservationAcceptMessage(context, "Se ha calificado corretamente la reserva");
+                                accceptMessage(context, "Se ha calificado corretamente la reserva");
                               } else {
                                 Navigator.of(context).pop();
                                 errorMessage(context, "Ha ocurrido un error");

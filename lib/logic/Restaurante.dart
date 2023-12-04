@@ -131,6 +131,18 @@ class Restaurante extends Usuario {
     }
   }
 
+  Future<List<Plato>> mostrarMenuHoy() async {
+    Plato plato = Plato.vacio();
+    List<Plato> platos = [];
+    try {
+      platos = await plato.listarPlatoPorRestauranteMenuHoy(idRestaurante);
+      return platos;
+    } catch (e) {
+      debugPrint(e.toString());
+      return platos;
+    }
+  }
+
   Future<List<Reserva>> monitorearReserva() async {
     Reserva reserva = Reserva.vacio();
     List<Reserva> reservas = [];
