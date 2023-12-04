@@ -1,9 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'package:unilunch/logic/Restaurante.dart';
+import 'package:unilunch/network_utilities.dart';
+import 'package:unilunch/presentation/common/models/autocomplete_prediction.dart';
+import 'package:unilunch/presentation/common/models/location_list_tile.dart';
+import 'package:unilunch/presentation/common/models/place_auto_complete_response.dart';
 import '../../../alerts.dart';
 import '../../../logic/Cliente.dart';
 import '../widgets/registration_page_widget.dart' show RegistrationPageWidget;
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class RegistrationPageModel extends FlutterFlowModel<RegistrationPageWidget> {
   ///  State fields for stateful widgets in this page.
@@ -50,6 +57,14 @@ class RegistrationPageModel extends FlutterFlowModel<RegistrationPageWidget> {
   DateTime? openingTime;
   DateTime? closingTime;
 
+  String? description;
+  String? placeId;
+
+  final String apiKey = "AIzaSyCbDjS9GXcjjfbEqUQ0kDVSi6EEQxMwBfM";
+
+  double? latitude;
+  double? longitude;
+
   /// Initialization and disposal methods.
 
   void initState(BuildContext context) {
@@ -82,18 +97,27 @@ class RegistrationPageModel extends FlutterFlowModel<RegistrationPageWidget> {
 
     logoFocusNode?.dispose();
     logoController?.dispose();
+
   }
 
   /// Action blocks are added here.
 
   void registrarUsuario(BuildContext context) async {
     if (isRestaurant == false) {
-      if (nameController1.text != "" && emailAddressController.text != "" && passwordController.text != "" && passwordControllerValidator != "") {
+      if (nameController1.text != "" &&
+          emailAddressController.text != "" &&
+          passwordController.text != "" &&
+          passwordControllerValidator != "") {
         if (passwordController.text == confirmPasswordController.text) {
-          Cliente cliente = Cliente.registrar(nombre: nameController1.text, email: emailAddressController.text, tipoUsuario: "Cliente");
-          String response = await cliente.resgistrarCliente(passwordController.text);
+          Cliente cliente = Cliente.registrar(
+              nombre: nameController1.text,
+              email: emailAddressController.text,
+              tipoUsuario: "Cliente");
+          String response =
+              await cliente.resgistrarCliente(passwordController.text);
           if (response == "correcto") {
-            registrationAcceptMessage(context, "Se ha registrado correctamente");
+            registrationAcceptMessage(
+                context, "Se ha registrado correctamente");
           } else {
             errorMessage(context, "Ha ocurrido un error, no se pudo registrar");
           }
@@ -104,9 +128,16 @@ class RegistrationPageModel extends FlutterFlowModel<RegistrationPageWidget> {
         warningMessage(context, "Por favor llenar todos los campos");
       }
     } else {
-      if (nameController1.text != "" && emailAddressController.text != "" && passwordController.text != "" && passwordControllerValidator != ""
-          && nameController2.text != "" && addressController1 != "" && descriptionController != "" && logoController != "" && openingTime != null
-          && closingTime != null) {
+      if (nameController1.text != "" &&
+          emailAddressController.text != "" &&
+          passwordController.text != "" &&
+          passwordControllerValidator != "" &&
+          nameController2.text != "" &&
+          addressController1 != "" &&
+          descriptionController != "" &&
+          logoController != "" &&
+          openingTime != null &&
+          closingTime != null) {
         if (passwordController.text == confirmPasswordController.text) {
           Restaurante restaurante = Restaurante.registro(
               nombre: nameController1.text,
@@ -119,9 +150,11 @@ class RegistrationPageModel extends FlutterFlowModel<RegistrationPageWidget> {
               horaApertura: openingTime as DateTime,
               horaCierre: closingTime as DateTime,
               imagen: logoController.text);
-          String response = await restaurante.resgistrarRestaurante(passwordController.text);
+          String response =
+              await restaurante.resgistrarRestaurante(passwordController.text);
           if (response == "correcto") {
-            registrationAcceptMessage(context, "Se ha registrado correctamente");
+            registrationAcceptMessage(
+                context, "Se ha registrado correctamente");
           } else {
             errorMessage(context, "Ha ocurrido un error, no se pudo registrar");
           }
@@ -134,5 +167,45 @@ class RegistrationPageModel extends FlutterFlowModel<RegistrationPageWidget> {
     }
   }
 
+  List<AutocompletePrediction> placePredictions = [];
+
+  void placeAutocomplete(String query, StateSetter setState) async {
+    Uri uri = Uri.https(
+      "maps.googleapis.com",
+      "maps/api/place/autocomplete/json",
+      {
+        "input": query,
+        "key": apiKey
+      }
+    );
+
+    String? response = await NetworkUtilities.fetchUrl(uri);
+
+    if(response != null){
+      PlaceAutocompleteResponse result = PlaceAutocompleteResponse.parseAutocompleteResult(response);
+      if(result.predictions != null){
+        placePredictions = result.predictions!;
+      }
+    }
+  }
+
+  void requestLatLong(String placeId) async {
+    Uri uri = Uri.https(
+      "maps.googleapis.com",
+      "maps/api/place/details/json",
+      {
+        "place_id": placeId,
+        "key": apiKey
+      }
+    );
+
+    final response = await http.get(uri);
+
+    if(response.statusCode == 200){
+      Map<String, dynamic> jsonResponse = json.decode(response.body);
+      latitude = jsonResponse['result']['geometry']['location']['lat'];
+      longitude = jsonResponse['result']['geometry']['location']['lng'];
+    }
+  }
   /// Additional helper methods are added here.
 }

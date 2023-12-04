@@ -2,6 +2,10 @@ import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:unilunch/presentation/common/models/location_list_tile.dart';
+//import 'package:place_picker/place_picker.dart';
+import '../../../network_utilities.dart';
+import '../models/place_auto_complete_response.dart';
 import 'login_page_widget.dart';
 
 import '../models/registration_page_model.dart';
@@ -822,6 +826,29 @@ class _RegistrationPageWidgetState extends State<RegistrationPageWidget>
                           child: Container(
                             width: double.infinity,
                             child: TextFormField(
+                              onChanged: (value) async {
+                                Uri uri = Uri.https(
+                                  "maps.googleapis.com",
+                                  "maps/api/place/autocomplete/json",
+                                  {
+                                    "input": value,
+                                    "key": _model.apiKey
+                                  }
+                                );
+
+                                String? response = await NetworkUtilities.fetchUrl(uri);
+
+                                if(response != null){
+                                  PlaceAutocompleteResponse result = PlaceAutocompleteResponse.parseAutocompleteResult(response);
+                                  if(result.predictions != null){
+                                    setState(() {
+                                      _model.placePredictions = result.predictions!;
+                                    });
+                                    //_model.placePredictions = result.predictions!;
+                                  }
+                                }
+                              },
+                              textInputAction: TextInputAction.search,
                               controller: _model.addressController1,
                               focusNode: _model.addressFocusNode1,
                               autofillHints: [AutofillHints.name],
@@ -876,6 +903,43 @@ class _RegistrationPageWidgetState extends State<RegistrationPageWidget>
                                   ),
                               validator: _model.addressController1Validator
                                   .asValidator(context),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                          child: Container(
+                            width: double.infinity,
+                            height: 200,
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context).secondaryBackground,
+                              borderRadius: BorderRadius.circular(35),
+                              border: Border.all(
+                                color: FlutterFlowTheme.of(context).alternate,
+                                width: 2,
+                              ),
+                            ),
+                            child: SingleChildScrollView(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Container(
+                                        height: MediaQuery.sizeOf(context).height * 0.62,
+                                        width: MediaQuery.sizeOf(context).width,
+                                        child: ListView.builder(
+                                          //scrollDirection: Axis.vertical,
+                                          physics: const NeverScrollableScrollPhysics(),
+                                          itemCount: _model.placePredictions.length,
+                                          itemBuilder: (context, index) => LocationListTile(
+                                            press: () {
+                                              _model.requestLatLong(_model.placePredictions[index].placeId!);
+                                            },
+                                            location: _model.placePredictions[index].description!
+                                          ),
+                                        ),
+                                      )
+                                ],
+                              ),
                             ),
                           ),
                         ),
