@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutterflow_ui/flutterflow_ui.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:unilunch/logic/Cliente.dart';
 
 import '../models/customers_page_model.dart';
@@ -8,7 +9,8 @@ export '../models/customers_page_model.dart';
 
 class CustomersPageWidget extends StatefulWidget {
   final Cliente cliente;
-  const CustomersPageWidget({Key? key, required this.cliente}) : super(key: key);
+  const CustomersPageWidget({Key? key, required this.cliente})
+      : super(key: key);
 
   @override
   _CustomersPageWidgetState createState() => _CustomersPageWidgetState();
@@ -84,6 +86,11 @@ class _CustomersPageWidgetState extends State<CustomersPageWidget> {
                   color: FlutterFlowTheme.of(context).secondaryBackground,
                   shape: BoxShape.rectangle,
                 ),
+                child: GoogleMap(
+                  myLocationButtonEnabled: false,
+                  zoomControlsEnabled: true,
+                  initialCameraPosition: CustomersPageModel.initialCameraPosition,
+                )
               ),
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(16, 8, 16, 8),
@@ -96,10 +103,11 @@ class _CustomersPageWidgetState extends State<CustomersPageWidget> {
                     obscureText: false,
                     decoration: InputDecoration(
                       labelText: 'Buscar Restaurante...',
-                      labelStyle: FlutterFlowTheme.of(context).labelMedium.override(
-                            fontFamily: 'Readex Pro',
-                            color: Color(0xFF064244),
-                          ),
+                      labelStyle:
+                          FlutterFlowTheme.of(context).labelMedium.override(
+                                fontFamily: 'Readex Pro',
+                                color: Color(0xFF064244),
+                              ),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color: FlutterFlowTheme.of(context).alternate,
@@ -129,8 +137,10 @@ class _CustomersPageWidgetState extends State<CustomersPageWidget> {
                         borderRadius: BorderRadius.circular(35),
                       ),
                       filled: true,
-                      fillColor: FlutterFlowTheme.of(context).secondaryBackground,
-                      contentPadding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
+                      fillColor:
+                          FlutterFlowTheme.of(context).secondaryBackground,
+                      contentPadding:
+                          EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
                       prefixIcon: Icon(
                         Icons.search_rounded,
                         color: Color(0xFF064244),
@@ -141,8 +151,8 @@ class _CustomersPageWidgetState extends State<CustomersPageWidget> {
                           color: Color(0xFF064244),
                         ),
                     keyboardType: TextInputType.emailAddress,
-                    validator:
-                        _model.searchRestaurantControllerValidator.asValidator(context),
+                    validator: _model.searchRestaurantControllerValidator
+                        .asValidator(context),
                   ),
                 ),
               ),
@@ -175,18 +185,23 @@ class _CustomersPageWidgetState extends State<CustomersPageWidget> {
                             children: [
                               Expanded(
                                 child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 5, 0),
                                   child: AspectRatio(
                                     aspectRatio: 1,
                                     child: Container(
-                                      width: MediaQuery.sizeOf(context).width * 1,
-                                      height: MediaQuery.sizeOf(context).height * 1,
+                                      width:
+                                          MediaQuery.sizeOf(context).width * 1,
+                                      height:
+                                          MediaQuery.sizeOf(context).height * 1,
                                       decoration: BoxDecoration(),
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(8),
                                         child: Image.network(
                                           'https://picsum.photos/seed/203/600',
-                                          width: MediaQuery.sizeOf(context).width * 0.108,
+                                          width:
+                                              MediaQuery.sizeOf(context).width *
+                                                  0.108,
                                           height: 200,
                                           fit: BoxFit.cover,
                                         ),
@@ -199,15 +214,18 @@ class _CustomersPageWidgetState extends State<CustomersPageWidget> {
                                 width: MediaQuery.sizeOf(context).width * 0.65,
                                 height: 100,
                                 decoration: BoxDecoration(
-                                  color:
-                                      FlutterFlowTheme.of(context).secondaryBackground,
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
                                 ),
                                 child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 5, 0),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -216,17 +234,19 @@ class _CustomersPageWidgetState extends State<CustomersPageWidget> {
                                         children: [
                                           Expanded(
                                             child: Align(
-                                              alignment:
-                                                  AlignmentDirectional(-1.00, 0.00),
+                                              alignment: AlignmentDirectional(
+                                                  -1.00, 0.00),
                                               child: Text(
                                                 'Las Palmas',
-                                                style: FlutterFlowTheme.of(context)
+                                                style: FlutterFlowTheme.of(
+                                                        context)
                                                     .bodyMedium
                                                     .override(
                                                       fontFamily: 'Readex Pro',
                                                       color: Color(0xFF064244),
                                                       fontSize: 16,
-                                                      fontWeight: FontWeight.bold,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                     ),
                                               ),
                                             ),
@@ -237,11 +257,12 @@ class _CustomersPageWidgetState extends State<CustomersPageWidget> {
                                             size: 24,
                                           ),
                                           Align(
-                                            alignment:
-                                                AlignmentDirectional(-1.00, 0.00),
+                                            alignment: AlignmentDirectional(
+                                                -1.00, 0.00),
                                             child: Text(
                                               '4.7',
-                                              style: FlutterFlowTheme.of(context)
+                                              style: FlutterFlowTheme.of(
+                                                      context)
                                                   .bodyMedium
                                                   .override(
                                                     fontFamily: 'Readex Pro',
@@ -268,11 +289,12 @@ class _CustomersPageWidgetState extends State<CustomersPageWidget> {
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
                                           Align(
-                                            alignment:
-                                                AlignmentDirectional(-1.00, 0.00),
+                                            alignment: AlignmentDirectional(
+                                                -1.00, 0.00),
                                             child: Text(
                                               'Cra 26A #10-11',
-                                              style: FlutterFlowTheme.of(context)
+                                              style: FlutterFlowTheme.of(
+                                                      context)
                                                   .bodyMedium
                                                   .override(
                                                     fontFamily: 'Readex Pro',
