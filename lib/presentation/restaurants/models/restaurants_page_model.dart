@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:unilunch/alerts.dart';
 import 'package:unilunch/logic/Restaurante.dart';
-
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../logic/Plato.dart';
 import '../widgets/restaurants_page_widget.dart' show RestaurantsPageWidget;
 import 'package:flutter/material.dart';
@@ -752,11 +752,17 @@ class RestaurantsPageModel extends FlutterFlowModel<RestaurantsPageWidget> {
   }
 
   void editarPlato(BuildContext context, Plato plato) {
+
+    final nombreController = TextEditingController();
+    final descripcionController = TextEditingController();
+    final precioController = TextEditingController();
+    final logoController = TextEditingController();
+    int stock = plato.stock;
+
     showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-              title: Center(child: Text("Actualizar Plato")),
               backgroundColor: Color(0xFFC6E8DA),
               content: SingleChildScrollView(
                   child: Container(
@@ -764,6 +770,349 @@ class RestaurantsPageModel extends FlutterFlowModel<RestaurantsPageWidget> {
                       child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 16),
+                              child: Text(
+                                'Actualizar Plato',
+                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                  fontFamily: 'Readex Pro',
+                                  color: Color(0xFF064244),
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                              child: Container(
+                                width: double.infinity,
+                                child: TextFormField(
+                                  controller: nombreController,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    labelText: plato.nombre,
+                                    labelStyle: FlutterFlowTheme.of(context).labelMedium,
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context).alternate,
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(35),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0xFF064244),
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(35),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context).error,
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(35),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context).error,
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(35),
+                                    ),
+                                    filled: true,
+                                    fillColor: FlutterFlowTheme.of(context).secondaryBackground,
+                                    contentPadding:
+                                    EdgeInsetsDirectional.fromSTEB(24, 24, 24, 24),
+                                    prefixIcon: Icon(
+                                      Icons.text_format_rounded,
+                                      color: Color(0xFF064244),
+                                    ),
+                                  ),
+                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                    fontFamily: 'Readex Pro',
+                                    color: Color(0xFF064244),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                              child: Container(
+                                width: double.infinity,
+                                child: TextFormField(
+                                  controller: descripcionController,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    labelText: plato.descripcion,
+                                    labelStyle: FlutterFlowTheme.of(context).labelMedium,
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context).alternate,
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(35),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0xFF064244),
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(35),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context).error,
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(35),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context).error,
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(35),
+                                    ),
+                                    filled: true,
+                                    fillColor: FlutterFlowTheme.of(context).secondaryBackground,
+                                    contentPadding:
+                                    EdgeInsetsDirectional.fromSTEB(24, 24, 24, 24),
+                                    prefixIcon: Icon(
+                                      Icons.short_text_rounded,
+                                      color: Color(0xFF064244),
+                                    ),
+                                  ),
+                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                    fontFamily: 'Readex Pro',
+                                    color: Color(0xFF064244),
+                                  ),
+                                  keyboardType: TextInputType.multiline,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                              child: Container(
+                                width: double.infinity,
+                                child: TextFormField(
+                                  controller: precioController,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    labelText: currencyFormat.format(plato.precio),
+                                    labelStyle: FlutterFlowTheme.of(context).labelMedium,
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context).alternate,
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(35),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0xFF064244),
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(35),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context).error,
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(35),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context).error,
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(35),
+                                    ),
+                                    filled: true,
+                                    fillColor: FlutterFlowTheme.of(context).secondaryBackground,
+                                    contentPadding:
+                                    EdgeInsetsDirectional.fromSTEB(24, 24, 24, 24),
+                                    prefixIcon: Icon(
+                                      Icons.attach_money_rounded,
+                                      color: Color(0xFF064244),
+                                    ),
+                                  ),
+                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                    fontFamily: 'Readex Pro',
+                                    color: Color(0xFF064244),
+                                  ),
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.allow(RegExp('[0-9]'))
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                              child: Container(
+                                width: double.infinity,
+                                child: TextFormField(
+                                  controller: logoController,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    labelText: plato.imagen,
+                                    labelStyle: FlutterFlowTheme.of(context).labelMedium,
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context).alternate,
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(35),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0xFF064244),
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(35),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context).error,
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(35),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context).error,
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(35),
+                                    ),
+                                    filled: true,
+                                    fillColor: FlutterFlowTheme.of(context).secondaryBackground,
+                                    contentPadding:
+                                    EdgeInsetsDirectional.fromSTEB(24, 24, 24, 24),
+                                    prefixIcon: Icon(
+                                      Icons.image_rounded,
+                                      color: Color(0xFF064244),
+                                    ),
+                                  ),
+                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                    fontFamily: 'Readex Pro',
+                                    color: Color(0xFF064244),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              width: 160,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context).secondaryBackground,
+                                borderRadius: BorderRadius.circular(8),
+                                shape: BoxShape.rectangle,
+                                border: Border.all(
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  width: 2,
+                                ),
+                              ),
+                              child: StatefulBuilder(
+                                builder: (BuildContext context, StateSetter setState) {
+                                  return FlutterFlowCountController(
+                                    decrementIconBuilder: (enabled) => FaIcon(
+                                      FontAwesomeIcons.minus,
+                                      color: enabled
+                                          ? FlutterFlowTheme.of(context).secondaryText
+                                          : FlutterFlowTheme.of(context).alternate,
+                                      size: 20,
+                                    ),
+                                    incrementIconBuilder: (enabled) => FaIcon(
+                                      FontAwesomeIcons.plus,
+                                      color: enabled
+                                          ? FlutterFlowTheme.of(context).primary
+                                          : FlutterFlowTheme.of(context).alternate,
+                                      size: 20,
+                                    ),
+                                    countBuilder: (count) => Text(
+                                      count.toString(),
+                                      style: FlutterFlowTheme.of(context).titleLarge,
+                                    ),
+                                    count: stock,
+                                    updateCount: (count) {
+                                      if(count >= 0) {
+                                        setState(() {
+                                          stock = count;
+                                        });
+                                      }
+                                    },
+                                    stepSize: 1,
+                                  );
+                                },
+                              ),
+                            ),
+                            Align(
+                              alignment: AlignmentDirectional(0.00, 0.00),
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 16),
+                                child: FFButtonWidget(
+                                  onPressed: () async {
+                                    bool actualizo = false;
+                                    if(nombreController.text!="") {
+                                      if(nombreController.text!=plato.nombre) {
+                                        plato.actualizarNombre(nombreController.text);
+                                        actualizo = true;
+                                      }
+                                    }
+                                    if(descripcionController.text!="") {
+                                      if(descripcionController.text!=plato.descripcion) {
+                                        plato.actualizarDescripcion(descripcionController.text);
+                                        actualizo = true;
+                                      }
+                                    }
+                                    if(precioController.text!="") {
+                                      if(precioController.text!=plato.precio) {
+                                        plato.actualizarPrecio(int.parse(precioController.text));
+                                        actualizo = true;
+                                      }
+                                    }
+                                    if(logoController.text!="") {
+                                      if(precioController.text!=plato.imagen) {
+                                        plato.actualizarLogo(precioController.text);
+                                        actualizo = true;
+                                      }
+                                    }
+                                    if(stock!=plato.stock){
+                                      plato.actualizarStock(stock);
+                                      actualizo = true;
+                                    }
+                                    if(actualizo==true) {
+                                      Navigator.of(context).pop();
+                                      accceptMessage(context, "Se ha actualizado correctamente");
+                                    } else {
+                                      Navigator.of(context).pop();
+                                      warningMessage(context, "No hubo cambios");
+                                    }
+                                  },
+                                  text: 'Actualizar',
+                                  options: FFButtonOptions(
+                                    width: 230,
+                                    height: 52,
+                                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                                    iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                                    color: Color(0xFF064244),
+                                    textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                                      fontFamily: 'Readex Pro',
+                                      color: Colors.white,
+                                    ),
+                                    elevation: 3,
+                                    borderSide: BorderSide(
+                                      color: Colors.transparent,
+                                      width: 1,
+                                    ),
+                                    borderRadius: BorderRadius.circular(35),
+                                  ),
+                                ),
+                              ),
+                            ),
                           ]
                       )
                   )

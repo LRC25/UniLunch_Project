@@ -185,7 +185,7 @@ class Reserva {
           Map<String, dynamic> logo = dato["logo"];
           Map<String, dynamic> notaRestaurante = dato["nota_prom"];
           String nota;
-          if(dato["nota"]==null){nota="";}else{Map<String, dynamic> notaDato = dato["nota"];nota=notaDato["calificacion"];}
+          if(dato["nota"]==null){nota="";}else{Map<String, dynamic> notaDato = dato["nota"];nota=notaDato["calificacion"].toString();}
           List<ReservaPlato> reservaPlatos = await ReservaPlato.vacio()
               .listarPorReserva(dato["id_reserva"]);
           Reserva reserva = Reserva.cliente(

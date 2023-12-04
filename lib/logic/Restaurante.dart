@@ -11,7 +11,8 @@ class Restaurante extends Usuario {
 
   String idRestaurante;
   String nombreRestaurante;
-  String ubicacion;
+  double latitud;
+  double longitud;
   String direccion;
   String descripcion;
   DateTime horaApertura;
@@ -26,7 +27,8 @@ class Restaurante extends Usuario {
     required String tipoUsuario,
     required this.idRestaurante,
     required this.nombreRestaurante,
-    required this.ubicacion,
+    required this.latitud,
+    required this.longitud,
     required this.direccion,
     required this.descripcion,
     required this.horaApertura,
@@ -40,7 +42,8 @@ class Restaurante extends Usuario {
     required String nombre,
     required String email,
     required String tipoUsuario,
-    required this.ubicacion,
+    required this.latitud,
+    required this.longitud,
     required this.nombreRestaurante,
     required this.direccion,
     required this.descripcion,
@@ -55,8 +58,9 @@ class Restaurante extends Usuario {
     String email = "",
     String tipoUsuario = "",
     required this.idRestaurante,
-    required this.ubicacion,
     required this.nombreRestaurante,
+    required this.latitud,
+    required this.longitud,
     required this.direccion,
     required this.descripcion,
     required this.horaApertura,
@@ -70,7 +74,7 @@ class Restaurante extends Usuario {
     String nombre = "",
     String email = "",
     String tipoUsuario = ""
-  }) : idRestaurante = "", ubicacion = "", nombreRestaurante = "", direccion = "", descripcion = "", horaApertura = DateTime(0),
+  }) : idRestaurante = "", latitud = 0, longitud = 0, nombreRestaurante = "", direccion = "", descripcion = "", horaApertura = DateTime(0),
         horaCierre = DateTime(0), imagen = "", notaPromedio = 0, super(idUsuario, nombre, email, tipoUsuario);
 
   Future<String> resgistrarRestaurante(String contrasenna) async {
@@ -84,8 +88,9 @@ class Restaurante extends Usuario {
           .insert({"id_usuario":idUsuario, "nombre":nombre, "email":email, "contrasenna":contrasenna, "tipo_usuario":tipoUsuario});
       await cliente
           .from("restaurante")
-          .insert({"id_restaurante":idRestaurante, "id_usuario":idUsuario, "nombre_restaurante":nombreRestaurante,"ubicacion":ubicacion, "direccion":direccion,
-        "descripcion":descripcion, "hora_apertura": convertTimeSQL(horaApertura), "hora_cierre": convertTimeSQL(horaCierre), "imagen":imagen, "nota_prom":0});
+          .insert({"id_restaurante":idRestaurante, "id_usuario":idUsuario, "nombre_restaurante":nombreRestaurante,"latitud": latitud, "longitud":longitud,
+        "direccion":direccion, "descripcion":descripcion, "hora_apertura": convertTimeSQL(horaApertura), "hora_cierre": convertTimeSQL(horaCierre),
+        "imagen":imagen, "nota_prom":0});
       return "correcto";
     } catch (e) {
       return e.toString();

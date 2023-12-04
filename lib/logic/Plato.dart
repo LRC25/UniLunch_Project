@@ -170,4 +170,56 @@ class Plato {
     }
   }
 
+  Future<String> actualizarNombre(String nombre) async {
+    final SupabaseService supabaseService = SupabaseService();
+    SupabaseClient cliente = supabaseService.client;
+    try {
+      await cliente
+          .from("plato")
+          .update({"nombre":nombre}).match({"id_plato":idPlato});
+      return "correcto";
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
+  Future<String> actualizarDescripcion(String descripcion) async {
+    final SupabaseService supabaseService = SupabaseService();
+    SupabaseClient cliente = supabaseService.client;
+    try {
+      await cliente
+          .from("plato")
+          .update({"descripcion":descripcion}).match({"id_plato":idPlato});
+      return "correcto";
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
+  Future<String> actualizarPrecio(int precio) async {
+    final SupabaseService supabaseService = SupabaseService();
+    SupabaseClient cliente = supabaseService.client;
+    try {
+      await cliente
+          .from("plato")
+          .update({"precio":precio}).match({"id_plato":idPlato});
+      return "correcto";
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
+  Future<String> actualizarLogo(String logo) async {
+    final SupabaseService supabaseService = SupabaseService();
+    SupabaseClient cliente = supabaseService.client;
+    try {
+      await cliente
+          .from("plato")
+          .update({"imagen":logo}).match({"id_plato":idPlato});
+      return "correcto";
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
 }

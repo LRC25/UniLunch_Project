@@ -48,7 +48,7 @@ class Usuario {
         } else if (dato["tipo_usuario"] == "Restaurante") {
           final dataRestaurante = await cliente
               .from("restaurante")
-              .select('''id_restaurante,nombre_restaurante,ubicacion,descripcion,direccion,hora_apertura,hora_cierre,imagen,nota_prom''')
+              .select('''id_restaurante,nombre_restaurante,latitud,longitud,descripcion,direccion,hora_apertura,hora_cierre,imagen,nota_prom''')
               .eq("id_usuario", dato["id_usuario"]);
           if (dataRestaurante.isNotEmpty) {
             Map<String, dynamic> datoRestarante = dataRestaurante[0];
@@ -59,7 +59,8 @@ class Usuario {
                 tipoUsuario: dato["tipo_usuario"],
                 idRestaurante: datoRestarante["id_restaurante"],
                 nombreRestaurante: datoRestarante["nombre_restaurante"],
-                ubicacion: datoRestarante["ubicacion"],
+                latitud: datoRestarante["latitud"].toDouble(),
+                longitud: datoRestarante["longitud"].toDouble(),
                 direccion: datoRestarante["direccion"],
                 descripcion: datoRestarante["descripcion"],
                 horaApertura: convertTime(datoRestarante["hora_apertura"]),
