@@ -64,24 +64,13 @@ class Cliente extends Usuario {
     }
   }
 
-  Future<String> cancelarReservar(Reserva reserva) async {
-    try {
-      String response = await reserva.eliminarReserva();
-      if (response == "correcto"){
-        return "correcto";
-      } else {
-        return response;
-      }
-    } catch (e) {
-      return e.toString();
-    }
-  }
-
-  Future<String> calificarRestaurante(String descripcion, int calificacion, String idRestaurante) async {
+  Future<String> calificarRestaurante(String descripcion, int calificacion, Reserva reserva) async {
     try {
       Nota nota = Nota.resgistro(descripcion, calificacion);
-      String response = await nota.insertarNota(idRestaurante, idUsuario);
-      if (response == "correcto"){
+      await nota.insertarNota(reserva.idRestaurante, idUsuario, reserva);
+      Restaurante restaurante = Restaurante.vacio();
+      String response = await restaurante.actualizarPromedio(reserva.idRestaurante);
+      if (response=="correcto") {
         return "correcto";
       } else {
         return response;
@@ -101,6 +90,30 @@ class Cliente extends Usuario {
       }
     } catch (e) {
       return e.toString();
+    }
+  }
+
+  Future<List<Reserva>> monitorearReserva() async {
+    Reserva reserva = Reserva.vacio();
+    List<Reserva> reservas = [];
+    try {
+      reservas = await reserva.listarResevaPendietePorCliente(idUsuario);
+      return reservas;
+    } catch (e) {
+      debugPrint(e.toString());
+      return reservas;
+    }
+  }
+
+  Future<List<Reserva>> monitorearHistorial() async {
+    Reserva reserva = Reserva.vacio();
+    List<Reserva> reservas = [];
+    try {
+      reservas = await reserva.listarResevaCompletaPorCliente(idUsuario);
+      return reservas;
+    } catch (e) {
+      debugPrint(e.toString());
+      return reservas;
     }
   }
 

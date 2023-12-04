@@ -57,7 +57,7 @@ class _NavbarCustomerPageState extends State<NavbarCustomerPage> {
         widget = CustomersPageWidget(cliente: cliente);
         break;
       case 1:
-        widget = CustomerReservationsPageWidget();
+        widget = CustomerReservationsPageWidget(cliente: cliente);
         break;
       case 2:
         widget = CustomerSettingsPageWidget();

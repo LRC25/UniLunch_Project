@@ -49,6 +49,14 @@ class Restaurante extends Usuario {
     required this.imagen
   }): idRestaurante = "", notaPromedio = 0, super(idUsuario, nombre, email, tipoUsuario);
 
+  Restaurante.vacio({
+    String idUsuario = "",
+    String nombre = "",
+    String email = "",
+    String tipoUsuario = ""
+  }) : idRestaurante = "", ubicacion = "", nombreRestaurante = "", direccion = "", descripcion = "", horaApertura = DateTime(0),
+        horaCierre = DateTime(0), imagen = "", notaPromedio = 0, super(idUsuario, nombre, email, tipoUsuario);
+
   Future<String> resgistrarRestaurante(String contrasenna) async {
     final SupabaseService supabaseService = SupabaseService();
     SupabaseClient cliente = supabaseService.client;
@@ -140,6 +148,31 @@ class Restaurante extends Usuario {
     } catch (e) {
       debugPrint(e.toString());
       return notas;
+    }
+  }
+
+  Future<String> actualizarPromedio(String idRestaurante) async {
+    final SupabaseService supabaseService = SupabaseService();
+    SupabaseClient cliente = supabaseService.client;
+    num contar = 0;
+    int lenght = 0;
+    double prom = 0;
+    try {
+      final data = await cliente
+          .from("nota").select("calificacion").eq("id_restaurante", idRestaurante);
+      if (data.isNotEmpty) {
+        for (var i in data) {
+          Map<String, dynamic> dato = i;
+          contar = contar + dato["calificacion"];
+          lenght = lenght +1;
+        }
+        prom = contar/lenght;
+        prom = double.parse(prom.toStringAsFixed(1));
+      }
+      await cliente.from("restaurante").update({"nota_prom":prom}).match({"id_restaurante":idRestaurante});
+      return "correcto";
+    } catch (e) {
+      return e.toString();
     }
   }
 

@@ -11,10 +11,8 @@ void registrationAcceptMessage(BuildContext context, String mensaje) {
         content: SingleChildScrollView(
             child: Container(
               width: MediaQuery.sizeOf(context).width,
-              height: 217,
               child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(
                     Icons.check_circle,
@@ -84,10 +82,8 @@ void completeReservationAcceptMessage(BuildContext context, String mensaje) {
         content: SingleChildScrollView(
             child: Container(
               width: MediaQuery.sizeOf(context).width,
-              height: 217,
               child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(
                     Icons.check_circle,
@@ -156,10 +152,8 @@ void warningMessage(BuildContext context, String mensaje) {
         content: SingleChildScrollView(
             child: Container(
               width: MediaQuery.sizeOf(context).width,
-              height: 217,
               child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(
                     Icons.warning_sharp,
@@ -228,10 +222,8 @@ void errorMessage(BuildContext context, String mensaje) {
         content: SingleChildScrollView(
             child: Container(
               width: MediaQuery.sizeOf(context).width,
-              height: 217,
               child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(
                     Icons.error_sharp,
