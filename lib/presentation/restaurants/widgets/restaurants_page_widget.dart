@@ -31,6 +31,11 @@ class _RestaurantsPageWidgetState extends State<RestaurantsPageWidget> {
     _loadPlatos();
     super.initState();
     _model = createModel(context, () => RestaurantsPageModel());
+
+    _model.nameController ??= TextEditingController();
+    _model.descriptionController ??= TextEditingController();
+    _model.priceController ??= TextEditingController();
+    _model.imageController ??= TextEditingController();
   }
 
   @override
@@ -115,8 +120,8 @@ class _RestaurantsPageWidgetState extends State<RestaurantsPageWidget> {
                               Align(
                                 alignment: AlignmentDirectional(0.00, 0.00),
                                 child: Padding(
-                                  padding:
-                                      EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 8, 0, 0),
                                   child: Text(
                                     'Platos',
                                     textAlign: TextAlign.center,
@@ -145,7 +150,7 @@ class _RestaurantsPageWidgetState extends State<RestaurantsPageWidget> {
                                     size: 24,
                                   ),
                                   onPressed: () {
-                                    print('IconButton pressed ...');
+                                    _model.addPlateAlert(context);
                                   },
                                 ),
                               ),
@@ -173,16 +178,19 @@ class _RestaurantsPageWidgetState extends State<RestaurantsPageWidget> {
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: (platos.isEmpty)
-                                    ? [Center(child: CircularProgressIndicator(
-                                      color: Color(0xFF064244),
-                                    ))]
-                                    : platos
-                                        .map((plato) {
-                                          return _model.mostrarPlatos(
-                                              context, plato);
-                                        })
-                                        .toList()
-                                        .divide(SizedBox(height: 8)),
+                                  ? [
+                                      Center(
+                                          child: CircularProgressIndicator(
+                                        color: Color(0xFF064244),
+                                      ))
+                                    ]
+                                  : platos
+                                      .map((plato) {
+                                        return _model.mostrarPlatos(
+                                            context, plato);
+                                      })
+                                      .toList()
+                                      .divide(SizedBox(height: 8)),
                             ),
                           ),
                         ),
@@ -239,12 +247,16 @@ class _RestaurantsPageWidgetState extends State<RestaurantsPageWidget> {
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
                               children: (menu.isEmpty)
-                                  ? [Center(child: CircularProgressIndicator(
-                                    color: Color(0xFF064244),
-                                  ))]
+                                  ? [
+                                      Center(
+                                          child: CircularProgressIndicator(
+                                        color: Color(0xFF064244),
+                                      ))
+                                    ]
                                   : menu
                                       .map((platoMenu) {
-                                        return _model.mostrarMenu(context, platoMenu);
+                                        return _model.mostrarMenu(
+                                            context, platoMenu);
                                       })
                                       .toList()
                                       .divide(SizedBox(height: 8)),
