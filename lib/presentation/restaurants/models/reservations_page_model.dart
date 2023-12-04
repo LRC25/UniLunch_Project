@@ -300,7 +300,7 @@ class RestaurantReservationsPageModel
                   child: FFButtonWidget(
                     onPressed: () async {
                       String respuesta = await reserva.completarReserva();
-                      if(respuesta=="Correto") {
+                      if(respuesta=="correcto") {
                         completeReservationAcceptMessage(context, "Se ha completado corretamente la reserva");
                       } else {
                         errorMessage(context, "Ha ocurrido un error");
@@ -460,6 +460,7 @@ class RestaurantReservationsPageModel
         ),
       ),
     );
+
   }
 
   /// Additional helper methods are added here.

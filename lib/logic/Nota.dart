@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:unilunch/logic/Reserva.dart';
 import 'package:unilunch/persistence/SupabaseConnection.dart';
 import 'package:supabase/src/supabase_client.dart';
 import 'package:unilunch/utils.dart';
@@ -21,7 +22,7 @@ class Nota {
 
   Nota.vacio(): idNota = "", calificacion = 0, descripcion = "";
 
-  Future<String> insertarNota(String idRestaurante, String idUsuario) async {
+  Future<String> insertarNota(String idRestaurante, String idUsuario, Reserva reserva) async {
     final SupabaseService supabaseService = SupabaseService();
     SupabaseClient cliente = supabaseService.client;
     try {
@@ -29,6 +30,7 @@ class Nota {
       await cliente
           .from("nota")
           .insert({"id_nota":id, "id_restaurante":idRestaurante, "id_usuario":idUsuario, "calificacion":calificacion, "descripcion":descripcion});
+      await reserva.actualizarEstadoCalificacion(id);
       return "correcto";
     } catch (e) {
       return e.toString();
@@ -57,7 +59,9 @@ class Nota {
       if (data.isNotEmpty) {
         for (var i in data) {
           Map<String, dynamic> dato = i;
-          Nota nota = Nota(dato["id_nota"], dato["descripcion"], dato["calificacion"]);
+          String descripcion;
+          if(dato["descripcion"]==null){descripcion="";}else{descripcion=dato["descripcion"];}
+          Nota nota = Nota(dato["id_nota"], descripcion, dato["calificacion"]);
           notas.add(nota);
         }
         return notas;

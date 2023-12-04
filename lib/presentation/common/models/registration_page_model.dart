@@ -2,7 +2,6 @@ import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'package:unilunch/logic/Restaurante.dart';
 import '../../../alerts.dart';
 import '../../../logic/Cliente.dart';
-import '../widgets/login_page_widget.dart';
 import '../widgets/registration_page_widget.dart' show RegistrationPageWidget;
 import 'package:flutter/material.dart';
 
