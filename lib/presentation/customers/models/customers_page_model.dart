@@ -18,7 +18,7 @@ class CustomersPageModel extends FlutterFlowModel<CustomersPageWidget> {
   /// Initialization and disposal methods.
 
   static const initialCameraPosition = google_maps_dart.CameraPosition(
-      target: google_maps_dart.LatLng(37.77, -122.43), zoom: 11.5);
+      target: google_maps_dart.LatLng(7.1380158, -73.1198447), zoom: 16.25);
 
   void initState(BuildContext context) {}
 
