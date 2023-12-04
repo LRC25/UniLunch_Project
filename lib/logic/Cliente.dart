@@ -32,7 +32,7 @@ class Cliente extends Usuario {
     _buscarRestaurante = buscarRestaurante;
   }
 
-  List<Restaurante> applyBuscarRestaurante(dynamic entrada) {
+  Future<List<Restaurante>> applyBuscarRestaurante(dynamic entrada) {
     return _buscarRestaurante.buscarRerstaurante(entrada);
   }
 
