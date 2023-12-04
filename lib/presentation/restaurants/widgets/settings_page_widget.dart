@@ -1,4 +1,7 @@
 import 'package:flutterflow_ui/flutterflow_ui.dart';
+
+import '../../../logic/Restaurante.dart';
+
 import '../../../logic/Usuario.dart';
 
 import 'package:flutter/material.dart';
@@ -9,7 +12,8 @@ import '../models/settings_page_model.dart';
 export '../models/settings_page_model.dart';
 
 class RestaurantSettingsPageWidget extends StatefulWidget {
-  const RestaurantSettingsPageWidget({Key? key}) : super(key: key);
+  final Restaurante restaurante;
+  const RestaurantSettingsPageWidget({Key? key, required this.restaurante}) : super(key: key);
 
   @override
   _RestaurantSettingsPageWidgetState createState() =>
@@ -138,7 +142,8 @@ class _RestaurantSettingsPageWidgetState
                                 size: 35,
                               ),
                               onPressed: () {
-                                print('IconButton pressed ...');
+                                updateMessage(context, "Nombre", widget.restaurante.nombre);
+
                               },
                             ),
                           ],
@@ -193,7 +198,9 @@ class _RestaurantSettingsPageWidgetState
                               size: 35,
                             ),
                             onPressed: () {
-                              print('IconButton pressed ...');
+
+                              updateMessage(context, "Nombre del restaurante", widget.restaurante.nombre);
+
                             },
                           ),
                         ],
@@ -235,7 +242,8 @@ class _RestaurantSettingsPageWidgetState
                             ),
                             onPressed: () async {
 
-                              updateMessage(context, "Descripción", "sdsed");
+                              updateMessage(context, "Descripción", widget.restaurante.descripcion);
+
                             },
                           ),
                         ],
@@ -276,7 +284,8 @@ class _RestaurantSettingsPageWidgetState
                               size: 35,
                             ),
                             onPressed: () {
-                              print('IconButton pressed ...');
+                              updateMessage(context, "Dirección", widget.restaurante.direccion);
+
                             },
                           ),
                         ],

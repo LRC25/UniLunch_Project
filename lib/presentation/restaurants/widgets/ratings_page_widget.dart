@@ -1,12 +1,15 @@
 import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../../../logic/Nota.dart';
+import '../../../logic/Restaurante.dart';
 
 import '../models/ratings_page_model.dart';
 export '../models/ratings_page_model.dart';
 
 class RestaurantRatingsPageWidget extends StatefulWidget {
-  const RestaurantRatingsPageWidget({Key? key}) : super(key: key);
+  final Restaurante restaurante;
+  const RestaurantRatingsPageWidget({Key? key, required this.restaurante}) : super(key: key);
 
   @override
   _RestaurantRatingsPageWidgetState createState() =>
@@ -19,8 +22,13 @@ class _RestaurantRatingsPageWidgetState
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
+  var notasCargadas = false;
+  var cantidad = 0;
+  late List<Nota> notas = [];
+
   @override
   void initState() {
+    _loadNotas();
     super.initState();
     _model = createModel(context, () => RestaurantRatingsPageModel());
   }
@@ -30,6 +38,15 @@ class _RestaurantRatingsPageWidgetState
     _model.dispose();
 
     super.dispose();
+  }
+
+  void _loadNotas() async {
+    List<Nota> notasTemp = await widget.restaurante.mostrarNotas();
+    setState(() {
+      notasCargadas = true;
+      notas = notasTemp;
+      cantidad = notasTemp.length;
+    });
   }
 
   @override
@@ -84,7 +101,7 @@ class _RestaurantRatingsPageWidgetState
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        'Las Palmas - ',
+                        '${widget.restaurante.nombreRestaurante} - ',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Readex Pro',
                               color: Color(0xFF064244),
@@ -98,7 +115,7 @@ class _RestaurantRatingsPageWidgetState
                         size: 30,
                       ),
                       Text(
-                        '4.7 (400)',
+                        '${widget.restaurante.notaPromedio} (${cantidad.toString()})',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Readex Pro',
                               color: Color(0xFFFF7A00),
@@ -317,93 +334,20 @@ class _RestaurantRatingsPageWidgetState
                         ),
                   ),
                 ),
-                Flexible(
-                  child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 10),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: MediaQuery.sizeOf(context).width,
-                            height: 80,
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 4,
-                                  color: Color(0x33000000),
-                                  offset: Offset(0, 2),
-                                )
-                              ],
-                              borderRadius: BorderRadius.circular(15),
-                              shape: BoxShape.rectangle,
-                            ),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Align(
-                                    alignment: AlignmentDirectional(0.00, 0.00),
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          5, 0, 5, 0),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Icon(
-                                            Icons.star_rounded,
-                                            color: Color(0xFFFF7A00),
-                                            size: 32,
-                                          ),
-                                          Text(
-                                            '5',
-                                            textAlign: TextAlign.center,
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Readex Pro',
-                                                  color: Color(0xFFFF7A00),
-                                                  fontSize: 24,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                          ),
-                                        ].divide(SizedBox(height: 0)),
-                                      ),
-                                    ),
-                                  ),
-                                  Flexible(
-                                    child: Text(
-                                      'Muy rica la comida. Excelente servicio. ¡Muchas gracias! Excelente servicioo jeje son increibles',
-                                      maxLines: 3,
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Readex Pro',
-                                            color: Color(0xFF064244),
-                                            fontSize: 16,
-                                          ),
-                                    ),
-                                  ),
-                                ].divide(SizedBox(width: 5)),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                Column(
+                  children: (notasCargadas==false)
+                      ? [const Center(child: CircularProgressIndicator(color: Color(0xFF064244)))]
+                      : (notas.isEmpty) ? [Center(child: Text(
+                      "No hay notas",
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                        fontFamily: 'Readex Pro',
+                        color: Color(0xFF064244),
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,))
+                  )] : notas.map((nota) {
+                    return _model.mostrarNotas(context, nota);
+                  }).toList(),
+                )
               ],
             ),
           ),
