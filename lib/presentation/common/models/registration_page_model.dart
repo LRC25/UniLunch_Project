@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutterflow_ui/flutterflow_ui.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart' as google_maps;
 import 'package:unilunch/logic/Restaurante.dart';
 import 'package:unilunch/network_utilities.dart';
 import 'package:unilunch/presentation/common/models/autocomplete_prediction.dart';
-import 'package:unilunch/presentation/common/models/location_list_tile.dart';
 import 'package:unilunch/presentation/common/models/place_auto_complete_response.dart';
 import '../../../alerts.dart';
 import '../../../logic/Cliente.dart';
@@ -60,6 +60,10 @@ class RegistrationPageModel extends FlutterFlowModel<RegistrationPageWidget> {
   String? description;
   String? placeId;
 
+  List<google_maps.Marker> markers = [];
+  // Markers have the following structure:
+
+
   final String apiKey = "AIzaSyCbDjS9GXcjjfbEqUQ0kDVSi6EEQxMwBfM";
 
   double? latitude;
@@ -97,7 +101,6 @@ class RegistrationPageModel extends FlutterFlowModel<RegistrationPageWidget> {
 
     logoFocusNode?.dispose();
     logoController?.dispose();
-
   }
 
   /// Action blocks are added here.
@@ -170,42 +173,36 @@ class RegistrationPageModel extends FlutterFlowModel<RegistrationPageWidget> {
   List<AutocompletePrediction> placePredictions = [];
 
   void placeAutocomplete(String query, StateSetter setState) async {
-    Uri uri = Uri.https(
-      "maps.googleapis.com",
-      "maps/api/place/autocomplete/json",
-      {
-        "input": query,
-        "key": apiKey
-      }
-    );
+    Uri uri = Uri.https("maps.googleapis.com",
+        "maps/api/place/autocomplete/json", {"input": query, "key": apiKey});
 
     String? response = await NetworkUtilities.fetchUrl(uri);
 
-    if(response != null){
-      PlaceAutocompleteResponse result = PlaceAutocompleteResponse.parseAutocompleteResult(response);
-      if(result.predictions != null){
+    if (response != null) {
+      PlaceAutocompleteResponse result =
+          PlaceAutocompleteResponse.parseAutocompleteResult(response);
+      if (result.predictions != null) {
         placePredictions = result.predictions!;
       }
     }
   }
 
   void requestLatLong(String placeId) async {
-    Uri uri = Uri.https(
-      "maps.googleapis.com",
-      "maps/api/place/details/json",
-      {
-        "place_id": placeId,
-        "key": apiKey
-      }
-    );
+    Uri uri = Uri.https("maps.googleapis.com", "maps/api/place/details/json",
+        {"place_id": placeId, "key": apiKey});
 
     final response = await http.get(uri);
 
-    if(response.statusCode == 200){
+    if (response.statusCode == 200) {
       Map<String, dynamic> jsonResponse = json.decode(response.body);
       latitude = jsonResponse['result']['geometry']['location']['lat'];
       longitude = jsonResponse['result']['geometry']['location']['lng'];
     }
   }
+
+  void addMarker(LatLng pos, Restaurante restaurante){
+    
+  }
+
   /// Additional helper methods are added here.
 }
