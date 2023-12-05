@@ -3,8 +3,6 @@ import 'package:unilunch/presentation/common/widgets/login_page_widget.dart';
 
 import '../../../logic/Restaurante.dart';
 
-import '../../../logic/Usuario.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../../alerts.dart';

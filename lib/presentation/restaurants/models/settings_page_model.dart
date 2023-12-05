@@ -1,5 +1,4 @@
 import 'package:flutterflow_ui/flutterflow_ui.dart';
-import '../../../logic/Usuario.dart';
 
 import '../widgets/settings_page_widget.dart' show RestaurantSettingsPageWidget;
 import 'package:flutter/material.dart';

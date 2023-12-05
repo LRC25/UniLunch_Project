@@ -2,7 +2,6 @@ import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'package:unilunch/alerts.dart';
 import 'package:unilunch/logic/Carrito.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:unilunch/logic/Reserva.dart';
 import 'package:unilunch/logic/ReservaPlato.dart';
 import '../widgets/customers_cart_page_widget.dart' show CustomerCartPageWidget;
 import 'package:flutter/material.dart';
