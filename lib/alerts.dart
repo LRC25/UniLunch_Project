@@ -73,7 +73,7 @@ void registrationAcceptMessage(BuildContext context, String mensaje) {
   );
 }
 
-void completeReservationAcceptMessage(BuildContext context, String mensaje) {
+void accceptMessage(BuildContext context, String mensaje) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -280,7 +280,6 @@ void errorMessage(BuildContext context, String mensaje) {
         ),
       );
     },
-
     );
   }
 
