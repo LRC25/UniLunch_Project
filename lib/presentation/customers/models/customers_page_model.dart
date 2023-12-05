@@ -1,5 +1,5 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart'
-    as google_maps_dart;
+    as google_maps;
 import 'package:unilunch/logic/Carrito.dart';
 import 'package:unilunch/logic/Restaurante.dart';
 
@@ -16,15 +16,17 @@ class CustomersPageModel extends FlutterFlowModel<CustomersPageWidget> {
   // State field(s) for searchRestaurant widget.
   FocusNode? searchRestaurantFocusNode;
   TextEditingController? searchRestaurantController;
-  google_maps_dart.GoogleMapController? googleMapController;
+  google_maps.GoogleMapController? googleMapController;
   String? Function(BuildContext, String?)? searchRestaurantControllerValidator;
 
   final Carrito carrito = Carrito.vacio();
 
+  List<google_maps.Marker> markers = [];
+
   /// Initialization and disposal methods.
 
-  static const initialCameraPosition = google_maps_dart.CameraPosition(
-      target: google_maps_dart.LatLng(7.1380158, -73.1198447), zoom: 16.25);
+  static const initialCameraPosition = google_maps.CameraPosition(
+      target: google_maps.LatLng(7.1380158, -73.1198447), zoom: 16.25);
 
   void initState(BuildContext context) {}
 
@@ -175,6 +177,7 @@ class CustomersPageModel extends FlutterFlowModel<CustomersPageWidget> {
                                 alignment: AlignmentDirectional(
                                     -1.00, 0.00),
                                 child: Text(
+                                  maxLines: 1,
                                   restaurante.direccion,
                                   style: FlutterFlowTheme.of(
                                       context)
@@ -182,7 +185,7 @@ class CustomersPageModel extends FlutterFlowModel<CustomersPageWidget> {
                                       .override(
                                     fontFamily: 'Readex Pro',
                                     color: Color(0xFF064244),
-                                    fontSize: 16,
+                                    fontSize: 14,
                                     fontWeight: FontWeight.w300,
                                   ),
                                 ),
@@ -198,6 +201,23 @@ class CustomersPageModel extends FlutterFlowModel<CustomersPageWidget> {
             ),
           ),
         )
+    );
+  }
+
+  void addMarker(BuildContext context, Restaurante restaurante){
+    markers.add(
+      google_maps.Marker(
+        markerId: google_maps.MarkerId(restaurante.idRestaurante),
+        position: google_maps.LatLng(restaurante.latitud, restaurante.longitud),
+        infoWindow: google_maps.InfoWindow(
+          title: restaurante.nombreRestaurante,
+          snippet: restaurante.direccion,
+          onTap: () {
+            Navigator.pushReplacement(context, MaterialPageRoute(builder:(context) =>
+            CustomerRestaurantMenuWidget(cliente: widget.cliente, carrito: carrito, restaurante: restaurante)));
+          },
+        )
+      )
     );
   }
 

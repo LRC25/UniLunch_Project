@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutterflow_ui/flutterflow_ui.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart' as google_maps;
 import 'package:unilunch/logic/BuscarPorDefecto.dart';
 import 'package:unilunch/logic/Cliente.dart';
 import 'package:unilunch/logic/Restaurante.dart';
@@ -50,6 +50,11 @@ class _CustomersPageWidgetState extends State<CustomersPageWidget> {
       listaCargada = true;
       restaurantes = restauranteTemp;
     });
+
+    for (var restaurante in restaurantes) {
+      // ignore: use_build_context_synchronously
+      _model.addMarker(context, restaurante);
+    }
   }
 
   @override
@@ -101,93 +106,136 @@ class _CustomersPageWidgetState extends State<CustomersPageWidget> {
                   color: FlutterFlowTheme.of(context).secondaryBackground,
                   shape: BoxShape.rectangle,
                 ),
-                child: GoogleMap(
+                child: google_maps.GoogleMap(
                   myLocationButtonEnabled: false,
                   zoomControlsEnabled: true,
                   initialCameraPosition: CustomersPageModel.initialCameraPosition,
+                  markers: Set<google_maps.Marker>.from(_model.markers)
                 )
               ),
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(16, 8, 16, 8),
-                child: Container(
-                  width: double.infinity,
-                  child: TextFormField(
-                    controller: _model.searchRestaurantController,
-                    focusNode: _model.searchRestaurantFocusNode,
-                    autofillHints: [AutofillHints.email],
-                    obscureText: false,
-                    decoration: InputDecoration(
-                      labelText: 'Buscar Restaurante...',
-                      labelStyle:
-                          FlutterFlowTheme.of(context).labelMedium.override(
-                                fontFamily: 'Readex Pro',
-                                color: Color(0xFF064244),
-                              ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).alternate,
-                          width: 2,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      width: MediaQuery.sizeOf(context).width*0.6,
+                      child: TextFormField(
+                        controller: _model.searchRestaurantController,
+                        focusNode: _model.searchRestaurantFocusNode,
+                        autofillHints: [AutofillHints.email],
+                        obscureText: false,
+                        decoration: InputDecoration(
+                          labelText: 'Buscar Restaurante...',
+                          labelStyle:
+                              FlutterFlowTheme.of(context).labelMedium.override(
+                                    fontFamily: 'Readex Pro',
+                                    color: Color(0xFF064244),
+                                  ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: FlutterFlowTheme.of(context).alternate,
+                              width: 2,
+                            ),
+                            borderRadius: BorderRadius.circular(35),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0xFF064244),
+                              width: 2,
+                            ),
+                            borderRadius: BorderRadius.circular(35),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: FlutterFlowTheme.of(context).error,
+                              width: 2,
+                            ),
+                            borderRadius: BorderRadius.circular(35),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: FlutterFlowTheme.of(context).error,
+                              width: 2,
+                            ),
+                            borderRadius: BorderRadius.circular(35),
+                          ),
+                          filled: true,
+                          fillColor:
+                              FlutterFlowTheme.of(context).secondaryBackground,
+                          contentPadding:
+                              EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
+                          prefixIcon: Icon(
+                            Icons.sort,
+                            color: Color(0xFF064244),
+                          ),
                         ),
-                        borderRadius: BorderRadius.circular(35),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color(0xFF064244),
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(35),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).error,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(35),
-                      ),
-                      focusedErrorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).error,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(35),
-                      ),
-                      filled: true,
-                      fillColor:
-                          FlutterFlowTheme.of(context).secondaryBackground,
-                      contentPadding:
-                          EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
-                      prefixIcon: Icon(
-                        Icons.search_rounded,
-                        color: Color(0xFF064244),
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                              fontFamily: 'Readex Pro',
+                              color: Color(0xFF064244),
+                            ),
+                        keyboardType: TextInputType.emailAddress,
+                        validator: _model.searchRestaurantControllerValidator
+                            .asValidator(context),
                       ),
                     ),
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Readex Pro',
-                          color: Color(0xFF064244),
+                    SizedBox(
+                      width: MediaQuery.sizeOf(context).width * 0.3,
+                      child: FFButtonWidget(
+                        onPressed: () {
+                          print("Hello");
+                        },
+                        text: 'Buscar',
+                        icon: Icon(
+                          Icons.search_rounded,
+                          size: 20,
                         ),
-                    keyboardType: TextInputType.emailAddress,
-                    validator: _model.searchRestaurantControllerValidator
-                        .asValidator(context),
-                  ),
+                        options: FFButtonOptions(
+                          width: 230,
+                          height: 52,
+                          padding:
+                              EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                          iconPadding:
+                              EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                          color: Color(0xFF064244),
+                          textStyle: FlutterFlowTheme.of(context)
+                              .titleSmall
+                              .override(
+                                fontFamily: 'Readex Pro',
+                                color: Colors.white,
+                              ),
+                          elevation: 3,
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(35),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    children: (listaCargada==false)
-                        ? [const Center(child: CircularProgressIndicator(color: Color(0xFF064244)))]
-                        : (restaurantes.isEmpty) ? [Center(child: Text(
-                        "No hay restaurantes",
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Readex Pro',
-                          color: Color(0xFF064244),
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,))
-                    )] : restaurantes.map((restaurante) {
-                      return _model.listaRestaurantes(context, restaurante);
-                    }).toList(),
+                child: Container(
+                  height: MediaQuery.sizeOf(context).height * 0.38,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: (listaCargada==false)
+                          ? [const Center(child: CircularProgressIndicator(color: Color(0xFF064244)))]
+                          : (restaurantes.isEmpty) ? [Center(child: Text(
+                          "No hay restaurantes",
+                          style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Readex Pro',
+                            color: Color(0xFF064244),
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,))
+                      )] : restaurantes.map((restaurante) {
+                        return _model.listaRestaurantes(context, restaurante);
+                      }).toList(),
+                    ),
                   ),
                 ),
               ),

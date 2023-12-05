@@ -60,10 +60,6 @@ class RegistrationPageModel extends FlutterFlowModel<RegistrationPageWidget> {
   String? description;
   String? placeId;
 
-  List<google_maps.Marker> markers = [];
-  // Markers have the following structure:
-
-
   final String apiKey = "AIzaSyCbDjS9GXcjjfbEqUQ0kDVSi6EEQxMwBfM";
 
   double? latitude;
@@ -201,19 +197,6 @@ class RegistrationPageModel extends FlutterFlowModel<RegistrationPageWidget> {
       latitude = jsonResponse['result']['geometry']['location']['lat'];
       longitude = jsonResponse['result']['geometry']['location']['lng'];
     }
-  }
-
-  void addMarker(Restaurante restaurante){
-    markers.add(
-      google_maps.Marker(
-        markerId: google_maps.MarkerId(restaurante.nombre),
-        position: google_maps.LatLng(restaurante.latitud, restaurante.longitud),
-        infoWindow: google_maps.InfoWindow(
-          title: restaurante.nombreRestaurante,
-          snippet: restaurante.descripcion
-        )
-      )
-    );
   }
 
   /// Additional helper methods are added here.
