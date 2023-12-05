@@ -103,12 +103,13 @@ class _RestaurantsPageWidgetState extends State<RestaurantsPageWidget> {
         body: SafeArea(
           top: true,
           child: Column(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Expanded(
                 flex: 1,
                 child: Container(
+                  height: MediaQuery.sizeOf(context).height * 0.3,
                   decoration: BoxDecoration(),
                   child: Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
@@ -117,7 +118,7 @@ class _RestaurantsPageWidgetState extends State<RestaurantsPageWidget> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 8),
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
                           child: Stack(
                             children: [
                               Align(
@@ -161,7 +162,7 @@ class _RestaurantsPageWidgetState extends State<RestaurantsPageWidget> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                           child: Text(
                             'Estos son los platos que podrás agregar al menú.',
                             textAlign: TextAlign.center,
@@ -203,6 +204,7 @@ class _RestaurantsPageWidgetState extends State<RestaurantsPageWidget> {
               Expanded(
                 flex: 1,
                 child: Container(
+                  height: MediaQuery.sizeOf(context).height * 0.3,
                   decoration: BoxDecoration(),
                   child: Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
@@ -230,7 +232,7 @@ class _RestaurantsPageWidgetState extends State<RestaurantsPageWidget> {
                           child: AutoSizeText(
                             'Estos son los platos que tienes a la venta el día de hoy.',
                             textAlign: TextAlign.center,
-                            maxLines: 2,
+                            maxLines: 1,
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(

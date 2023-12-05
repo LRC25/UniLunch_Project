@@ -23,8 +23,8 @@ class BuscarPorDefecto implements BuscarRestaurante {
           Restaurante restaurante = Restaurante.cliente(
               idRestaurante: datoRestaurante["id_restaurante"],
               nombreRestaurante: datoRestaurante["nombre_restaurante"],
-              latitud: datoRestaurante["latitud"],
-              longitud: datoRestaurante["longitud"],
+              latitud: datoRestaurante["latitud"].toDouble(),
+              longitud: datoRestaurante["longitud"].toDouble(),
               direccion: datoRestaurante["direccion"],
               descripcion: datoRestaurante["descripcion"],
               horaApertura: convertTime(datoRestaurante["hora_apertura"]),

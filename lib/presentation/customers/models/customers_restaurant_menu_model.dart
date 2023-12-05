@@ -48,7 +48,7 @@ class CustomerRestaurantMenuModel
                 padding: EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
                       width: MediaQuery.sizeOf(context).width * 0.65,
@@ -136,15 +136,9 @@ class CustomerRestaurantMenuModel
                         ),
                       ),
                     ),
-                    Expanded(
-                      child: Container(
-                        width: MediaQuery.sizeOf(context).width * 0.3,
-                        height: 100,
-                        decoration: BoxDecoration(),
+                    AspectRatio(
+                        aspectRatio: 1,
                         child: Container(
-                          width: MediaQuery.sizeOf(context).width,
-                          height:
-                          MediaQuery.sizeOf(context).height * 1,
                           child: Stack(
                             children: [
                               ClipRRect(
@@ -185,7 +179,6 @@ class CustomerRestaurantMenuModel
                           ),
                         ),
                       ),
-                    ),
                   ],
                 ),
               ),

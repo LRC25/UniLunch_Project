@@ -440,17 +440,20 @@ class RestaurantReservationsPageModel
                 ),
               ),
               Expanded(
-                child: Container(
-                  width: MediaQuery.sizeOf(context).width * 0.3,
-                  height: 100,
-                  decoration: BoxDecoration(),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: Image.network(
-                      reservaPlato.plato.imagen,
-                      width: MediaQuery.sizeOf(context).width * 0.108,
-                      height: 200,
-                      fit: BoxFit.cover,
+                child: AspectRatio(
+                  aspectRatio: 1,
+                  child: Container(
+                    width: MediaQuery.sizeOf(context).width * 0.3,
+                    height: 100,
+                    decoration: BoxDecoration(),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: Image.network(
+                        reservaPlato.plato.imagen,
+                        width: MediaQuery.sizeOf(context).width * 0.108,
+                        height: 200,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 ),

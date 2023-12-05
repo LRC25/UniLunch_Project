@@ -189,7 +189,7 @@ class Reserva {
           List<ReservaPlato> reservaPlatos = await ReservaPlato.vacio()
               .listarPorReserva(dato["id_reserva"]);
           Reserva reserva = Reserva.cliente(
-              dato["id_reserva"], dato["id_restaurante"], nombre["nombre_restaurante"], logo["imagen"], notaRestaurante["nota_prom"], converDateTime(dato["fecha"], dato["hora"]),
+              dato["id_reserva"], dato["id_restaurante"], nombre["nombre_restaurante"], logo["imagen"], notaRestaurante["nota_prom"].toDouble(), converDateTime(dato["fecha"], dato["hora"]),
               dato["precio"], reservaPlatos, dato["estado"], dato["estado_calificacion"], nota);
           reservas.add(reserva);
         }
@@ -227,7 +227,7 @@ class Reserva {
           List<ReservaPlato> reservaPlatos = await ReservaPlato.vacio()
               .listarPorReserva(dato["id_reserva"]);
           Reserva reserva = Reserva.cliente(
-              dato["id_reserva"], dato["id_restaurante"], nombre["nombre_restaurante"], logo["imagen"], notaRestaurante["nota_prom"], converDateTime(dato["fecha"], dato["hora"]),
+              dato["id_reserva"], dato["id_restaurante"], nombre["nombre_restaurante"], logo["imagen"], notaRestaurante["nota_prom"].toDouble(), converDateTime(dato["fecha"], dato["hora"]),
               dato["precio"], reservaPlatos, dato["estado"], dato["estado_calificacion"], nota);
           reservas.add(reserva);
         }

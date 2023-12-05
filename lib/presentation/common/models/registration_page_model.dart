@@ -140,14 +140,16 @@ class RegistrationPageModel extends FlutterFlowModel<RegistrationPageWidget> {
           descriptionController != "" &&
           logoController != "" &&
           openingTime != null &&
-          closingTime != null) {
+          closingTime != null
+          && latitude != null
+          && longitude != null) {
         if (passwordController.text == confirmPasswordController.text) {
           Restaurante restaurante = Restaurante.registro(
               nombre: nameController1.text,
               email: emailAddressController.text,
               tipoUsuario: "Restaurante",
-              latitud: 0,
-              longitud: 0,
+              latitud: latitude as double,
+              longitud: longitude as double,
               nombreRestaurante: nameController2.text,
               direccion: addressController1.text,
               descripcion: descriptionController.text,
@@ -201,8 +203,17 @@ class RegistrationPageModel extends FlutterFlowModel<RegistrationPageWidget> {
     }
   }
 
-  void addMarker(LatLng pos, Restaurante restaurante){
-    
+  void addMarker(Restaurante restaurante){
+    markers.add(
+      google_maps.Marker(
+        markerId: google_maps.MarkerId(restaurante.nombre),
+        position: google_maps.LatLng(restaurante.latitud, restaurante.longitud),
+        infoWindow: google_maps.InfoWindow(
+          title: restaurante.nombreRestaurante,
+          snippet: restaurante.descripcion
+        )
+      )
+    );
   }
 
   /// Additional helper methods are added here.

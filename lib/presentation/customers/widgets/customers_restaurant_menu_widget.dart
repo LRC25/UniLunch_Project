@@ -2,6 +2,7 @@ import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:unilunch/logic/Carrito.dart';
+import 'package:unilunch/presentation/customers/widgets/customers_cart_page_widget.dart';
 import '../../../logic/Cliente.dart';
 import '../../../logic/Plato.dart';
 import '../../../logic/Restaurante.dart';
@@ -107,6 +108,25 @@ class _CustomerRestaurantMenuWidgetState
                   },
                 ),
               ),
+              Align(
+                alignment: AlignmentDirectional(1.00, 0.00),
+                child: FlutterFlowIconButton(
+                  borderColor: Color(0x00FFFFFF),
+                  borderRadius: 20,
+                  borderWidth: 1,
+                  buttonSize: 40,
+                  fillColor: Color(0x00FFFFFF),
+                  icon: Icon(
+                    Icons.shopping_cart_rounded,
+                    color: Color(0xFF064244),
+                    size: 24,
+                  ),
+                  onPressed: () {
+                    Navigator.pushReplacement(context, MaterialPageRoute(
+                        builder:(context) => CustomerCartPageWidget()));
+                  },
+                ),
+              ),
             ],
           ),
           actions: [],
@@ -144,18 +164,19 @@ class _CustomerRestaurantMenuWidgetState
                         Expanded(
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
-                            child: Container(
-                              width: MediaQuery.sizeOf(context).width * 0.4,
-                              height: MediaQuery.sizeOf(context).height * 1,
-                              decoration: BoxDecoration(),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(16),
-                                child: Image.network(
-                                  widget.restaurante.imagen,
-                                  width:
-                                      MediaQuery.sizeOf(context).width * 0.108,
-                                  height: 200,
-                                  fit: BoxFit.cover,
+                            child: AspectRatio(
+                              aspectRatio: 1,
+                              child: Container(
+                                decoration: BoxDecoration(),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(16),
+                                  child: Image.network(
+                                    widget.restaurante.imagen,
+                                    width:
+                                        MediaQuery.sizeOf(context).width * 0.108,
+                                    height: 200,
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
                             ),

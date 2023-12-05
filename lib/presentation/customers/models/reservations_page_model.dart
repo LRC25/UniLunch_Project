@@ -67,7 +67,7 @@ class CustomerReservationsPageModel extends FlutterFlowModel<CustomerReservation
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
-                    width: MediaQuery.sizeOf(context).width * 0.20,
+                    width: MediaQuery.sizeOf(context).width * 0.18,
                     height: 120,
                     decoration: BoxDecoration(),
                     child: ClipRRect(
@@ -98,6 +98,7 @@ class CustomerReservationsPageModel extends FlutterFlowModel<CustomerReservation
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
                               ),
+                              maxLines: 1,
                             ),
                             Row(
                               mainAxisSize: MainAxisSize.max,
@@ -111,8 +112,9 @@ class CustomerReservationsPageModel extends FlutterFlowModel<CustomerReservation
                                     color: Color(0xFF064244),
                                     fontSize: 15,
                                   ),
+                                  maxLines: 1,
                                 ),
-                                estodoReserva(context, reserva)
+                                estadoReserva(context, reserva)
                               ],
                             ),
                             Text(
@@ -124,6 +126,7 @@ class CustomerReservationsPageModel extends FlutterFlowModel<CustomerReservation
                                 fontWeight: FontWeight.w500,
                                 fontStyle: FontStyle.italic,
                               ),
+                              maxLines: 1,
                             ),
                           ],
                         ),
@@ -140,7 +143,7 @@ class CustomerReservationsPageModel extends FlutterFlowModel<CustomerReservation
     );
   }
 
-  Text estodoReserva(BuildContext context, Reserva reserva) {
+  Text estadoReserva(BuildContext context, Reserva reserva) {
     if (reserva.estado=="Cancelado") {
       return Text(
         "Cancelado",
@@ -175,7 +178,7 @@ class CustomerReservationsPageModel extends FlutterFlowModel<CustomerReservation
           width: 100,
           height: 100,
           child: Row(
-            mainAxisSize: MainAxisSize.max,
+            mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
@@ -206,7 +209,7 @@ class CustomerReservationsPageModel extends FlutterFlowModel<CustomerReservation
             color: FlutterFlowTheme.of(context).secondaryBackground,
           ),
           child: Column(
-            mainAxisSize: MainAxisSize.max,
+            mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
@@ -263,7 +266,7 @@ class CustomerReservationsPageModel extends FlutterFlowModel<CustomerReservation
             children: [
               Flexible(
                 child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 15),
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
                   child: Text(
                     'Detalles de Reserva',
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -283,17 +286,20 @@ class CustomerReservationsPageModel extends FlutterFlowModel<CustomerReservation
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Container(
-                      width: MediaQuery.sizeOf(context).width * 0.20,
-                      height: 120,
-                      decoration: BoxDecoration(),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(16),
-                        child: Image.network(
-                          reserva.logoRestaurante,
-                          width: MediaQuery.sizeOf(context).width * 0.108,
-                          height: 120,
-                          fit: BoxFit.cover,
+                    AspectRatio(
+                      aspectRatio: 1,
+                      child: Container(
+                        width: MediaQuery.sizeOf(context).width * 0.18,
+                        height: 120,
+                        decoration: BoxDecoration(),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(16),
+                          child: Image.network(
+                            reserva.logoRestaurante,
+                            width: MediaQuery.sizeOf(context).width * 0.108,
+                            height: 120,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                     ),
@@ -315,6 +321,7 @@ class CustomerReservationsPageModel extends FlutterFlowModel<CustomerReservation
                                   fontSize: 13,
                                   fontWeight: FontWeight.w600,
                                 ),
+                                maxLines: 1,
                               ),
                               Row(
                                 mainAxisSize: MainAxisSize.max,
@@ -328,6 +335,7 @@ class CustomerReservationsPageModel extends FlutterFlowModel<CustomerReservation
                                       color: Color(0xFF064244),
                                       fontSize: 12,
                                     ),
+                                    maxLines: 1,
                                   ),
                                 ],
                               ),
@@ -340,6 +348,7 @@ class CustomerReservationsPageModel extends FlutterFlowModel<CustomerReservation
                                   fontWeight: FontWeight.w500,
                                   fontStyle: FontStyle.italic,
                                 ),
+                                maxLines: 1,
                               ),
                               Text(
                                 DateFormat('HH:mm').format(reserva.fecha),
@@ -350,6 +359,7 @@ class CustomerReservationsPageModel extends FlutterFlowModel<CustomerReservation
                                   fontWeight: FontWeight.w500,
                                   fontStyle: FontStyle.italic,
                                 ),
+                                maxLines: 1,
                               ),
                             ],
                           ),
@@ -379,6 +389,7 @@ class CustomerReservationsPageModel extends FlutterFlowModel<CustomerReservation
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
                             ),
+                            maxLines: 1,
                           ),
                         ].divide(SizedBox(height: 0)),
                       ),
@@ -563,17 +574,20 @@ class CustomerReservationsPageModel extends FlutterFlowModel<CustomerReservation
                 ),
               ),
               Expanded(
-                child: Container(
-                  width: MediaQuery.sizeOf(context).width * 0.3,
-                  height: 100,
-                  decoration: BoxDecoration(),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: Image.network(
-                      reservaPlato.plato.imagen,
-                      width: MediaQuery.sizeOf(context).width * 0.108,
-                      height: 200,
-                      fit: BoxFit.cover,
+                child: AspectRatio(
+                  aspectRatio: 1,
+                  child: Container(
+                    width: MediaQuery.sizeOf(context).width * 0.3,
+                    height: 100,
+                    decoration: BoxDecoration(),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: Image.network(
+                        reservaPlato.plato.imagen,
+                        width: MediaQuery.sizeOf(context).width * 0.108,
+                        height: 200,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 ),
