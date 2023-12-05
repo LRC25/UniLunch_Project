@@ -1,6 +1,8 @@
 import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:unilunch/logic/Carrito.dart';
 import 'package:unilunch/logic/Plato.dart';
+import 'package:unilunch/logic/ReservaPlato.dart';
 
 import '../widgets/customers_restaurant_menu_widget.dart';
 
@@ -11,6 +13,7 @@ class CustomerRestaurantMenuModel
   final unfocusNode = FocusNode();
 
   final currencyFormat = NumberFormat.simpleCurrency(locale: "es_US");
+  Carrito actualCarrito = Carrito.vacio();
 
   /// Initialization and disposal methods.
 
@@ -171,7 +174,17 @@ class CustomerRestaurantMenuModel
                                     size: 24,
                                   ),
                                   onPressed: () {
-                                    print('IconButton pressed ...');
+                                    bool encotrado = false;
+                                    for(ReservaPlato reservaPlato in actualCarrito.platos) {
+                                      if(reservaPlato.plato.idPlato==plato.idPlato) {
+                                        reservaPlato.cantidad = reservaPlato.cantidad+1;
+                                        encotrado = true;
+                                      }
+                                    }
+                                    if(encotrado==false){
+                                      ReservaPlato nuevaReservaPlato = ReservaPlato.registro(plato, 1);
+                                      actualCarrito.platos.add(nuevaReservaPlato);
+                                    }
                                   },
                                 ),
                               ),

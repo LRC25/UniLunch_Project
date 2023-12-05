@@ -38,9 +38,8 @@ class Reserva {
       this.fecha,
       this.total,
       this.platos,
-      this.estado
       ): idReserva = "", nombreUsuario = "", idRestaurante = "", nombreRestaurante = "", logoRestaurante = "",
-        notaRestaurante = 0, estadoCalificacion = false, nota = "";
+        notaRestaurante = 0, estadoCalificacion = false, nota = "", estado = "";
 
   Reserva.cliente(
       this.idReserva,
@@ -69,14 +68,15 @@ class Reserva {
         fecha = DateTime(0), total = 0, platos = [], estado = "", estadoCalificacion = false, nota = "";
 
 
-  Future<String> insertarReserva(String idUsuario, String idRestaurante) async {
+  Future<String> insertarReserva(String idUsuario, String idRestaurante, DateTime hora) async {
     final SupabaseService supabaseService = SupabaseService();
     SupabaseClient cliente = supabaseService.client;
     try {
       String id = randomDigits(10);
       await cliente
           .from("reserva")
-          .insert({"id_reserva":id, "id_restaurante":idRestaurante, "id_usuario":idUsuario, "fecha":convertDate(fecha), "precio":total});
+          .insert({"id_reserva":id, "id_restaurante":idRestaurante, "id_usuario":idUsuario, "fecha":convertDate(fecha),
+        "hora":convertTimeSQL(hora), "precio":total, "estado":"Pendiente", "estado_calificacion":false});
       for (ReservaPlato plato in platos) {
         plato.insertarReservaPlato(id);
       }

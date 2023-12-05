@@ -36,6 +36,7 @@ class _CustomerRestaurantMenuWidgetState
     _loadMenu();
     super.initState();
     _model = createModel(context, () => CustomerRestaurantMenuModel());
+    _model.actualCarrito = widget.carrito;
   }
 
   @override
@@ -123,7 +124,8 @@ class _CustomerRestaurantMenuWidgetState
                   ),
                   onPressed: () {
                     Navigator.pushReplacement(context, MaterialPageRoute(
-                        builder:(context) => CustomerCartPageWidget()));
+                        builder:(context) => CustomerCartPageWidget(cliente: widget.cliente,
+                          carrito: _model.actualCarrito, restaurante: widget.restaurante,)));
                   },
                 ),
               ),

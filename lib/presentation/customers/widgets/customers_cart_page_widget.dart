@@ -1,12 +1,21 @@
 import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:unilunch/logic/Carrito.dart';
+import 'package:unilunch/logic/Cliente.dart';
+import 'package:unilunch/logic/Restaurante.dart';
 
+import '../../../logic/ReservaPlato.dart';
 import '../models/customers_cart_page_model.dart';
+import 'customers_restaurant_menu_widget.dart';
 export '../models/customers_cart_page_model.dart';
 
 class CustomerCartPageWidget extends StatefulWidget {
-  const CustomerCartPageWidget({Key? key}) : super(key: key);
+  final Cliente cliente;
+  final Carrito carrito;
+  final Restaurante restaurante;
+  const CustomerCartPageWidget({Key? key, required this.cliente,
+    required this.carrito, required this.restaurante}) : super(key: key);
 
   @override
   _CustomerCartPageWidgetState createState() => _CustomerCartPageWidgetState();
@@ -16,11 +25,28 @@ class _CustomerCartPageWidgetState extends State<CustomerCartPageWidget> {
   late CustomerCartPageModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final currencyFormat = NumberFormat.simpleCurrency(locale: "es_US");
+
+  var platosCargados = false;
+  List<ReservaPlato> reservaPlatos = [];
+
+  int suma(List<ReservaPlato> reservaPlatos){
+    int suma = 0;
+    for(ReservaPlato reservaPlato in reservaPlatos) {
+      suma = suma + reservaPlato.cantidad*reservaPlato.plato.precio;
+    }
+    return suma;
+  }
+
+  int total = 0;
 
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => CustomerCartPageModel());
+    _model.actualCarrito = widget.carrito;
+    _loadReservaPlaro();
+    _loadTotal();
   }
 
   @override
@@ -28,6 +54,19 @@ class _CustomerCartPageWidgetState extends State<CustomerCartPageWidget> {
     _model.dispose();
 
     super.dispose();
+  }
+
+  void _loadReservaPlaro() {
+    setState(() {
+      platosCargados = true;
+      reservaPlatos = _model.actualCarrito.platos;
+    });
+  }
+
+  void _loadTotal(){
+    setState(() {
+      total = suma(_model.actualCarrito.platos);
+    });
   }
 
   @override
@@ -80,7 +119,9 @@ class _CustomerCartPageWidgetState extends State<CustomerCartPageWidget> {
                     size: 24,
                   ),
                   onPressed: () {
-                    print('IconButton pressed ...');
+                    Navigator.pushReplacement(context, MaterialPageRoute(
+                        builder:(context) => CustomerRestaurantMenuWidget(cliente: widget.cliente,
+                          carrito: _model.actualCarrito, restaurante: widget.restaurante,)));
                   },
                 ),
               ),
@@ -129,7 +170,7 @@ class _CustomerCartPageWidgetState extends State<CustomerCartPageWidget> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(16),
                                 child: Image.network(
-                                  'https://picsum.photos/seed/203/600',
+                                  widget.restaurante.imagen,
                                   width:
                                       MediaQuery.sizeOf(context).width * 0.108,
                                   height: 200,
@@ -163,7 +204,7 @@ class _CustomerCartPageWidgetState extends State<CustomerCartPageWidget> {
                                         alignment:
                                             AlignmentDirectional(-1.00, 0.00),
                                         child: Text(
-                                          'Las Palmas',
+                                          widget.restaurante.nombreRestaurante,
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
@@ -184,7 +225,7 @@ class _CustomerCartPageWidgetState extends State<CustomerCartPageWidget> {
                                       alignment:
                                           AlignmentDirectional(-1.00, 0.00),
                                       child: Text(
-                                        '4.7',
+                                        widget.restaurante.notaPromedio.toString(),
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
@@ -198,7 +239,7 @@ class _CustomerCartPageWidgetState extends State<CustomerCartPageWidget> {
                                   ],
                                 ),
                                 Text(
-                                  'Quien dijo picadaaaaaaaaaaaaaaaaa hijueputaaaaaaaa, deme picadaaaaa',
+                                  widget.restaurante.descripcion,
                                   textAlign: TextAlign.justify,
                                   maxLines: 2,
                                   style: FlutterFlowTheme.of(context)
@@ -215,7 +256,7 @@ class _CustomerCartPageWidgetState extends State<CustomerCartPageWidget> {
                                       alignment:
                                           AlignmentDirectional(-1.00, 0.00),
                                       child: Text(
-                                        'Cra 26A #10-11',
+                                        widget.restaurante.direccion,
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
@@ -251,188 +292,30 @@ class _CustomerCartPageWidgetState extends State<CustomerCartPageWidget> {
                   ),
                 ),
               ),
-              Container(
-                constraints: BoxConstraints(
-                  maxHeight: MediaQuery.sizeOf(context).height * 0.3,
-                ),
-                decoration: BoxDecoration(),
-                child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Container(
-                          width: MediaQuery.sizeOf(context).width,
-                          height: 110,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                blurRadius: 4,
-                                color: Color(0x33000000),
-                                offset: Offset(0, 2),
-                              )
-                            ],
-                            borderRadius: BorderRadius.circular(15),
-                            shape: BoxShape.rectangle,
-                          ),
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Flexible(
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 5, 0),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Flexible(
-                                          child: Text(
-                                            'Milanesa de Pollo',
-                                            maxLines: 2,
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Readex Pro',
-                                                  color: Color(0xFF064244),
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                          ),
-                                        ),
-                                        Text(
-                                          '\$12.000 c/u',
-                                          textAlign: TextAlign.start,
-                                          maxLines: 1,
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Readex Pro',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryText,
-                                                fontWeight: FontWeight.normal,
-                                              ),
-                                        ),
-                                        Text(
-                                          '\$24.000',
-                                          textAlign: TextAlign.start,
-                                          maxLines: 1,
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Readex Pro',
-                                                color: Color(0xFF138D20),
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w300,
-                                              ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      5, 0, 5, 0),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      FlutterFlowIconButton(
-                                        borderColor: Colors.transparent,
-                                        borderRadius: 12,
-                                        buttonSize: 35,
-                                        fillColor: Color(0xFFE72828),
-                                        icon: Icon(
-                                          Icons.remove_circle_rounded,
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryBackground,
-                                          size: 20,
-                                        ),
-                                        onPressed: () {
-                                          print('EditButton pressed ...');
-                                        },
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            10, 0, 10, 0),
-                                        child: Text(
-                                          '2',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Readex Pro',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryText,
-                                                fontSize: 20,
-                                              ),
-                                        ),
-                                      ),
-                                      FlutterFlowIconButton(
-                                        borderColor: Colors.transparent,
-                                        borderRadius: 12,
-                                        buttonSize: 35,
-                                        fillColor: Color(0xFF138D20),
-                                        icon: Icon(
-                                          Icons.add_circle_rounded,
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryBackground,
-                                          size: 20,
-                                        ),
-                                        onPressed: () {
-                                          print('EditButton pressed ...');
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Flexible(
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 5, 0),
-                                    child: Container(
-                                      width: MediaQuery.sizeOf(context).width *
-                                          0.25,
-                                      height:
-                                          MediaQuery.sizeOf(context).height * 1,
-                                      decoration: BoxDecoration(),
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(16),
-                                        child: Image.network(
-                                          'https://picsum.photos/seed/203/600',
-                                          width:
-                                              MediaQuery.sizeOf(context).width,
-                                          height: MediaQuery.sizeOf(context)
-                                                  .height *
-                                              1,
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ].divide(SizedBox(height: 8)),
-                    ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: (platosCargados==false)
+                        ? [const Center(child: CircularProgressIndicator(color: Color(0xFF064244)))]
+                        : (reservaPlatos.isEmpty) ? [Center(child: Text(
+                        "No hay platos",
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                          fontFamily: 'Readex Pro',
+                          color: Color(0xFF064244),
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,))
+                    )] : reservaPlatos.map((reservaPlato) {
+                      return _model.mostrarPlatosReserva(context, reservaPlato, _loadTotal, reservaPlatos);
+                    }).toList(),
                   ),
                 ),
               ),
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
                 child: Text(
-                  'Total: \$24.000',
+                  currencyFormat.format(total),
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Readex Pro',
                         color: Color(0xFF138D20),
@@ -518,7 +401,7 @@ class _CustomerCartPageWidgetState extends State<CustomerCartPageWidget> {
                 padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                 child: FFButtonWidget(
                   onPressed: () {
-                    print('Button pressed ...');
+                    _model.crearReserva(context, total);
                   },
                   text: 'Crear Reserva',
                   options: FFButtonOptions(

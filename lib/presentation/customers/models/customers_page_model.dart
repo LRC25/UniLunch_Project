@@ -42,8 +42,9 @@ class CustomersPageModel extends FlutterFlowModel<CustomersPageWidget> {
         padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
         child: InkWell(
           onTap: () {
-            Navigator.pushReplacement(context, MaterialPageRoute(builder:(context) =>
-                CustomerRestaurantMenuWidget(cliente: widget.cliente, carrito: carrito, restaurante: restaurante,)));
+            Navigator.pushReplacement(context, MaterialPageRoute(
+                builder:(context) => CustomerRestaurantMenuWidget(cliente: widget.cliente,
+                  carrito: carrito, restaurante: restaurante,)));
           },
           child: Container(
             width: MediaQuery.sizeOf(context).width,
