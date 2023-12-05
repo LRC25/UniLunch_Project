@@ -22,6 +22,8 @@ class _RestaurantsPageWidgetState extends State<RestaurantsPageWidget> {
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
+  bool platosCargados = false;
+  bool menuCargado = false;
   late List<Plato> platos = [];
   late List<Plato> menu = [];
 
@@ -48,13 +50,15 @@ class _RestaurantsPageWidgetState extends State<RestaurantsPageWidget> {
   void _loadPlatos() async {
     List<Plato> platosTemp = await widget.restaurante.mostrarMenu();
     setState(() {
+      platosCargados = true;
       platos = platosTemp;
     });
   }
 
   void _loadMenu() async {
-    List<Plato> menuTemp = await widget.restaurante.mostrarMenu();
+    List<Plato> menuTemp = await widget.restaurante.mostrarMenuHoy();
     setState(() {
+      menuCargado = true;
       menu = menuTemp;
     });
   }
@@ -105,7 +109,6 @@ class _RestaurantsPageWidgetState extends State<RestaurantsPageWidget> {
               Expanded(
                 flex: 1,
                 child: Container(
-                  //height: MediaQuery.sizeOf(context).height * 0.5,
                   decoration: BoxDecoration(),
                   child: Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
@@ -172,25 +175,23 @@ class _RestaurantsPageWidgetState extends State<RestaurantsPageWidget> {
                                 ),
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                        Container(
+                          height: MediaQuery.of(context).size.height * 0.3,
                           child: SingleChildScrollView(
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
-                              children: (platos.isEmpty)
-                                  ? [
-                                      Center(
-                                          child: CircularProgressIndicator(
-                                        color: Color(0xFF064244),
-                                      ))
-                                    ]
-                                  : platos
-                                      .map((plato) {
-                                        return _model.mostrarPlatos(
-                                            context, plato);
-                                      })
-                                      .toList()
-                                      .divide(SizedBox(height: 8)),
+                              children: (platosCargados==false)
+                                  ? [const Center(child: CircularProgressIndicator(color: Color(0xFF064244)))]
+                                  : (platos.isEmpty) ? [Center(child: Text(
+                                  "No hay platos agregados",
+                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                    fontFamily: 'Readex Pro',
+                                    color: Color(0xFF064244),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,))
+                              )] : platos.map((plato) {
+                                return _model.mostrarPlatos(context, plato);
+                              }).toList(),
                             ),
                           ),
                         ),
@@ -202,7 +203,6 @@ class _RestaurantsPageWidgetState extends State<RestaurantsPageWidget> {
               Expanded(
                 flex: 1,
                 child: Container(
-                  //height: MediaQuery.sizeOf(context).height * 0.5,
                   decoration: BoxDecoration(),
                   child: Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
@@ -241,25 +241,23 @@ class _RestaurantsPageWidgetState extends State<RestaurantsPageWidget> {
                                 ),
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+                        Container(
+                          height: MediaQuery.of(context).size.height * 0.3,
                           child: SingleChildScrollView(
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
-                              children: (menu.isEmpty)
-                                  ? [
-                                      Center(
-                                          child: CircularProgressIndicator(
-                                        color: Color(0xFF064244),
-                                      ))
-                                    ]
-                                  : menu
-                                      .map((platoMenu) {
-                                        return _model.mostrarMenu(
-                                            context, platoMenu);
-                                      })
-                                      .toList()
-                                      .divide(SizedBox(height: 8)),
+                              children: (menuCargado==false)
+                                  ? [const Center(child: CircularProgressIndicator(color: Color(0xFF064244)))]
+                                  : (menu.isEmpty) ? [Center(child: Text(
+                                  "No hay platos en el menú",
+                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                    fontFamily: 'Readex Pro',
+                                    color: Color(0xFF064244),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,))
+                              )] : menu.map((plato) {
+                                return _model.mostrarMenu(context, plato);
+                              }).toList(),
                             ),
                           ),
                         ),

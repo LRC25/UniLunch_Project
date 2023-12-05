@@ -301,7 +301,7 @@ class RestaurantReservationsPageModel
                     onPressed: () async {
                       String respuesta = await reserva.completarReserva();
                       if(respuesta=="correcto") {
-                        completeReservationAcceptMessage(context, "Se ha completado corretamente la reserva");
+                        accceptMessage(context, "Se ha completado corretamente la reserva");
                       } else {
                         errorMessage(context, "Ha ocurrido un error");
                       }

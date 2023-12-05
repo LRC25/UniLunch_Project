@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:unilunch/presentation/common/models/location_list_tile.dart';
-//import 'package:place_picker/place_picker.dart';
 import '../../../network_utilities.dart';
 import '../models/place_auto_complete_response.dart';
 import 'login_page_widget.dart';

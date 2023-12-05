@@ -16,20 +16,21 @@ class BuscarPorDefecto implements BuscarRestaurante {
     try {
       final dataRestaurante = await cliente
           .from("restaurante")
-          .select('''id_restaurante,nombre_restaurante,ubicacion,descripcion,direccion,hora_apertura,hora_cierre,imagen,nota_prom''');
+          .select('''id_restaurante,nombre_restaurante,latitud,longitud,direccion,descripcion,hora_apertura,hora_cierre,imagen,nota_prom''');
       if (dataRestaurante.isNotEmpty) {
         for(var i in dataRestaurante) {
-          Map<String, dynamic> datoRestarante = i;
+          Map<String, dynamic> datoRestaurante = i;
           Restaurante restaurante = Restaurante.cliente(
-              idRestaurante: datoRestarante["id_restaurante"],
-              nombreRestaurante: datoRestarante["nombre_restaurante"],
-              ubicacion: datoRestarante["ubicacion"],
-              direccion: datoRestarante["direccion"],
-              descripcion: datoRestarante["descripcion"],
-              horaApertura: convertTime(datoRestarante["hora_apertura"]),
-              horaCierre: convertTime(datoRestarante["hora_cierre"]),
-              imagen: datoRestarante["imagen"],
-              notaPromedio: datoRestarante["nota_prom"].toDouble());
+              idRestaurante: datoRestaurante["id_restaurante"],
+              nombreRestaurante: datoRestaurante["nombre_restaurante"],
+              latitud: datoRestaurante["latitud"],
+              longitud: datoRestaurante["longitud"],
+              direccion: datoRestaurante["direccion"],
+              descripcion: datoRestaurante["descripcion"],
+              horaApertura: convertTime(datoRestaurante["hora_apertura"]),
+              horaCierre: convertTime(datoRestaurante["hora_cierre"]),
+              imagen: datoRestaurante["imagen"],
+              notaPromedio: datoRestaurante["nota_prom"].toDouble());
           restaurantes.add(restaurante);
         }
       }
