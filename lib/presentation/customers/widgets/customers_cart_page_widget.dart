@@ -84,6 +84,24 @@ class _CustomerCartPageWidgetState extends State<CustomerCartPageWidget> {
                   },
                 ),
               ),
+              Align(
+                alignment: AlignmentDirectional(1.00, 0.00),
+                child: FlutterFlowIconButton(
+                  borderColor: Color(0x00FFFFFF),
+                  borderRadius: 20,
+                  borderWidth: 1,
+                  buttonSize: 40,
+                  fillColor: Color(0x00FFFFFF),
+                  icon: Icon(
+                    Icons.shopping_cart_rounded,
+                    color: Color(0xFF064244),
+                    size: 24,
+                  ),
+                  onPressed: () {
+                    print('IconButton pressed ...');
+                  },
+                ),
+              ),
             ],
           ),
           actions: [],
