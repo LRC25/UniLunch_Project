@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart' as google_maps;
 import 'package:unilunch/logic/BuscarPorDefecto.dart';
+import 'package:unilunch/logic/BuscarPorNombre.dart';
 import 'package:unilunch/logic/Cliente.dart';
 import 'package:unilunch/logic/Restaurante.dart';
 
@@ -46,6 +47,23 @@ class _CustomersPageWidgetState extends State<CustomersPageWidget> {
   void _loadRestaurantes() async {
     widget.cliente.setBuscarRestaurante(BuscarPorDefecto());
     List<Restaurante> restauranteTemp = await widget.cliente.applyBuscarRestaurante("");
+    setState(() {
+      listaCargada = true;
+      restaurantes = restauranteTemp;
+    });
+
+    for (var restaurante in restaurantes) {
+      // ignore: use_build_context_synchronously
+      _model.addMarker(context, restaurante);
+    }
+  }
+
+  void _loadFilteredRestaurantes() async {
+    listaCargada = false;
+    //TODO: clear Markers
+    _model.clearMarkers(context);
+    widget.cliente.setBuscarRestaurante(BuscarPorNombre());
+    List<Restaurante> restauranteTemp = await widget.cliente.applyBuscarRestaurante(_model.searchRestaurantController.text);
     setState(() {
       listaCargada = true;
       restaurantes = restauranteTemp;
@@ -126,7 +144,7 @@ class _CustomersPageWidgetState extends State<CustomersPageWidget> {
                         autofillHints: [AutofillHints.email],
                         obscureText: false,
                         decoration: InputDecoration(
-                          labelText: 'Buscar Restaurante...',
+                          labelText: 'Nombre de Restaurante...',
                           labelStyle:
                               FlutterFlowTheme.of(context).labelMedium.override(
                                     fontFamily: 'Readex Pro',
@@ -183,7 +201,7 @@ class _CustomersPageWidgetState extends State<CustomersPageWidget> {
                       width: MediaQuery.sizeOf(context).width * 0.3,
                       child: FFButtonWidget(
                         onPressed: () {
-                          print("Hello");
+                          _loadFilteredRestaurantes();
                         },
                         text: 'Buscar',
                         icon: Icon(
