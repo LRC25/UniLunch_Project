@@ -179,7 +179,7 @@ class _CustomersPageWidgetState extends State<CustomersPageWidget> {
                     children: (listaCargada==false)
                         ? [const Center(child: CircularProgressIndicator(color: Color(0xFF064244)))]
                         : (restaurantes.isEmpty) ? [Center(child: Text(
-                        "No hay reservas pendientes",
+                        "No hay restaurantes",
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily: 'Readex Pro',
                           color: Color(0xFF064244),
