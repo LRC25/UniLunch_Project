@@ -38,9 +38,8 @@ class Reserva {
       this.fecha,
       this.total,
       this.platos,
-      this.estado
       ): idReserva = "", nombreUsuario = "", idRestaurante = "", nombreRestaurante = "", logoRestaurante = "",
-        notaRestaurante = 0, estadoCalificacion = false, nota = "";
+        notaRestaurante = 0, estadoCalificacion = false, nota = "", estado = "";
 
   Reserva.cliente(
       this.idReserva,
@@ -69,31 +68,19 @@ class Reserva {
         fecha = DateTime(0), total = 0, platos = [], estado = "", estadoCalificacion = false, nota = "";
 
 
-  Future<String> insertarReserva(String idUsuario, String idRestaurante) async {
+  Future<String> insertarReserva(String idUsuario, String idRestaurante, DateTime hora) async {
     final SupabaseService supabaseService = SupabaseService();
     SupabaseClient cliente = supabaseService.client;
     try {
       String id = randomDigits(10);
       await cliente
           .from("reserva")
-          .insert({"id_reserva":id, "id_restaurante":idRestaurante, "id_usuario":idUsuario, "fecha":convertDate(fecha), "precio":total});
+          .insert({"id_reserva":id, "id_restaurante":idRestaurante, "id_usuario":idUsuario, "fecha":convertDate(fecha),
+        "hora":convertTimeSQL(hora), "precio":total, "estado":"Pendiente", "estado_calificacion":false});
       for (ReservaPlato plato in platos) {
         plato.insertarReservaPlato(id);
+        plato.plato.actualizarStock(plato.plato.stock-plato.cantidad);
       }
-      return "correcto";
-    } catch (e) {
-      return e.toString();
-    }
-  }
-
-  Future<String> eliminarReserva() async {
-    final SupabaseService supabaseService = SupabaseService();
-    SupabaseClient cliente = supabaseService.client;
-    try {
-      for (ReservaPlato plato in platos) {
-        plato.eliminarReservaPlato();
-      }
-      await cliente.from('reserva').delete().match({"id_reserva": idReserva});
       return "correcto";
     } catch (e) {
       return e.toString();
@@ -189,7 +176,7 @@ class Reserva {
           List<ReservaPlato> reservaPlatos = await ReservaPlato.vacio()
               .listarPorReserva(dato["id_reserva"]);
           Reserva reserva = Reserva.cliente(
-              dato["id_reserva"], dato["id_restaurante"], nombre["nombre_restaurante"], logo["imagen"], notaRestaurante["nota_prom"], converDateTime(dato["fecha"], dato["hora"]),
+              dato["id_reserva"], dato["id_restaurante"], nombre["nombre_restaurante"], logo["imagen"], notaRestaurante["nota_prom"].toDouble(), converDateTime(dato["fecha"], dato["hora"]),
               dato["precio"], reservaPlatos, dato["estado"], dato["estado_calificacion"], nota);
           reservas.add(reserva);
         }
@@ -227,7 +214,7 @@ class Reserva {
           List<ReservaPlato> reservaPlatos = await ReservaPlato.vacio()
               .listarPorReserva(dato["id_reserva"]);
           Reserva reserva = Reserva.cliente(
-              dato["id_reserva"], dato["id_restaurante"], nombre["nombre_restaurante"], logo["imagen"], notaRestaurante["nota_prom"], converDateTime(dato["fecha"], dato["hora"]),
+              dato["id_reserva"], dato["id_restaurante"], nombre["nombre_restaurante"], logo["imagen"], notaRestaurante["nota_prom"].toDouble(), converDateTime(dato["fecha"], dato["hora"]),
               dato["precio"], reservaPlatos, dato["estado"], dato["estado_calificacion"], nota);
           reservas.add(reserva);
         }
@@ -257,6 +244,9 @@ class Reserva {
     SupabaseClient cliente = supabaseService.client;
     try {
       await cliente.from('reserva').update({"estado": "Cancelado"}).match({"id_reserva": idReserva});
+      for(ReservaPlato reservaPlato in this.platos){
+        reservaPlato.plato.actualizarStock(reservaPlato.cantidad+reservaPlato.plato.stock);
+      }
       return "correcto";
     } catch (e) {
       return e.toString();

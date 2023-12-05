@@ -50,10 +50,10 @@ class Cliente extends Usuario {
     }
   }
 
-  Future<String> hacerReservar(DateTime fecha, int total, List<ReservaPlato> platos, String estado, String idRestaurante) async {
+  Future<String> hacerReservar(DateTime fecha, DateTime hora, int total, List<ReservaPlato> platos, String idRestaurante) async {
     try {
-      Reserva reserva = Reserva.registro(fecha, total, platos, estado);
-      String response = await reserva.insertarReserva(idUsuario, idRestaurante);
+      Reserva reserva = Reserva.registro(fecha, total, platos);
+      String response = await reserva.insertarReserva(idUsuario, idRestaurante, hora);
       if (response == "correcto"){
         return "correcto";
       } else {

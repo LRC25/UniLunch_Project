@@ -1,4 +1,5 @@
 import 'package:flutterflow_ui/flutterflow_ui.dart';
+import 'package:unilunch/presentation/common/widgets/login_page_widget.dart';
 
 import '../../../logic/Restaurante.dart';
 
@@ -474,7 +475,8 @@ class _RestaurantSettingsPageWidgetState
                   padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 16),
                   child: FFButtonWidget(
                     onPressed: () {
-                      print('Button pressed ...');
+                      Navigator.pushReplacement(context, MaterialPageRoute(
+                          builder:(context) => LoginPageWidget()));
                     },
                     text: 'Cerrar Sesión',
                     options: FFButtonOptions(

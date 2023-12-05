@@ -48,6 +48,13 @@ class _CustomerReservationsPageWidgetState extends State<CustomerReservationsPag
     });
   }
 
+  void reload(){
+    setState(() {
+      reservaCargada=false;
+      _loadReservas();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     if (isiOS) {
@@ -123,7 +130,7 @@ class _CustomerReservationsPageWidgetState extends State<CustomerReservationsPag
                             fontSize: 16,
                             fontWeight: FontWeight.w400,))
                       )] : reservas.map((reserva) {
-                        return _model.mostrarReservas(context, reserva, widget.cliente);
+                        return _model.mostrarReservas(context, reserva, widget.cliente, reload);
                       }).toList(),
                     ),
                   ),
@@ -159,7 +166,7 @@ class _CustomerReservationsPageWidgetState extends State<CustomerReservationsPag
                             fontSize: 16,
                             fontWeight: FontWeight.w400,))
                       )] : reservasCompletas.map((reserva) {
-                        return _model.mostrarReservas(context, reserva, widget.cliente);
+                        return _model.mostrarReservas(context, reserva, widget.cliente, reload);
                       }).toList(),
                     ),
                   ),

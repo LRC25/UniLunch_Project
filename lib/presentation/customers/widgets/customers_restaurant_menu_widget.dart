@@ -1,12 +1,21 @@
 import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
+import 'package:unilunch/logic/Carrito.dart';
+import 'package:unilunch/presentation/customers/widgets/customers_cart_page_widget.dart';
+import '../../../logic/Cliente.dart';
+import '../../../logic/Plato.dart';
+import '../../../logic/Restaurante.dart';
 import '../models/customers_restaurant_menu_model.dart';
+import 'navbar_customer_page_widget.dart';
 export '../models/customers_restaurant_menu_model.dart';
 
 class CustomerRestaurantMenuWidget extends StatefulWidget {
-  const CustomerRestaurantMenuWidget({Key? key}) : super(key: key);
+  final Cliente cliente;
+  final Carrito carrito;
+  final Restaurante restaurante;
+  const CustomerRestaurantMenuWidget({Key? key, required this.cliente,
+    required this.carrito, required this.restaurante}) : super(key: key);
 
   @override
   _CustomerRestaurantMenuWidgetState createState() =>
@@ -19,10 +28,15 @@ class _CustomerRestaurantMenuWidgetState
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
+  var menuCargado = false;
+  late List<Plato> menu = [];
+
   @override
   void initState() {
+    _loadMenu();
     super.initState();
     _model = createModel(context, () => CustomerRestaurantMenuModel());
+    _model.actualCarrito = widget.carrito;
   }
 
   @override
@@ -30,6 +44,14 @@ class _CustomerRestaurantMenuWidgetState
     _model.dispose();
 
     super.dispose();
+  }
+
+  void _loadMenu() async {
+    List<Plato> platosTemp = await widget.restaurante.mostrarMenuHoy();
+    setState(() {
+      menuCargado = true;
+      menu = platosTemp;
+    });
   }
 
   @override
@@ -53,17 +75,61 @@ class _CustomerRestaurantMenuWidgetState
         appBar: AppBar(
           backgroundColor: Color(0xFFC6E8DA),
           automaticallyImplyLeading: false,
-          title: Align(
-            alignment: AlignmentDirectional(0.00, 0.00),
-            child: Text(
-              'Menú',
-              style: FlutterFlowTheme.of(context).headlineMedium.override(
+          title: Stack(
+            alignment: AlignmentDirectional(0, 0),
+            children: [
+              Align(
+                alignment: AlignmentDirectional(0.00, 0.00),
+                child: Text(
+                  'Menú',
+                  style: FlutterFlowTheme.of(context).headlineMedium.override(
                     fontFamily: 'Outfit',
                     color: Color(0xFF064244),
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
                   ),
-            ),
+                ),
+              ),
+              Align(
+                alignment: AlignmentDirectional(-1.00, 0.00),
+                child: FlutterFlowIconButton(
+                  borderColor: Color(0x00FFFFFF),
+                  borderRadius: 20,
+                  borderWidth: 1,
+                  buttonSize: 40,
+                  fillColor: Color(0x00FFFFFF),
+                  icon: Icon(
+                    Icons.arrow_back_rounded,
+                    color: Color(0xFF064244),
+                    size: 24,
+                  ),
+                  onPressed: () {
+                    Navigator.pushReplacement(context, MaterialPageRoute(
+                        builder:(context) => NavbarCustomerPage(cliente: widget.cliente)));
+                  },
+                ),
+              ),
+              Align(
+                alignment: AlignmentDirectional(1.00, 0.00),
+                child: FlutterFlowIconButton(
+                  borderColor: Color(0x00FFFFFF),
+                  borderRadius: 20,
+                  borderWidth: 1,
+                  buttonSize: 40,
+                  fillColor: Color(0x00FFFFFF),
+                  icon: Icon(
+                    Icons.shopping_cart_rounded,
+                    color: Color(0xFF064244),
+                    size: 24,
+                  ),
+                  onPressed: () {
+                    Navigator.pushReplacement(context, MaterialPageRoute(
+                        builder:(context) => CustomerCartPageWidget(cliente: widget.cliente,
+                          carrito: _model.actualCarrito, restaurante: widget.restaurante,)));
+                  },
+                ),
+              ),
+            ],
           ),
           actions: [],
           centerTitle: false,
@@ -100,18 +166,19 @@ class _CustomerRestaurantMenuWidgetState
                         Expanded(
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
-                            child: Container(
-                              width: MediaQuery.sizeOf(context).width * 0.4,
-                              height: MediaQuery.sizeOf(context).height * 1,
-                              decoration: BoxDecoration(),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(16),
-                                child: Image.network(
-                                  'https://picsum.photos/seed/203/600',
-                                  width:
-                                      MediaQuery.sizeOf(context).width * 0.108,
-                                  height: 200,
-                                  fit: BoxFit.cover,
+                            child: AspectRatio(
+                              aspectRatio: 1,
+                              child: Container(
+                                decoration: BoxDecoration(),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(16),
+                                  child: Image.network(
+                                    widget.restaurante.imagen,
+                                    width:
+                                        MediaQuery.sizeOf(context).width * 0.108,
+                                    height: 200,
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
                             ),
@@ -141,7 +208,7 @@ class _CustomerRestaurantMenuWidgetState
                                         alignment:
                                             AlignmentDirectional(-1.00, 0.00),
                                         child: Text(
-                                          'Las Palmas',
+                                          widget.restaurante.nombreRestaurante,
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
@@ -162,7 +229,7 @@ class _CustomerRestaurantMenuWidgetState
                                       alignment:
                                           AlignmentDirectional(-1.00, 0.00),
                                       child: Text(
-                                        '4.7',
+                                        (widget.restaurante.notaPromedio==0) ? "-" : widget.restaurante.notaPromedio.toString(),
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
@@ -176,7 +243,7 @@ class _CustomerRestaurantMenuWidgetState
                                   ],
                                 ),
                                 Text(
-                                  'Quien dijo picadaaaaaaaaaaaaaaaaa hijueputaaaaaaaa, deme picadaaaaa',
+                                  widget.restaurante.descripcion,
                                   textAlign: TextAlign.justify,
                                   maxLines: 2,
                                   style: FlutterFlowTheme.of(context)
@@ -193,7 +260,7 @@ class _CustomerRestaurantMenuWidgetState
                                       alignment:
                                           AlignmentDirectional(-1.00, 0.00),
                                       child: Text(
-                                        'Cra 26A #10-11',
+                                        widget.restaurante.direccion,
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
@@ -230,173 +297,22 @@ class _CustomerRestaurantMenuWidgetState
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Container(
-                        width: MediaQuery.sizeOf(context).width,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 4,
-                              color: Color(0x33000000),
-                              offset: Offset(0, 2),
-                            )
-                          ],
-                          borderRadius: BorderRadius.circular(15),
-                          shape: BoxShape.rectangle,
-                        ),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Container(
-                                width: MediaQuery.sizeOf(context).width * 0.65,
-                                height: 100,
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 5, 0),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Align(
-                                        alignment:
-                                            AlignmentDirectional(-1.00, 0.00),
-                                        child: Text(
-                                          'Milanesa de Pollo',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Readex Pro',
-                                                color: Color(0xFF064244),
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                        ),
-                                      ),
-                                      Text(
-                                        'Deliciosa milanesa con pollo y papas y arroz y me lo chupa',
-                                        textAlign: TextAlign.start,
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Readex Pro',
-                                              color: Color(0xFF064244),
-                                            ),
-                                      ),
-                                      Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Align(
-                                            alignment: AlignmentDirectional(
-                                                -1.00, 0.00),
-                                            child: Text(
-                                              '\$15.000',
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .bodyMedium
-                                                  .override(
-                                                    fontFamily: 'Readex Pro',
-                                                    color: Color(0xFF138D20),
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.w300,
-                                                  ),
-                                            ),
-                                          ),
-                                          Flexible(
-                                            child: Align(
-                                              alignment: AlignmentDirectional(
-                                                  1.00, 0.00),
-                                              child: Text(
-                                                '15 disponibles',
-                                                textAlign: TextAlign.start,
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Readex Pro',
-                                                          fontWeight:
-                                                              FontWeight.w300,
-                                                        ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Container(
-                                  width: MediaQuery.sizeOf(context).width * 0.3,
-                                  height: 100,
-                                  decoration: BoxDecoration(),
-                                  child: Container(
-                                    width: MediaQuery.sizeOf(context).width,
-                                    height:
-                                        MediaQuery.sizeOf(context).height * 1,
-                                    child: Stack(
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(16),
-                                          child: Image.network(
-                                            'https://picsum.photos/seed/203/600',
-                                            width: MediaQuery.sizeOf(context)
-                                                .width,
-                                            height: MediaQuery.sizeOf(context)
-                                                    .height *
-                                                1,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(1.00, 1.00),
-                                          child: FlutterFlowIconButton(
-                                            borderColor: Color(0x00FFFFFF),
-                                            borderRadius: 16,
-                                            borderWidth: 1,
-                                            buttonSize: 40,
-                                            fillColor: Color(0xFFFF7A00),
-                                            icon: Icon(
-                                              Icons.add_circle,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryBackground,
-                                              size: 24,
-                                            ),
-                                            onPressed: () {
-                                              print('IconButton pressed ...');
-                                            },
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
+                    children: (menuCargado==false)
+                        ? [const Center(child: CircularProgressIndicator(color: Color(0xFF064244)))]
+                        : (menu.isEmpty) ? [Center(child: Text(
+                        "No hay restaurantes",
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                          fontFamily: 'Readex Pro',
+                          color: Color(0xFF064244),
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,))
+                    )] : menu.map((plato) {
+                      return _model.mostrarMenu(context, plato);
+                    }).toList(),
                   ),
                 ),
               ),
