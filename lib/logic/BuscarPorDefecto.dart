@@ -9,7 +9,7 @@ import '../utils.dart';
 class BuscarPorDefecto implements BuscarRestaurante {
 
   @override
-  Future<List<Restaurante>> buscarRerstaurante(dynamic entrada) async {
+  Future<List<Restaurante>> buscarRestaurante(dynamic entrada) async {
     final SupabaseService supabaseService = SupabaseService();
     SupabaseClient cliente = supabaseService.client;
     List<Restaurante> restaurantes = [];
@@ -40,5 +40,4 @@ class BuscarPorDefecto implements BuscarRestaurante {
       return restaurantes;
     }
   }
-
 }

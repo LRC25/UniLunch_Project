@@ -1,7 +1,5 @@
 import 'package:unilunch/logic/Restaurante.dart';
 
 abstract class BuscarRestaurante {
-
-  Future<List<Restaurante>> buscarRerstaurante(dynamic entrada);
-
+  Future<List<Restaurante>> buscarRestaurante(dynamic entrada);
 }
