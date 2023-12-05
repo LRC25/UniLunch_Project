@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutterflow_ui/flutterflow_ui.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart' as google_maps;
 import 'package:unilunch/logic/Restaurante.dart';
 import 'package:unilunch/network_utilities.dart';
 import 'package:unilunch/presentation/common/models/autocomplete_prediction.dart';

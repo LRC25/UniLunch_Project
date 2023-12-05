@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:unilunch/persistence/SupabaseConnection.dart';
 import 'package:supabase/src/supabase_client.dart';
 import 'package:unilunch/logic/Cliente.dart';
