@@ -49,6 +49,13 @@ class _RestaurantReservationsPageWidgetState
     });
   }
 
+  void reload(){
+    setState(() {
+      reservaCargada=false;
+      _loadReservas();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     if (isiOS) {
@@ -124,7 +131,7 @@ class _RestaurantReservationsPageWidgetState
                             fontSize: 16,
                             fontWeight: FontWeight.w400,))
                       )] : reservas.map((reserva) {
-                        return _model.mostrarReservas(context, reserva);
+                        return _model.mostrarReservas(context, reserva, reload);
                       }).toList(),
                     ),
                   ),
@@ -160,7 +167,7 @@ class _RestaurantReservationsPageWidgetState
                             fontSize: 16,
                             fontWeight: FontWeight.w400,))
                       )] : reservasCompletas.map((reserva) {
-                        return _model.mostrarReservas(context, reserva);
+                        return _model.mostrarReservas(context, reserva, reload);
                       }).toList(),
                     ),
                   ),

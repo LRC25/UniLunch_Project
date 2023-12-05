@@ -3,7 +3,6 @@ import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../common/widgets/login_page_widget.dart';
 import '../models/settings_page_model.dart';
 export '../models/settings_page_model.dart';
 
@@ -254,8 +253,7 @@ class _CustomerSettingsPageWidgetState
                 padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                 child: FFButtonWidget(
                   onPressed: () {
-                    Navigator.pushReplacement(context, MaterialPageRoute(
-                        builder:(context) => LoginPageWidget()));
+                    print('Button pressed ...');
                   },
                   text: 'Cerrar Sesión',
                   options: FFButtonOptions(

@@ -29,7 +29,7 @@ class CustomerReservationsPageModel extends FlutterFlowModel<CustomerReservation
 
   /// Action blocks are added here.
 
-  Padding mostrarReservas(BuildContext context, Reserva reserva, Cliente cliente) {
+  Padding mostrarReservas(BuildContext context, Reserva reserva, Cliente cliente, Function reload) {
     int cantidad = 0;
     for (ReservaPlato plato in reserva.platos) {
       cantidad = cantidad + plato.cantidad;
@@ -56,7 +56,7 @@ class CustomerReservationsPageModel extends FlutterFlowModel<CustomerReservation
           color: FlutterFlowTheme.of(context).secondaryBackground,
           child: InkWell(
             onTap: () async {
-              detallesReservaPendiente(context, reserva, cantidad);
+              detallesReservaPendiente(context, reserva, cantidad, reload);
             },
             child: Container(
               width: MediaQuery.sizeOf(context).width,
@@ -244,7 +244,7 @@ class CustomerReservationsPageModel extends FlutterFlowModel<CustomerReservation
     }
   }
 
-  void detallesReservaPendiente(BuildContext context, Reserva reserva, int cantidad) {
+  void detallesReservaPendiente(BuildContext context, Reserva reserva, int cantidad, Function reload) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -438,7 +438,7 @@ class CustomerReservationsPageModel extends FlutterFlowModel<CustomerReservation
                   child: FFButtonWidget(
                     onPressed: () async {
                       Navigator.of(context).pop();
-                      warningCanceleReservationMessage(context, "Esta seguro que desea cancelar la reserva", reserva);
+                      warningCanceleReservationMessage(context, "Esta seguro que desea cancelar la reserva", reserva, reload);
                     },
                     text: 'Cancelar Reserva',
                     options: FFButtonOptions(
@@ -599,7 +599,7 @@ class CustomerReservationsPageModel extends FlutterFlowModel<CustomerReservation
     );
   }
 
-  void warningCanceleReservationMessage(BuildContext context, String mensaje, Reserva reserva) {
+  void warningCanceleReservationMessage(BuildContext context, String mensaje, Reserva reserva, Function reload) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -640,6 +640,7 @@ class CustomerReservationsPageModel extends FlutterFlowModel<CustomerReservation
                             String respuesta = await reserva.cancelarReserva();
                             if(respuesta=="correcto") {
                               Navigator.of(context).pop();
+                              reload();
                               accceptMessage(context, "Se ha cancelado corretamente la reserva");
                             } else {
                               Navigator.of(context).pop();

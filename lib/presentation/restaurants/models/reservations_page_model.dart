@@ -23,7 +23,7 @@ class RestaurantReservationsPageModel
 
   /// Action blocks are added here.
 
-  Padding mostrarReservas(BuildContext context, Reserva reserva) {
+  Padding mostrarReservas(BuildContext context, Reserva reserva, Function reload) {
     int cantidad = 0;
     for (ReservaPlato plato in reserva.platos) {
       cantidad = cantidad + plato.cantidad;
@@ -50,7 +50,7 @@ class RestaurantReservationsPageModel
           color: FlutterFlowTheme.of(context).secondaryBackground,
           child: InkWell(
             onTap: () async {
-              detallesReservaPendiente(context, reserva);
+              detallesReservaPendiente(context, reserva, reload);
             },
             child: Container(
               width: MediaQuery.sizeOf(context).width,
@@ -163,7 +163,7 @@ class RestaurantReservationsPageModel
     }
   }
 
-  void detallesReservaPendiente(BuildContext context, Reserva reserva) {
+  void detallesReservaPendiente(BuildContext context, Reserva reserva, Function reload) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -301,8 +301,11 @@ class RestaurantReservationsPageModel
                     onPressed: () async {
                       String respuesta = await reserva.completarReserva();
                       if(respuesta=="correcto") {
+                        Navigator.of(context).pop();
+                        reload();
                         accceptMessage(context, "Se ha completado corretamente la reserva");
                       } else {
+                        Navigator.of(context).pop();
                         errorMessage(context, "Ha ocurrido un error");
                       }
                     },

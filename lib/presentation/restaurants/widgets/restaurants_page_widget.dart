@@ -63,6 +63,16 @@ class _RestaurantsPageWidgetState extends State<RestaurantsPageWidget> {
     });
   }
 
+  void reload(){
+    setState(() {
+      platosCargados=false;
+      menuCargado=false;
+      _loadPlatos();
+      _loadMenu();
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     if (isiOS) {
@@ -154,7 +164,7 @@ class _RestaurantsPageWidgetState extends State<RestaurantsPageWidget> {
                                     size: 24,
                                   ),
                                   onPressed: () {
-                                    _model.addPlateAlert(context, widget.restaurante);
+                                    _model.addPlateAlert(context, widget.restaurante, reload);
                                   },
                                 ),
                               ),
@@ -191,7 +201,7 @@ class _RestaurantsPageWidgetState extends State<RestaurantsPageWidget> {
                                     fontSize: 16,
                                     fontWeight: FontWeight.w400,))
                               )] : platos.map((plato) {
-                                return _model.mostrarPlatos(context, plato);
+                                return _model.mostrarPlatos(context, plato, reload);
                               }).toList(),
                             ),
                           ),
@@ -258,7 +268,7 @@ class _RestaurantsPageWidgetState extends State<RestaurantsPageWidget> {
                                     fontSize: 16,
                                     fontWeight: FontWeight.w400,))
                               )] : menu.map((plato) {
-                                return _model.mostrarMenu(context, plato);
+                                return _model.mostrarMenu(context, plato, reload);
                               }).toList(),
                             ),
                           ),

@@ -43,7 +43,7 @@ class RestaurantsPageModel extends FlutterFlowModel<RestaurantsPageWidget> {
   /// Action blocks are added here.
   ///
 
-  Padding mostrarPlatos(BuildContext context, Plato plato) {
+  Padding mostrarPlatos(BuildContext context, Plato plato, Function reload) {
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 5),
       child: Container(
@@ -127,6 +127,7 @@ class RestaurantsPageModel extends FlutterFlowModel<RestaurantsPageWidget> {
                                 if(plato.menuHoy==false) {
                                   String respuesta = await plato.agregarMenu();
                                   if (respuesta == "correcto") {
+                                    reload();
                                     accceptMessage(context, "Ha sido agregado con éxito.");
                                   } else {
                                     errorMessage(context, "Ha ocurrido un error");
@@ -171,7 +172,7 @@ class RestaurantsPageModel extends FlutterFlowModel<RestaurantsPageWidget> {
                                 size: 20,
                               ),
                               onPressed: () {
-                                editarPlato(context, plato);
+                                editarPlato(context, plato, reload);
                               },
                             ),
                             FlutterFlowIconButton(
@@ -186,7 +187,7 @@ class RestaurantsPageModel extends FlutterFlowModel<RestaurantsPageWidget> {
                                 size: 20,
                               ),
                               onPressed: () {
-                                mensajeConfirmacion(context, "Esta segudo que desea eliminar el plato", plato);
+                                mensajeConfirmacion(context, "Esta segudo que desea eliminar el plato", plato, reload);
                               },
                             ),
                           ],
@@ -212,7 +213,7 @@ class RestaurantsPageModel extends FlutterFlowModel<RestaurantsPageWidget> {
     );
   }
 
-  Padding mostrarMenu(BuildContext context, Plato plato) {
+  Padding mostrarMenu(BuildContext context, Plato plato, Function reload) {
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 5),
       child: Container(
@@ -322,6 +323,7 @@ class RestaurantsPageModel extends FlutterFlowModel<RestaurantsPageWidget> {
                           onPressed: () async {
                             String respuesta = await plato.quitarMenu();
                             if (respuesta == "correcto") {
+                              reload();
                               accceptMessage(context, "Ha sido quitado del menu con éxito.");
                             } else {
                               errorMessage(context, "Ha ocurrido un error");
@@ -340,7 +342,7 @@ class RestaurantsPageModel extends FlutterFlowModel<RestaurantsPageWidget> {
     );
   }
 
-  void addPlateAlert(BuildContext context, Restaurante restaurante) {
+  void addPlateAlert(BuildContext context, Restaurante restaurante, Function reload) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -606,6 +608,7 @@ class RestaurantsPageModel extends FlutterFlowModel<RestaurantsPageWidget> {
                         String respuesta = await newPlato.insertarPlato(restaurante.idRestaurante);
                         if (respuesta == "correcto") {
                           Navigator.of(context).pop();
+                          reload();
                           accceptMessage(context, "Ha sido agregado con éxito.");
                         } else {
                           Navigator.of(context).pop();
@@ -644,7 +647,7 @@ class RestaurantsPageModel extends FlutterFlowModel<RestaurantsPageWidget> {
   );
 }
 
-  void mensajeConfirmacion(BuildContext context, String mensaje, Plato plato) {
+  void mensajeConfirmacion(BuildContext context, String mensaje, Plato plato, Function reload) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -685,6 +688,7 @@ class RestaurantsPageModel extends FlutterFlowModel<RestaurantsPageWidget> {
                             String respuesta = await plato.eliminarPlato();
                             if(respuesta=="correcto") {
                               Navigator.of(context).pop();
+                              reload();
                               accceptMessage(context, "Se ha eliminado corretamente la reserva");
                             } else {
                               Navigator.of(context).pop();
@@ -750,7 +754,7 @@ class RestaurantsPageModel extends FlutterFlowModel<RestaurantsPageWidget> {
     );
   }
 
-  void editarPlato(BuildContext context, Plato plato) {
+  void editarPlato(BuildContext context, Plato plato, Function reload) {
 
     final nombreController = TextEditingController();
     final descripcionController = TextEditingController();
@@ -1085,6 +1089,7 @@ class RestaurantsPageModel extends FlutterFlowModel<RestaurantsPageWidget> {
                                     }
                                     if(actualizo==true) {
                                       Navigator.of(context).pop();
+                                      reload();
                                       accceptMessage(context, "Se ha actualizado correctamente");
                                     } else {
                                       Navigator.of(context).pop();
