@@ -55,7 +55,6 @@ class _CustomerReservationsPageWidgetState extends State<CustomerReservationsPag
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     if (isiOS) {

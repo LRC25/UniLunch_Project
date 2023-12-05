@@ -233,12 +233,22 @@ class CustomerCartPageModel extends FlutterFlowModel<CustomerCartPageWidget> {
   crearReserva(BuildContext context, int total) async {
     if(actualCarrito.platos.isNotEmpty) {
       if(datePicked!=null) {
-        DateTime fecha = DateTime.now();
-        String response = await widget.cliente.hacerReservar(fecha, datePicked!, total, actualCarrito.platos, widget.restaurante.idRestaurante);
-        if (response=="correcto") {
-          accceptMessageReserva(context, "Se ha agredo correctanemte", widget.cliente);
+        bool cantidadInsuficiente = false;
+        for(ReservaPlato carrito in actualCarrito.platos) {
+          if(carrito.cantidad>carrito.plato.stock){
+            cantidadInsuficiente = true;
+          }
+        }
+        if(cantidadInsuficiente==false) {
+          DateTime fecha = DateTime.now();
+          String response = await widget.cliente.hacerReservar(fecha, datePicked!, total, actualCarrito.platos, widget.restaurante.idRestaurante);
+          if (response=="correcto") {
+            accceptMessageReserva(context, "Se ha agredo correctanemte", widget.cliente);
+          } else {
+            errorMessage(context, "ha ocurrido un error");
+          }
         } else {
-          errorMessage(context, "ha ocurrido un error");
+          warningMessage(context, "Algunos platos no tienen la suficiente cantidad");
         }
       } else {
         warningMessage(context, "Por favor agregar la hora de la reserva");

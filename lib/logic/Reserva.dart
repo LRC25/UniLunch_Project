@@ -79,21 +79,8 @@ class Reserva {
         "hora":convertTimeSQL(hora), "precio":total, "estado":"Pendiente", "estado_calificacion":false});
       for (ReservaPlato plato in platos) {
         plato.insertarReservaPlato(id);
+        plato.plato.actualizarStock(plato.plato.stock-plato.cantidad);
       }
-      return "correcto";
-    } catch (e) {
-      return e.toString();
-    }
-  }
-
-  Future<String> eliminarReserva() async {
-    final SupabaseService supabaseService = SupabaseService();
-    SupabaseClient cliente = supabaseService.client;
-    try {
-      for (ReservaPlato plato in platos) {
-        plato.eliminarReservaPlato();
-      }
-      await cliente.from('reserva').delete().match({"id_reserva": idReserva});
       return "correcto";
     } catch (e) {
       return e.toString();
@@ -257,6 +244,9 @@ class Reserva {
     SupabaseClient cliente = supabaseService.client;
     try {
       await cliente.from('reserva').update({"estado": "Cancelado"}).match({"id_reserva": idReserva});
+      for(ReservaPlato reservaPlato in this.platos){
+        reservaPlato.plato.actualizarStock(reservaPlato.cantidad+reservaPlato.plato.stock);
+      }
       return "correcto";
     } catch (e) {
       return e.toString();
