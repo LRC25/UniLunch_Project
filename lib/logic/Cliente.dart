@@ -33,7 +33,7 @@ class Cliente extends Usuario {
   }
 
   Future<List<Restaurante>> applyBuscarRestaurante(dynamic entrada) {
-    return _buscarRestaurante.buscarRerstaurante(entrada);
+    return _buscarRestaurante.buscarRestaurante(entrada);
   }
 
   Future<String> resgistrarCliente(String contrasenna) async {

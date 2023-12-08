@@ -222,5 +222,9 @@ class CustomersPageModel extends FlutterFlowModel<CustomersPageWidget> {
     );
   }
 
+  void clearMarkers(BuildContext context){
+    markers.clear();
+  }
+
   /// Additional helper methods are added here.
 }
