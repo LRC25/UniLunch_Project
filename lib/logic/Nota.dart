@@ -25,15 +25,29 @@ class Nota {
   Future<String> insertarNota(String idRestaurante, String idUsuario, Reserva reserva) async {
     final SupabaseService supabaseService = SupabaseService();
     SupabaseClient cliente = supabaseService.client;
-    try {
-      String id = randomDigits(10);
-      await cliente
-          .from("nota")
-          .insert({"id_nota":id, "id_restaurante":idRestaurante, "id_usuario":idUsuario, "calificacion":calificacion, "descripcion":descripcion});
-      await reserva.actualizarEstadoCalificacion(id);
-      return "correcto";
-    } catch (e) {
-      return e.toString();
+    final responseUsuario = await cliente.from("usuario").select('''id_usuario''').eq("id_usuario", idUsuario);
+    if(responseUsuario.isNotEmpty) {
+      final responseRestaurante = await cliente.from("restaurante").select('''id_restaurante''').eq("id_restaurante", idRestaurante);
+      if(responseRestaurante.isNotEmpty) {
+        if(calificacion >= 1 && calificacion <= 5) {
+          try {
+            String id = randomDigits(10);
+            await cliente
+                .from("nota")
+                .insert({"id_nota":id, "id_restaurante":idRestaurante, "id_usuario":idUsuario, "calificacion":calificacion, "descripcion":descripcion});
+            await reserva.actualizarEstadoCalificacion(id);
+            return "correcto";
+          } catch (e) {
+            return e.toString();
+          }
+        } else {
+          return "Error La calificacion no esta dentro en lo esperado";
+        }
+      } else {
+        return "Error este restaurante no existe";
+      }
+    } else {
+      return "Error este usuario no existe";
     }
   }
 

@@ -36,15 +36,32 @@ class Plato {
   Future<String> insertarPlato(String idRestaurante) async {
     final SupabaseService supabaseService = SupabaseService();
     SupabaseClient cliente = supabaseService.client;
-    try {
-      String id = randomDigits(10);
-      await cliente
-          .from("plato")
-          .insert({"id_plato":id, "id_restaurante":idRestaurante, "nombre":nombre, "descripcion":descripcion, "imagen":imagen, "stock":0,
-        "precio":precio, "menu_hoy": false});
-      return "correcto";
-    } catch (e) {
-      return e.toString();
+    final responseRestaurante = await cliente.from("restaurante").select('''id_restaurante''').eq("id_restaurante", idRestaurante);
+    if (responseRestaurante.isNotEmpty) {
+      if(stock > 0) {
+        if(precio > 0) {
+          if (imagen != "") {
+            try {
+              String id = randomDigits(10);
+              await cliente
+                  .from("plato")
+                  .insert({"id_plato": id, "id_restaurante": idRestaurante, "nombre": nombre, "descripcion": descripcion,
+                "imagen": imagen, "stock": 0, "precio": precio, "menu_hoy": false});
+              return "correcto";
+            } catch (e) {
+              return e.toString();
+            }
+          } else {
+            return "Error la imagen esta vacía";
+          }
+        } else {
+          return "Error el precio de este plato es negativo";
+        }
+      } else {
+        return "Error el stock de este plato es negativo";
+      }
+    } else {
+      return "Error este restaurante no existe";
     }
   }
 
