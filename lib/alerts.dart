@@ -4,6 +4,8 @@ import 'package:unilunch/logic/Cliente.dart';
 import 'package:unilunch/presentation/common/widgets/login_page_widget.dart';
 import 'package:unilunch/presentation/customers/widgets/navbar_customer_page_widget.dart';
 
+import '../../../logic/Restaurante.dart';
+
 void registrationAcceptMessage(BuildContext context, String mensaje) {
   showDialog(
     context: context,
@@ -357,7 +359,7 @@ void errorMessage(BuildContext context, String mensaje) {
   }
 
 
-void updateMessage(BuildContext context, String campo, String informacionActual) {
+void updateMessage(BuildContext context, String campo, String informacionActual, idR) {
 
   TextEditingController _textFieldController = TextEditingController(text: informacionActual);
 
@@ -403,10 +405,19 @@ void updateMessage(BuildContext context, String campo, String informacionActual)
               ElevatedButton(
                 onPressed: () {
 
-
                   String nuevoValor = _textFieldController.text;
+                  if(campo == 'Nombre') {
+                    Restaurante.actualizarNombre(nuevoValor,idR);
+                  }
+                  else if(campo == 'Nombre Restaurante') {
+                    Restaurante.actualizarNombreRestaurante(nuevoValor,idR);
+                  }
+                  else if(campo == 'Dirección') {
+                    Restaurante.actualizarDescripcion(nuevoValor,idR);
+                  }
+
                   Navigator.of(context).pop();
-                  
+
 
                 },
                 style: ElevatedButton.styleFrom(
@@ -428,6 +439,7 @@ void updateMessage(BuildContext context, String campo, String informacionActual)
       );
     },
   );
+
 }
 
 

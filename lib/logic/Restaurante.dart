@@ -184,6 +184,7 @@ class Restaurante extends Usuario {
     }
   }
 
+
   Future<String> actualizarPromedio(String idRestaurante) async {
     final SupabaseService supabaseService = SupabaseService();
     SupabaseClient cliente = supabaseService.client;
@@ -209,4 +210,52 @@ class Restaurante extends Usuario {
     }
   }
 
+static Future<int> actualizarDescripcion(String campo, String idRestaurante) async {
+    final SupabaseService supabaseService = SupabaseService();
+    SupabaseClient cliente = supabaseService.client;
+    try {
+      await cliente
+          .from('restaurante')
+          .update({'descripcion': campo}).match({'id_restaurante': idRestaurante});
+      debugPrint("Correcto, cambio de contraseña realizado");
+      return 1;
+    } catch (e) {
+      debugPrint(e.toString());
+      return 0;
+    }
+  }
+
+  static Future<int> actualizarNombre(String campo, String idUsuario) async {
+    final SupabaseService supabaseService = SupabaseService();
+    SupabaseClient cliente = supabaseService.client;
+    try {
+      await cliente
+          .from('usuario')
+          .update({'nombre': campo}).match({'id_usuario': idUsuario});
+      debugPrint("Correcto, cambio de nombre realizado");
+      return 1;
+    } catch (e) {
+      debugPrint(e.toString());
+      return 0;
+    }
+  }
+
+  static Future<int> actualizarNombreRestaurante(String campo, String idRestaurante) async {
+    final SupabaseService supabaseService = SupabaseService();
+    SupabaseClient cliente = supabaseService.client;
+    try {
+      await cliente
+          .from('restaurante')
+          .update({'nombre_restaurante': campo}).match({'id_restaurante': idRestaurante});
+      debugPrint("Correcto, se ha cambiado el nombre del restaurante");
+      return 1;
+    } catch (e) {
+      debugPrint(e.toString());
+      return 0;
+    }
+  }
+
 }
+
+
+

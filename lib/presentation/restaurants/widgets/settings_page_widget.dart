@@ -143,7 +143,7 @@ class _RestaurantSettingsPageWidgetState
                                 size: 35,
                               ),
                               onPressed: () {
-                                updateMessage(context, "Nombre", widget.restaurante.nombre);
+                                updateMessage(context, "Nombre", widget.restaurante.nombre,  widget.restaurante.idUsuario);
 
                               },
                             ),
@@ -200,7 +200,7 @@ class _RestaurantSettingsPageWidgetState
                             ),
                             onPressed: () {
 
-                              updateMessage(context, "Nombre del restaurante", widget.restaurante.nombre);
+                              updateMessage(context,  "Nombre del restaurante", widget.restaurante.nombre,  widget.restaurante.idRestaurante);
 
                             },
                           ),
@@ -243,7 +243,7 @@ class _RestaurantSettingsPageWidgetState
                             ),
                             onPressed: () async {
 
-                              updateMessage(context, "Descripción", widget.restaurante.descripcion);
+                              updateMessage(context, "Descripción", widget.restaurante.descripcion, widget.restaurante.idRestaurante);
 
                             },
                           ),
@@ -285,7 +285,7 @@ class _RestaurantSettingsPageWidgetState
                               size: 35,
                             ),
                             onPressed: () {
-                              updateMessage(context, "Dirección", widget.restaurante.direccion);
+                              updateMessage(context, "Dirección", widget.restaurante.direccion,  widget.restaurante.idRestaurante);
 
                             },
                           ),
@@ -327,7 +327,8 @@ class _RestaurantSettingsPageWidgetState
                               size: 35,
                             ),
                             onPressed: () {
-                              print('IconButton pressed ...');
+                              String hora = '${widget.restaurante.horaApertura.hour.toString().padLeft(2, '0')}:${widget.restaurante.horaApertura.minute.toString().padLeft(2, '0')}';
+                              updateMessage(context, "Hora de apertura", hora,  widget.restaurante.idRestaurante);
                             },
                           ),
                         ],
@@ -368,7 +369,8 @@ class _RestaurantSettingsPageWidgetState
                               size: 35,
                             ),
                             onPressed: () {
-                              print('IconButton pressed ...');
+                              String hora = '${widget.restaurante.horaCierre.hour}:${widget.restaurante.horaCierre.minute.toString().padLeft(2, '0')}';
+                              updateMessage(context, "Hora de cierre", hora,  widget.restaurante.idRestaurante);
                             },
                           ),
                         ],
@@ -423,7 +425,7 @@ class _RestaurantSettingsPageWidgetState
                               size: 35,
                             ),
                             onPressed: () {
-                              print('IconButton pressed ...');
+                              updateMessage(context, "Email", widget.restaurante.email,  widget.restaurante.idRestaurante);
                             },
                           ),
                         ],
