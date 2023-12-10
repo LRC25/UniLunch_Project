@@ -358,8 +358,210 @@ void errorMessage(BuildContext context, String mensaje) {
     );
   }
 
+void updateMessage(BuildContext context, String campo, String informacionActual, id, tipo) {
 
-void updateMessage(BuildContext context, String campo, String informacionActual, idR) {
+  TextEditingController _textFieldController = TextEditingController(text: informacionActual);
+
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+
+        title: Text("Actualizar $campo"),
+        backgroundColor: Color(0xFFC6E8DA),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: [
+
+
+              SizedBox(height: 20),
+
+              TextField(
+                controller: _textFieldController,
+                decoration: InputDecoration(hintText: 'Ingrese $campo'),
+              ),
+              SizedBox(height: 20),
+
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                style: ElevatedButton.styleFrom(
+                  minimumSize: Size(150, 50),
+                  primary: Color(0xFF064244),
+                  padding: EdgeInsets.symmetric(vertical: 15),
+                ),
+                child: Text(
+                  'Cancelar',
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
+
+              ElevatedButton(
+                onPressed: () async {
+                  String nuevoValor = _textFieldController.text;
+                  if(campo == 'Nombre') {
+                    if (tipo == 'Restaurante') {
+
+                      int valor = await Restaurante.actualizarNombre(nuevoValor,id);
+                      debugPrint('$valor');
+                      if (valor == 1){
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              backgroundColor: Color(0xFFC6E8DA),
+                              title: Text("Correcto"),
+                              content: Text("Se ha actualizado correctamente"),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: Text("Ok"),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
+                      else {
+                        // ignore: use_build_context_synchronously
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return const AlertDialog(
+                                backgroundColor: Color(0xFFC6E8DA),
+                                title: Text("Ocurrió un error"),
+                                content: SingleChildScrollView(
+                                  child: ListBody(
+                                    children: [
+                                      Text("No se pudo crear")
+                                    ],
+                                  ),
+                                ),
+                              );
+                            }
+                        );
+                      }
+                    }
+                    else if(tipo == 'Cliente') {
+                      int valor = await Cliente.actualizarNombre(nuevoValor,id);
+                      if (valor == 1){
+                       showDialog(
+                         context: context,
+                         builder: (BuildContext context) {
+                           return AlertDialog(
+                             backgroundColor: Color(0xFFC6E8DA),
+                             title: Text("Correcto"),
+                             content: Text("Se ha creado correctamente"),
+                             actions: <Widget>[
+                               TextButton(
+                                 child: Text("Ok"),
+                                 onPressed: () {
+                                   Navigator.pop(context);
+                                 },
+                               ),
+                             ],
+                           );
+                         },
+                       );
+                     }
+                     else {
+                       // ignore: use_build_context_synchronously
+                       showDialog(
+                           context: context,
+                           builder: (BuildContext context) {
+                             return const AlertDialog(
+                               backgroundColor: Color(0xFFC6E8DA),
+                               title: Text("Ocurrió un error"),
+                               content: SingleChildScrollView(
+                                 child: ListBody(
+                                   children: [
+                                     Text("No se pudo crear")
+                                   ],
+                                 ),
+                               ),
+                             );
+                           }
+                       );
+                     }
+                    }
+                  }
+                  else if(campo == 'Nombre Restaurante') {
+                    var val = Restaurante.actualizarNombreRestaurante(nuevoValor,id);
+                    if (val == 1){
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            backgroundColor: Color(0xFFC6E8DA),
+                            title: Text("Correcto"),
+                            content: Text("Se ha creado correctamente"),
+                            actions: <Widget>[
+                              TextButton(
+                                child: Text("Ok"),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
+                    else {
+                      // ignore: use_build_context_synchronously
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return const AlertDialog(
+                              backgroundColor: Color(0xFFC6E8DA),
+                              title: Text("Ocurrió un error"),
+                              content: SingleChildScrollView(
+                                child: ListBody(
+                                  children: [
+                                    Text("No se pudo crear")
+                                  ],
+                                ),
+                              ),
+                            );
+                          }
+                      );
+                    }
+                  }
+
+
+                  Navigator.of(context).pop();
+
+
+                },
+                style: ElevatedButton.styleFrom(
+                  minimumSize: Size(150, 50),
+                  primary: Color(0xFF064244),
+                  padding: EdgeInsets.symmetric(vertical: 15),
+                ),
+                child: Text(
+                  'Guardar',
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    },
+  );
+}
+
+ void updateMessagee(BuildContext context, String campo, String informacionActual, idR, tipo) {
 
   TextEditingController _textFieldController = TextEditingController(text: informacionActual);
 
@@ -407,13 +609,92 @@ void updateMessage(BuildContext context, String campo, String informacionActual,
 
                   String nuevoValor = _textFieldController.text;
                   if(campo == 'Nombre') {
-                    Restaurante.actualizarNombre(nuevoValor,idR);
+                    var val = Restaurante.actualizarNombre(nuevoValor,idR);
+                    if (val == 1){
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            backgroundColor: Color(0xFFC6E8DA),
+                            title: Text("Correcto"),
+                            content: Text("Se ha creado correctamente"),
+                            actions: <Widget>[
+                              TextButton(
+                                child: Text("Ok"),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                  }
+                    else {
+                      // ignore: use_build_context_synchronously
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return const AlertDialog(
+                              backgroundColor: Color(0xFFC6E8DA),
+                              title: Text("Ocurrió un error"),
+                              content: SingleChildScrollView(
+                                child: ListBody(
+                                  children: [
+                                    Text("No se pudo crear")
+                                  ],
+                                ),
+                              ),
+                            );
+                          }
+                      );
+                    }
+
                   }
                   else if(campo == 'Nombre Restaurante') {
-                    Restaurante.actualizarNombreRestaurante(nuevoValor,idR);
+                    var val = Restaurante.actualizarNombreRestaurante(nuevoValor,idR);
+                    if (val == 1){
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            backgroundColor: Color(0xFFC6E8DA),
+                            title: Text("Correcto"),
+                            content: Text("Se ha creado correctamente"),
+                            actions: <Widget>[
+                              TextButton(
+                                child: Text("Ok"),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
+                    else {
+                      // ignore: use_build_context_synchronously
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return const AlertDialog(
+                              backgroundColor: Color(0xFFC6E8DA),
+                              title: Text("Ocurrió un error"),
+                              content: SingleChildScrollView(
+                                child: ListBody(
+                                  children: [
+                                    Text("No se pudo crear")
+                                  ],
+                                ),
+                              ),
+                            );
+                          }
+                      );
+                    }
                   }
                   else if(campo == 'Dirección') {
-                    Restaurante.actualizarDescripcion(nuevoValor,idR);
+                    Restaurante.actualizarDireccion(nuevoValor,idR);
                   }
 
                   Navigator.of(context).pop();

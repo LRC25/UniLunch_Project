@@ -110,6 +110,7 @@ class RegistrationPageModel extends FlutterFlowModel<RegistrationPageWidget> {
         if (passwordController.text == confirmPasswordController.text) {
           Cliente cliente = Cliente.registrar(
               nombre: nameController1.text,
+              contrasenna: passwordController.text,
               email: emailAddressController.text,
               tipoUsuario: "Cliente");
           String response =
@@ -143,6 +144,7 @@ class RegistrationPageModel extends FlutterFlowModel<RegistrationPageWidget> {
           Restaurante restaurante = Restaurante.registro(
               nombre: nameController1.text,
               email: emailAddressController.text,
+              contrasenna: passwordController.text,
               tipoUsuario: "Restaurante",
               latitud: latitude as double,
               longitud: longitude as double,
