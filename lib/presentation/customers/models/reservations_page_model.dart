@@ -206,7 +206,7 @@ class CustomerReservationsPageModel extends FlutterFlowModel<CustomerReservation
         );
       } else {
         return Container(
-          width: 100,
+          width: MediaQuery.sizeOf(context).height * 0.1,
           height: 100,
           decoration: BoxDecoration(
             color: FlutterFlowTheme.of(context).secondaryBackground,
@@ -747,7 +747,7 @@ class CustomerReservationsPageModel extends FlutterFlowModel<CustomerReservation
                             child: Align(
                               alignment: AlignmentDirectional(0.00, 0.00),
                               child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
+                                padding: EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,

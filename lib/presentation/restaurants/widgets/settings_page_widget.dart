@@ -492,7 +492,7 @@ class _RestaurantSettingsPageWidgetState
                                         itemBuilder: (context, index) => LocationListTile(
                                           press: () {
                                             _model.requestLatLong(_model.placePredictions[index].placeId!);
-                                            _model.restaurantAddress = _model.placePredictions[index].description!;
+                                            //_model.restaurantAddress = _model.placePredictions[index].description!;
                                           },
                                           location: _model.placePredictions[index].description!
                                         ),
