@@ -481,7 +481,19 @@ class _RegistrationPageWidgetState extends State<RegistrationPageWidget>
                               validator: _model.passwordControllerValidator
                                   .asValidator(context),
                             ),
+
                           ),
+
+                        ),
+                        Text(
+                          "La contraseña debe tener entre 5 y 20 caracteres y estar compuesta por letras minúsculas, mayúsculas, números y mínimo un caracter especial (@\$!%*#&?)",
+                          style: TextStyle(
+                            color: Colors.grey.withOpacity(0.9),
+                            fontSize: 12,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
