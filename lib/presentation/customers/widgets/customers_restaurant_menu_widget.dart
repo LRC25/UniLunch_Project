@@ -123,7 +123,7 @@ class _CustomerRestaurantMenuWidgetState
                     size: 24,
                   ),
                   onPressed: () {
-                    Navigator.pushReplacement(context, MaterialPageRoute(
+                    Navigator.push(context, MaterialPageRoute(
                         builder:(context) => CustomerCartPageWidget(cliente: widget.cliente,
                           carrito: _model.actualCarrito, restaurante: widget.restaurante,)));
                   },
@@ -304,7 +304,7 @@ class _CustomerRestaurantMenuWidgetState
                     children: (menuCargado==false)
                         ? [const Center(child: CircularProgressIndicator(color: Color(0xFF064244)))]
                         : (menu.isEmpty) ? [Center(child: Text(
-                        "No hay restaurantes",
+                        "No hay menú disponible.",
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily: 'Readex Pro',
                           color: Color(0xFF064244),

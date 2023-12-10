@@ -45,7 +45,7 @@ class RestaurantsPageModel extends FlutterFlowModel<RestaurantsPageWidget> {
 
   Padding mostrarPlatos(BuildContext context, Plato plato, Function reload) {
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 5),
+      padding: EdgeInsetsDirectional.fromSTEB(16, 5, 16, 5),
       child: Container(
         width: MediaQuery.sizeOf(context).width,
         height: 110,
@@ -215,7 +215,7 @@ class RestaurantsPageModel extends FlutterFlowModel<RestaurantsPageWidget> {
 
   Padding mostrarMenu(BuildContext context, Plato plato, Function reload) {
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 5),
+      padding: EdgeInsetsDirectional.fromSTEB(16, 5, 16, 5),
       child: Container(
         width: MediaQuery.sizeOf(context).width,
         height: 110,
@@ -353,7 +353,7 @@ class RestaurantsPageModel extends FlutterFlowModel<RestaurantsPageWidget> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 16),
+                padding: EdgeInsetsDirectional.fromSTEB(16, 5, 16, 5),
                 child: Text(
                   'Información de Plato',
                   style: FlutterFlowTheme.of(context).bodyMedium.override(

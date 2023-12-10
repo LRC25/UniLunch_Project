@@ -41,10 +41,10 @@ class CustomersPageModel extends FlutterFlowModel<CustomersPageWidget> {
 
   Padding listaRestaurantes(BuildContext context, Restaurante restaurante) {
     return Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+        padding: EdgeInsetsDirectional.fromSTEB(16, 5, 16, 5),
         child: InkWell(
           onTap: () {
-            Navigator.pushReplacement(context, MaterialPageRoute(
+            Navigator.push(context, MaterialPageRoute(
                 builder:(context) => CustomerRestaurantMenuWidget(cliente: widget.cliente,
                   carrito: carrito, restaurante: restaurante,)));
           },
@@ -214,7 +214,7 @@ class CustomersPageModel extends FlutterFlowModel<CustomersPageWidget> {
           title: restaurante.nombreRestaurante,
           snippet: restaurante.direccion,
           onTap: () {
-            Navigator.pushReplacement(context, MaterialPageRoute(builder:(context) =>
+            Navigator.push(context, MaterialPageRoute(builder:(context) =>
             CustomerRestaurantMenuWidget(cliente: widget.cliente, carrito: carrito, restaurante: restaurante)));
           },
         )

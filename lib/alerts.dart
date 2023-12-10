@@ -430,5 +430,76 @@ void updateMessage(BuildContext context, String campo, String informacionActual)
   );
 }
 
+void accceptPassRecoveryMessage(BuildContext context, String mensaje) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        backgroundColor: Color(0xFFC6E8DA),
+        content: SingleChildScrollView(
+            child: Container(
+              width: MediaQuery.sizeOf(context).width,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.check_circle,
+                    color: Color(0xFF29A814),
+                    size: 100,
+                  ),
+                  Align(
+                    alignment: AlignmentDirectional(0.00, 0.00),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                      child: Text(
+                        mensaje,
+                        style: FlutterFlowTheme.of(context).headlineMedium.override(
+                          fontFamily: 'Outfit',
+                          color: Color(0xFF064244),
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Align(
+                    alignment: AlignmentDirectional(0.00, 0.00),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(10, 5, 10, 10),
+                      child: FFButtonWidget(
+                        onPressed: () {
+                          Navigator.pushReplacement(context, MaterialPageRoute(
+                            builder: (context) => LoginPageWidget()));
+                        },
+                        text: 'Aceptar',
+                        options: FFButtonOptions(
+                          width: 140,
+                          height: 52,
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                          iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                          color: Color(0xFF064244),
+                          textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                            fontFamily: 'Readex Pro',
+                            color: Colors.white,
+                          ),
+                          elevation: 3,
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(35),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            )
+        ),
+      );
+    },
+  );
+}
+
 
 

@@ -17,7 +17,9 @@ class _NavbarCustomerPageState extends State<NavbarCustomerPage> {
   int index = 0;
 
   @override
-  Widget build(BuildContext context) => SafeArea(
+  Widget build(BuildContext context) => WillPopScope(
+    onWillPop: () async => false,
+    child: SafeArea(
         child: Scaffold(
             body: getSelectedWidget(
                 index: index, cliente: widget.cliente
@@ -47,7 +49,8 @@ class _NavbarCustomerPageState extends State<NavbarCustomerPage> {
                 ],
               ),
             )),
-      );
+      )
+    );
 
   Widget getSelectedWidget(
       {required int index, required Cliente cliente}) {
