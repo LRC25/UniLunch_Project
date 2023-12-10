@@ -309,7 +309,7 @@ class _RestaurantSettingsPageWidgetState
                                   final formattedTime = '${_openingTime.format(context)}';
                                   Restaurante.actualizarHoraApertura( horaApertura, widget.restaurante.idRestaurante);
                                   debugPrint(formattedTime);
-                                  var time = formattedTime;
+                                  //var time = formattedTime;
                                 });
                               }
                             },
@@ -375,7 +375,7 @@ class _RestaurantSettingsPageWidgetState
                                   final formattedTime = '${_closingTime.format(context)}';
                                   Restaurante.actualizarHoraCierre( horaCierre, widget.restaurante.idRestaurante);
                                   debugPrint(formattedTime);
-                                  var time = formattedTime;
+                                  //var time = formattedTime;
                                 });
                               }
                             },
@@ -492,7 +492,7 @@ class _RestaurantSettingsPageWidgetState
                                         itemBuilder: (context, index) => LocationListTile(
                                           press: () {
                                             _model.requestLatLong(_model.placePredictions[index].placeId!);
-                                            _model.restaurantAddress = _model.placePredictions[index].description!;
+                                            //_model.restaurantAddress = _model.placePredictions[index].description!;
                                           },
                                           location: _model.placePredictions[index].description!
                                         ),
@@ -511,11 +511,11 @@ class _RestaurantSettingsPageWidgetState
                             if(_model.restaurantAddress == null || _model.longitude == null || _model.longitude == null){
                               errorMessage(context, "Debes seleccionar una dirección antes de actualizar.");
                             } else {
-                              int result = await Restaurante.actualizarDireccion(_model.restaurantAddress as String, _model.longitude as double, _model.longitude as double, widget.restaurante.idRestaurante);
+                              int result = await Restaurante.actualizarDireccion(_model.restaurantAddress as String, _model.latitude as double, _model.longitude as double, widget.restaurante.idRestaurante);
                               if (result == 1){
                                 accceptMessage(context, "Se ha actualizado la dirección correctamente.");
                               } else {
-                                errorMessage(context, "Hubo un error actualizando tu dirección. Intentalo nuevamente.");
+                                errorMessage(context, "Hubo un error actualizando tu dirección. In123tentalo nuevamente.");
                               }
                             }
                           },

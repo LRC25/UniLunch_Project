@@ -67,6 +67,7 @@ class RestaurantSettingsPageModel
       Map<String, dynamic> jsonResponse = json.decode(response.body);
       latitude = jsonResponse['result']['geometry']['location']['lat'];
       longitude = jsonResponse['result']['geometry']['location']['lng'];
+      restaurantAddress = jsonResponse['result']['formatted_address'];
     }
   }
 

@@ -172,22 +172,25 @@ class CustomersPageModel extends FlutterFlowModel<CustomersPageWidget> {
                             ),
                           ),
                           Row(
-                            mainAxisSize: MainAxisSize.max,
+                            mainAxisSize: MainAxisSize.min,
                             children: [
-                              Align(
-                                alignment: AlignmentDirectional(
-                                    -1.00, 0.00),
-                                child: Text(
-                                  maxLines: 1,
-                                  restaurante.direccion,
-                                  style: FlutterFlowTheme.of(
-                                      context)
-                                      .bodyMedium
-                                      .override(
-                                    fontFamily: 'Readex Pro',
-                                    color: Color(0xFF064244),
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w300,
+                              Flexible(
+                                child: Align(
+                                  alignment: AlignmentDirectional(
+                                      -1.00, 0.00),
+                                  child: Text(
+                                    maxLines: 1,
+                                    restaurante.direccion,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: FlutterFlowTheme.of(
+                                        context)
+                                        .bodyMedium
+                                        .override(
+                                      fontFamily: 'Readex Pro',
+                                      color: Color(0xFF064244),
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w300,
+                                    ),
                                   ),
                                 ),
                               ),
