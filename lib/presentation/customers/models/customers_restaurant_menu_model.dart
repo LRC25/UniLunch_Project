@@ -54,7 +54,7 @@ class CustomerRestaurantMenuModel
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      width: MediaQuery.sizeOf(context).width * 0.65,
+                      width: MediaQuery.sizeOf(context).width * 0.62,
                       height: 100,
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context)
