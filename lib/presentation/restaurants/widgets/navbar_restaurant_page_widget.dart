@@ -18,7 +18,9 @@ class _NavbarRestaurantPageState extends State<NavbarRestaurantPage> {
   int index = 0;
 
   @override
-  Widget build(BuildContext context) => SafeArea(
+  Widget build(BuildContext context) => WillPopScope(
+    onWillPop: () async => false,
+    child: SafeArea(
         child: Scaffold(
             body: getSelectedWidget(
                 index: index, restaurante: widget.restaurante),
@@ -52,7 +54,8 @@ class _NavbarRestaurantPageState extends State<NavbarRestaurantPage> {
                 ],
               ),
             )),
-      );
+      )
+    );
 
   Widget getSelectedWidget(
       {required int index, required Restaurante restaurante}) {

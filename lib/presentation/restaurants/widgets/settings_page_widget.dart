@@ -1,14 +1,16 @@
 import 'package:flutterflow_ui/flutterflow_ui.dart';
+import 'package:unilunch/network_utilities.dart';
 import 'package:unilunch/presentation/common/widgets/login_page_widget.dart';
 import 'package:unilunch/presentation/restaurants/email_form.dart';
 import 'package:unilunch/presentation/restaurants/password_form.dart';
 import '../../../logic/Restaurante.dart';
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../../alerts.dart';
 
+import '../../common/models/location_list_tile.dart';
+import '../../common/models/place_auto_complete_response.dart';
 import '../models/settings_page_model.dart';
 export '../models/settings_page_model.dart';
 
@@ -94,7 +96,7 @@ class _RestaurantSettingsPageWidgetState
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                         child: Text(
-                          'Información personal',
+                          'Información Personal',
                           textAlign: TextAlign.center,
                           style: FlutterFlowTheme.of(context)
                               .headlineMedium
@@ -154,7 +156,7 @@ class _RestaurantSettingsPageWidgetState
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
                         child: Text(
-                          'Información restaurante',
+                          'Información Restaurante',
                           style:
                           FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily: 'Readex Pro',
@@ -245,50 +247,6 @@ class _RestaurantSettingsPageWidgetState
                             onPressed: () async {
 
                               updateMessage(context, "Descripción", widget.restaurante.descripcion, widget.restaurante.idRestaurante, widget.restaurante.tipoUsuario);
-
-                            },
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Padding(
-                            padding:
-                            EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
-                            child: Icon(
-                              Icons.place,
-                              color: Color(0xFF064244),
-                              size: 35,
-                            ),
-                          ),
-                          Text(
-                            'Dirección',
-                            textAlign: TextAlign.center,
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                              fontFamily: 'Readex Pro',
-                              color: Color(0xFF064244),
-                              fontSize: 15,
-                            ),
-                          ),
-                          FlutterFlowIconButton(
-                            borderColor: Colors.white,
-                            borderRadius: 0,
-                            borderWidth: 0,
-                            buttonSize: 50,
-                            fillColor: Colors.white,
-                            icon: Icon(
-                              Icons.edit_square,
-                              color: Color(0xFFFF7A00),
-                              size: 35,
-                            ),
-                            onPressed: () {
-
-
-                              //updateMessagee(context, "Dirección", widget.restaurante.direccion,  widget.restaurante.idRestaurante);
 
                             },
                           ),
@@ -423,6 +381,165 @@ class _RestaurantSettingsPageWidgetState
                             },
                           ),
                         ],
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 16),
+                        child: Container(
+                          width: double.infinity,
+                          child: TextFormField(
+                            onChanged: (value) async {
+                              Uri uri = Uri.https(
+                                "maps.googleapis.com",
+                                "maps/api/place/autocomplete/json",
+                                {
+                                  "input": value,
+                                  "key": _model.apiKey
+                                }
+                              );
+                             String? response = await NetworkUtilities.fetchUrl(uri);
+                             if(response != null){
+                                PlaceAutocompleteResponse result = PlaceAutocompleteResponse.parseAutocompleteResult(response);
+                                if(result.predictions != null){
+                                  setState(() {
+                                    _model.placePredictions = result.predictions!;
+                                  });
+                                  //_model.placePredictions = result.predictions!;
+                                }
+                              }
+                            },
+                            textInputAction: TextInputAction.search,
+                            controller: _model.addressController1,
+                            focusNode: _model.addressFocusNode1,
+                            autofillHints: [AutofillHints.name],
+                            obscureText: false,
+                            decoration: InputDecoration(
+                              labelText: 'Dirección',
+                              labelStyle:
+                                  FlutterFlowTheme.of(context).labelMedium,
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  width: 2,
+                                ),
+                                borderRadius: BorderRadius.circular(35),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0xFF064244),
+                                  width: 2,
+                                ),
+                                borderRadius: BorderRadius.circular(35),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: FlutterFlowTheme.of(context).error,
+                                  width: 2,
+                                ),
+                                borderRadius: BorderRadius.circular(35),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: FlutterFlowTheme.of(context).error,
+                                  width: 2,
+                                ),
+                                borderRadius: BorderRadius.circular(35),
+                              ),
+                              filled: true,
+                              fillColor: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
+                              contentPadding: EdgeInsetsDirectional.fromSTEB(
+                                  24, 24, 24, 24),
+                              prefixIcon: Icon(
+                                Icons.location_pin,
+                                color: Color(0xFF064244),
+                              ),
+                            ),
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Readex Pro',
+                                  color: Color(0xFF064244),
+                                ),
+                            validator: _model.addressController1Validator
+                                .asValidator(context),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                        child: Container(
+                          width: double.infinity,
+                          height: 200,
+                          decoration: BoxDecoration(
+                            color: FlutterFlowTheme.of(context).secondaryBackground,
+                            borderRadius: BorderRadius.circular(35),
+                            border: Border.all(
+                              color: FlutterFlowTheme.of(context).alternate,
+                              width: 2,
+                            ),
+                          ),
+                          child: SingleChildScrollView(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Container(
+                                      height: MediaQuery.sizeOf(context).height * 0.62,
+                                      width: MediaQuery.sizeOf(context).width,
+                                      child: ListView.builder(
+                                        //scrollDirection: Axis.vertical,
+                                        physics: const NeverScrollableScrollPhysics(),
+                                        itemCount: _model.placePredictions.length,
+                                        itemBuilder: (context, index) => LocationListTile(
+                                          press: () {
+                                            _model.requestLatLong(_model.placePredictions[index].placeId!);
+                                            _model.restaurantAddress = _model.placePredictions[index].description!;
+                                          },
+                                          location: _model.placePredictions[index].description!
+                                        ),
+                                      ),
+                                    )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                        child: FFButtonWidget(
+                          onPressed: () async {
+                            if(_model.restaurantAddress == null || _model.longitude == null || _model.longitude == null){
+                              errorMessage(context, "Debes seleccionar una dirección antes de actualizar.");
+                            } else {
+                              int result = await Restaurante.actualizarDireccion(_model.restaurantAddress as String, _model.longitude as double, _model.longitude as double, widget.restaurante.idRestaurante);
+                              if (result == 1){
+                                accceptMessage(context, "Se ha actualizado la dirección correctamente.");
+                              } else {
+                                errorMessage(context, "Hubo un error actualizando tu dirección. Intentalo nuevamente.");
+                              }
+                            }
+                          },
+                          text: 'Actualizar Dirección',
+                          options: FFButtonOptions(
+                            width: 230,
+                            height: 52,
+                            padding: EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
+                            iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                            color: Color(0xFF064244),
+                            textStyle:
+                            FlutterFlowTheme.of(context).titleSmall.override(
+                              fontFamily: 'Readex Pro',
+                              color: Colors.white,
+                              fontSize: 20,
+                            ),
+                            elevation: 3,
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(35),
+                          ),
+                        ),
                       ),
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 16),

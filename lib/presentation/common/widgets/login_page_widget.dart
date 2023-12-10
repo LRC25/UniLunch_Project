@@ -2,6 +2,7 @@ import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:unilunch/presentation/common/widgets/recover_password_page_widget.dart';
 import 'package:unilunch/presentation/common/widgets/registration_page_widget.dart';
 
 import '../models/login_page_model.dart';
@@ -360,7 +361,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget>
                             padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                             child: FFButtonWidget(
                               onPressed: () {
-                                print('Button pressed ...');
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => RecoverPasswordPageWidget()));
                               },
                               text: '¿Olvidaste tu contraseña?',
                               options: FFButtonOptions(
@@ -429,7 +430,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget>
                             padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                             child: FFButtonWidget(
                               onPressed: () {
-                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => RegistrationPageWidget()));
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => RegistrationPageWidget()));
                               },
                               text: '¿No tienes cuenta? Registrate aquí.',
                               options: FFButtonOptions(

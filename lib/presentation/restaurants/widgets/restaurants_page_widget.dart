@@ -122,7 +122,7 @@ class _RestaurantsPageWidgetState extends State<RestaurantsPageWidget> {
                   height: MediaQuery.sizeOf(context).height * 0.3,
                   decoration: BoxDecoration(),
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -217,7 +217,7 @@ class _RestaurantsPageWidgetState extends State<RestaurantsPageWidget> {
                   height: MediaQuery.sizeOf(context).height * 0.3,
                   decoration: BoxDecoration(),
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.start,

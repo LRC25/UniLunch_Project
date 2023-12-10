@@ -235,7 +235,7 @@ class _CustomersPageWidgetState extends State<CustomersPageWidget> {
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                 child: Container(
                   height: MediaQuery.sizeOf(context).height * 0.38,
                   child: SingleChildScrollView(
@@ -244,7 +244,7 @@ class _CustomersPageWidgetState extends State<CustomersPageWidget> {
                       children: (listaCargada==false)
                           ? [const Center(child: CircularProgressIndicator(color: Color(0xFF064244)))]
                           : (restaurantes.isEmpty) ? [Center(child: Text(
-                          "No hay restaurantes",
+                          "No hay restaurantes.",
                           style: FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily: 'Readex Pro',
                             color: Color(0xFF064244),
