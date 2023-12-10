@@ -71,19 +71,40 @@ class Reserva {
   Future<String> insertarReserva(String idUsuario, String idRestaurante, DateTime hora) async {
     final SupabaseService supabaseService = SupabaseService();
     SupabaseClient cliente = supabaseService.client;
-    try {
-      String id = randomDigits(10);
-      await cliente
-          .from("reserva")
-          .insert({"id_reserva":id, "id_restaurante":idRestaurante, "id_usuario":idUsuario, "fecha":convertDate(fecha),
-        "hora":convertTimeSQL(hora), "precio":total, "estado":"Pendiente", "estado_calificacion":false});
-      for (ReservaPlato plato in platos) {
-        plato.insertarReservaPlato(id);
-        plato.plato.actualizarStock(plato.plato.stock-plato.cantidad);
+    final responseUsuario = await cliente.from("usuario").select('''id_usuario''').eq("id_usuario", idUsuario);
+    if(responseUsuario.isNotEmpty) {
+      final responseRestaurante = await cliente.from("restaurante").select('''id_restaurante''').eq("id_restaurante", idRestaurante);
+      if(responseRestaurante.isNotEmpty) {
+        if(total > 0) {
+          DateTime actual = DateTime.now();
+          if(fecha.year==actual.year && fecha.month==actual.month && fecha.day==actual.day) {
+            final SupabaseService supabaseService = SupabaseService();
+            SupabaseClient cliente = supabaseService.client;
+            try {
+              String id = randomDigits(10);
+              await cliente
+                  .from("reserva")
+                  .insert({"id_reserva":id, "id_restaurante":idRestaurante, "id_usuario":idUsuario, "fecha":convertDate(fecha),
+                "hora":convertTimeSQL(hora), "precio":total, "estado":"Pendiente", "estado_calificacion":false});
+              for (ReservaPlato plato in platos) {
+                plato.insertarReservaPlato(id);
+                plato.plato.actualizarStock(plato.plato.stock-plato.cantidad);
+              }
+              return "correcto";
+            } catch (e) {
+              return e.toString();
+            }
+          } else {
+            return "La fecha ingreseda no es la actual";
+          }
+        } else {
+          return "Error El precio es un valor no esperado";
+        }
+      } else {
+        return "Error este restaurante no existe";
       }
-      return "correcto";
-    } catch (e) {
-      return e.toString();
+    } else {
+      return "Error este usuario no existe";
     }
   }
 
