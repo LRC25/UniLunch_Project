@@ -1,7 +1,6 @@
 import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:unilunch/logic/Cliente.dart';
-import 'package:unilunch/presentation/restaurants/widgets/reservations_page_widget.dart';
 import '../../../alerts.dart';
 import '../../../logic/Reserva.dart';
 import '../../../logic/ReservaPlato.dart';

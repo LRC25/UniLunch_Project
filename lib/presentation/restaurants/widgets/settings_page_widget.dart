@@ -309,7 +309,7 @@ class _RestaurantSettingsPageWidgetState
                                   final formattedTime = '${_openingTime.format(context)}';
                                   Restaurante.actualizarHoraApertura( horaApertura, widget.restaurante.idRestaurante);
                                   debugPrint(formattedTime);
-                                  var time = formattedTime;
+                                  //var time = formattedTime;
                                 });
                               }
                             },
@@ -375,7 +375,7 @@ class _RestaurantSettingsPageWidgetState
                                   final formattedTime = '${_closingTime.format(context)}';
                                   Restaurante.actualizarHoraCierre( horaCierre, widget.restaurante.idRestaurante);
                                   debugPrint(formattedTime);
-                                  var time = formattedTime;
+                                  //var time = formattedTime;
                                 });
                               }
                             },
