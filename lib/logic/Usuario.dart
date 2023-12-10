@@ -113,7 +113,7 @@ class Usuario {
     }
   }
 
-  Future<int> actualizarContrasena(String campo, String userEmail) async {
+  Future<int> updatePasswordFromEmail(String campo, String userEmail) async {
     final SupabaseService supabaseService = SupabaseService();
     SupabaseClient cliente = supabaseService.client;
     try {

@@ -9,7 +9,6 @@ import '../../../alerts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../common/widgets/login_page_widget.dart';
 import '../models/settings_page_model.dart';
 export '../models/settings_page_model.dart';
 

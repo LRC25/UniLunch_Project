@@ -380,7 +380,7 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
 
     final Usuario user = Usuario.vacio();
 
-    dynamic passwordUpdated = await user.actualizarContrasena(newPassword, widget.userEmail);
+    dynamic passwordUpdated = await user.updatePasswordFromEmail(newPassword, widget.userEmail);
     if (passwordUpdated == 1) {
       accceptPassRecoveryMessage(context, "Tu contraseña ha sido actualizada.");
     } else {
