@@ -1,9 +1,9 @@
 import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'package:unilunch/presentation/common/widgets/login_page_widget.dart';
-
+import 'package:unilunch/presentation/restaurants/email_form.dart';
+import 'package:unilunch/presentation/restaurants/password_form.dart';
 import '../../../logic/Restaurante.dart';
 
-import '../../../logic/Usuario.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -32,6 +32,7 @@ class _RestaurantSettingsPageWidgetState
   void initState() {
     super.initState();
     _model = createModel(context, () => RestaurantSettingsPageModel());
+
   }
 
   @override
@@ -143,7 +144,7 @@ class _RestaurantSettingsPageWidgetState
                                 size: 35,
                               ),
                               onPressed: () {
-                                updateMessage(context, "Nombre", widget.restaurante.nombre);
+                                updateMessage(context, "Nombre", widget.restaurante.nombre,  widget.restaurante.idUsuario, widget.restaurante.tipoUsuario);
 
                               },
                             ),
@@ -200,7 +201,7 @@ class _RestaurantSettingsPageWidgetState
                             ),
                             onPressed: () {
 
-                              updateMessage(context, "Nombre del restaurante", widget.restaurante.nombre);
+                              updateMessage(context,  "Nombre del restaurante", widget.restaurante.nombreRestaurante,  widget.restaurante.idRestaurante, widget.restaurante.tipoUsuario);
 
                             },
                           ),
@@ -243,7 +244,7 @@ class _RestaurantSettingsPageWidgetState
                             ),
                             onPressed: () async {
 
-                              updateMessage(context, "Descripción", widget.restaurante.descripcion);
+                              updateMessage(context, "Descripción", widget.restaurante.descripcion, widget.restaurante.idRestaurante, widget.restaurante.tipoUsuario);
 
                             },
                           ),
@@ -285,7 +286,9 @@ class _RestaurantSettingsPageWidgetState
                               size: 35,
                             ),
                             onPressed: () {
-                              updateMessage(context, "Dirección", widget.restaurante.direccion);
+
+
+                              //updateMessagee(context, "Dirección", widget.restaurante.direccion,  widget.restaurante.idRestaurante);
 
                             },
                           ),
@@ -326,9 +329,34 @@ class _RestaurantSettingsPageWidgetState
                               color: Color(0xFFFF7A00),
                               size: 35,
                             ),
-                            onPressed: () {
-                              print('IconButton pressed ...');
+                            onPressed: () async {
+                              final _openingTime = await showTimePicker(
+                                context: context,
+                                helpText: "Actualizar hora de apertura",
+                                confirmText: "Actualizar",
+                                cancelText: "Cancelar",
+                                initialTime:  TimeOfDay(hour:widget.restaurante.horaApertura.hour, minute:widget.restaurante.horaApertura.minute),
+                              );
+                              if (_openingTime != null) {
+                                var horaApertura = DateTime(0);
+                                safeSetState(() {
+                                  horaApertura = DateTime(
+                                    getCurrentTimestamp.year,
+                                    getCurrentTimestamp.month,
+                                    getCurrentTimestamp.day,
+                                    _openingTime.hour,
+                                    _openingTime.minute,
+                                  );
+
+                                  final formattedTime = '${_openingTime.format(context)}';
+                                  Restaurante.actualizarHoraApertura( horaApertura, widget.restaurante.idRestaurante);
+                                  debugPrint(formattedTime);
+                                  var time = formattedTime;
+                                });
+                              }
                             },
+
+
                           ),
                         ],
                       ),
@@ -367,8 +395,31 @@ class _RestaurantSettingsPageWidgetState
                               color: Color(0xFFFF7A00),
                               size: 35,
                             ),
-                            onPressed: () {
-                              print('IconButton pressed ...');
+                            onPressed:  () async {
+                              final _closingTime = await showTimePicker(
+                                context: context,
+                                helpText: "Actualizar hora de cierre",
+                                confirmText: "Actualizar",
+                                cancelText: "Cancelar",
+                                initialTime:  TimeOfDay(hour:widget.restaurante.horaCierre.hour, minute:widget.restaurante.horaCierre.minute),
+                              );
+                              if (_closingTime != null) {
+                                var horaCierre = DateTime(0);
+                                safeSetState(() {
+                                  horaCierre = DateTime(
+                                    getCurrentTimestamp.year,
+                                    getCurrentTimestamp.month,
+                                    getCurrentTimestamp.day,
+                                    _closingTime.hour,
+                                    _closingTime.minute,
+                                  );
+
+                                  final formattedTime = '${_closingTime.format(context)}';
+                                  Restaurante.actualizarHoraCierre( horaCierre, widget.restaurante.idRestaurante);
+                                  debugPrint(formattedTime);
+                                  var time = formattedTime;
+                                });
+                              }
                             },
                           ),
                         ],
@@ -422,9 +473,69 @@ class _RestaurantSettingsPageWidgetState
                               color: Color(0xFFFF7A00),
                               size: 35,
                             ),
+
                             onPressed: () {
-                              print('IconButton pressed ...');
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      backgroundColor: Color(0xFFC6E8DA),
+                                      title: const Text(
+                                        "Su correo electrónico es:",
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      content: SingleChildScrollView(
+                                        child: ListBody(
+                                          children: [
+                                            Text(
+                                              widget.restaurante.email,
+                                              style: const TextStyle(
+                                                fontSize: 15,
+                                                color: Color(0xFF064244),
+
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 20,
+                                            ),
+                                            ExpansionTile(
+                                              leading: const CircleAvatar(
+                                                backgroundColor: Color(0xFF064244),
+                                                child: Icon(
+                                                  color: Colors.white,
+                                                  Icons.edit,
+                                                  size: 20,
+                                                ),
+                                              ),
+                                              title: const Text(
+                                                "Actualizar correo:",
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    color: Colors.green,
+                                                    fontWeight: FontWeight.bold),
+                                              ),
+                                              // Contents
+                                              children: [
+                                                FormEmail(
+                                                  restaurante: widget.restaurante,
+                                                )
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  });
                             },
+
+                            //onPressed: () {
+
+
+                             // updateMessage(context, "Email", widget.restaurante.email,  widget.restaurante.idRestaurante);
+                            //},
                           ),
                         ],
                       ),
@@ -463,7 +574,47 @@ class _RestaurantSettingsPageWidgetState
                               size: 35,
                             ),
                             onPressed: () {
-                              print('IconButton pressed ...');
+                              showDialog(
+
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      backgroundColor: Color(0xFFC6E8DA),
+                                      content: SingleChildScrollView(
+                                        child: ListBody(
+                                          children: [
+                                            const SizedBox(
+                                              height: 20,
+                                            ),
+                                            ExpansionTile(
+                                              leading: const CircleAvatar(
+
+                                                backgroundColor: Color(0xFF064244),
+                                                child: Icon(
+                                                  color: Colors.white,
+                                                  Icons.edit,
+                                                  size: 20,
+                                                ),
+                                              ),
+                                              title: const Text(
+                                                "Cambiar contraseña:",
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    color: Colors.green,
+                                                    fontWeight: FontWeight.bold),
+                                              ),
+                                              // Contents
+                                              children: [
+                                                FormPassword(
+                                                  restaurante: widget.restaurante,
+                                                )
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  });
                             },
                           ),
                         ],

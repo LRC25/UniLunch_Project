@@ -4,6 +4,8 @@ import 'package:unilunch/logic/Cliente.dart';
 import 'package:unilunch/presentation/common/widgets/login_page_widget.dart';
 import 'package:unilunch/presentation/customers/widgets/navbar_customer_page_widget.dart';
 
+import '../../../logic/Restaurante.dart';
+
 void registrationAcceptMessage(BuildContext context, String mensaje) {
   showDialog(
     context: context,
@@ -356,8 +358,7 @@ void errorMessage(BuildContext context, String mensaje) {
     );
   }
 
-
-void updateMessage(BuildContext context, String campo, String informacionActual) {
+void updateMessage(BuildContext context, String campo, String informacionActual, id, tipo) {
 
   TextEditingController _textFieldController = TextEditingController(text: informacionActual);
 
@@ -401,12 +402,63 @@ void updateMessage(BuildContext context, String campo, String informacionActual)
               SizedBox(height: 20),
 
               ElevatedButton(
-                onPressed: () {
-
-
+                onPressed: () async {
+                  debugPrint(campo);
                   String nuevoValor = _textFieldController.text;
-                  Navigator.of(context).pop();
-                  
+                  if(campo == 'Nombre') {
+                    if (tipo == 'Restaurante') {
+
+                      int valor = await Restaurante.actualizarNombre(nuevoValor,id);
+                      debugPrint('$valor');
+                      if (valor == 1){
+                        await alertActualizado(context);
+                        Navigator.pop(context);
+                      }
+                      else {
+                        await alertError(context);
+                      }
+
+                    }
+                    else if(tipo == 'Cliente') {
+                      int valor =  await Cliente.actualizarNombre(nuevoValor,id) ;
+                      debugPrint('$valor');
+                      if (valor == 1){
+                        debugPrint('Entró al if');
+                        await alertActualizado(context);
+                        Navigator.pop(context);
+                     }
+                     else {
+                       await alertError(context);
+                    }
+                  }
+
+                  }
+                  else  if(campo == 'Nombre del restaurante'){
+                    int valor =  await Restaurante.actualizarNombreRestaurante(nuevoValor,id);
+                    if (valor == 1){
+                      await alertActualizado(context);
+                      Navigator.pop(context);
+                      debugPrint('Entró al iif II');
+                    }
+                    else {
+                      await alertError(context);
+                    }
+                    debugPrint('Entró al iif');
+                  }
+
+                  else if(campo == 'Descripción'){
+                    debugPrint('Entró al iif II');
+                    int valor =  await Restaurante.actualizarDescripcion(nuevoValor,id);
+                    if (valor == 1){
+                      await alertActualizado(context);
+                      Navigator.pop(context);
+
+                    }
+                    else {
+                      await alertError(context);
+                    }
+
+                  }
 
                 },
                 style: ElevatedButton.styleFrom(
@@ -414,7 +466,7 @@ void updateMessage(BuildContext context, String campo, String informacionActual)
                   primary: Color(0xFF064244),
                   padding: EdgeInsets.symmetric(vertical: 15),
                 ),
-                child: Text(
+                child: const Text(
                   'Guardar',
                   style: TextStyle(
                     fontSize: 15,
@@ -428,6 +480,51 @@ void updateMessage(BuildContext context, String campo, String informacionActual)
       );
     },
   );
+}
+
+Future<void> alertError(BuildContext context) async {
+  await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const AlertDialog(
+          backgroundColor: Color(0xFFC6E8DA),
+          title: Text("Ocurrió un error"),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: [
+                Text("No se actualizar")
+              ],
+            ),
+          ),
+        );
+      }
+  );
+}
+
+Future<void> alertActualizado(BuildContext context) async {
+  await showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        backgroundColor: Color(0xFFC6E8DA),
+        title: Text("Correcto"),
+        content: Text("Se ha actualizado correctamente"),
+        actions: <Widget>[
+          TextButton(
+            child: Text("Ok"),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      );
+
+    },
+  );
+
+
+
+
 }
 
 

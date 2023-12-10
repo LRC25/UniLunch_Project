@@ -23,6 +23,7 @@ class Restaurante extends Usuario {
   Restaurante({
     required String idUsuario,
     required String nombre,
+    required String contrasenna,
     required String email,
     required String tipoUsuario,
     required this.idRestaurante,
@@ -35,13 +36,14 @@ class Restaurante extends Usuario {
     required this.horaCierre,
     required this.imagen,
     required this.notaPromedio
-  }) : super(idUsuario, nombre, email, tipoUsuario);
+  }) : super(idUsuario, nombre, email, tipoUsuario, contrasenna);
 
   Restaurante.registro({
     String idUsuario = "",
     required String nombre,
     required String email,
     required String tipoUsuario,
+    required String contrasenna,
     required this.latitud,
     required this.longitud,
     required this.nombreRestaurante,
@@ -50,13 +52,14 @@ class Restaurante extends Usuario {
     required this.horaApertura,
     required this.horaCierre,
     required this.imagen
-  }): idRestaurante = "", notaPromedio = 0, super(idUsuario, nombre, email, tipoUsuario);
+  }): idRestaurante = "", notaPromedio = 0, super(idUsuario, nombre, email, tipoUsuario, contrasenna);
 
   Restaurante.cliente({
     String idUsuario = "",
     String nombre = "",
     String email = "",
     String tipoUsuario = "",
+    String contrasenna = "",
     required this.idRestaurante,
     required this.nombreRestaurante,
     required this.latitud,
@@ -67,15 +70,16 @@ class Restaurante extends Usuario {
     required this.horaCierre,
     required this.imagen,
     required this.notaPromedio
-  }) : super(idUsuario, nombre, email, tipoUsuario);
+  }) : super(idUsuario, nombre, email, tipoUsuario, contrasenna);
 
   Restaurante.vacio({
     String idUsuario = "",
     String nombre = "",
     String email = "",
-    String tipoUsuario = ""
+    String tipoUsuario = "",
+    String contrasenna = ""
   }) : idRestaurante = "", latitud = 0, longitud = 0, nombreRestaurante = "", direccion = "", descripcion = "", horaApertura = DateTime(0),
-        horaCierre = DateTime(0), imagen = "", notaPromedio = 0, super(idUsuario, nombre, email, tipoUsuario);
+        horaCierre = DateTime(0), imagen = "", notaPromedio = 0, super(idUsuario, nombre, email, tipoUsuario, contrasenna);
 
   Future<String> resgistrarRestaurante(String contrasenna) async {
     final SupabaseService supabaseService = SupabaseService();
@@ -184,6 +188,7 @@ class Restaurante extends Usuario {
     }
   }
 
+
   Future<String> actualizarPromedio(String idRestaurante) async {
     final SupabaseService supabaseService = SupabaseService();
     SupabaseClient cliente = supabaseService.client;
@@ -209,4 +214,129 @@ class Restaurante extends Usuario {
     }
   }
 
+static Future<int> actualizarDescripcion(String campo, String idRestaurante) async {
+    final SupabaseService supabaseService = SupabaseService();
+    SupabaseClient cliente = supabaseService.client;
+    try {
+      await cliente
+          .from('restaurante')
+          .update({'descripcion': campo}).match({'id_restaurante': idRestaurante});
+      debugPrint("Correcto, cambio de contraseña realizado");
+      return 1;
+    } catch (e) {
+      debugPrint(e.toString());
+      return 0;
+    }
+  }
+
+  static Future<int> actualizarNombre(String campo, String idUsuario) async {
+    final SupabaseService supabaseService = SupabaseService();
+    SupabaseClient cliente = supabaseService.client;
+    try {
+      await cliente
+          .from('usuario')
+          .update({'nombre': campo}).match({'id_usuario': idUsuario});
+
+      debugPrint("Correcto, cambio de nombre realizado");
+      return 1;
+    } catch (e) {
+      debugPrint(e.toString());
+      return 0;
+    }
+  }
+
+  static Future<int> actualizarNombreRestaurante(String campo, String idRestaurante) async {
+    final SupabaseService supabaseService = SupabaseService();
+    SupabaseClient cliente = supabaseService.client;
+    try {
+      await cliente
+          .from('restaurante')
+          .update({'nombre_restaurante': campo}).match({'id_restaurante': idRestaurante});
+      debugPrint("Correcto, se ha cambiado el nombre del restaurante");
+      return 1;
+    } catch (e) {
+      debugPrint(e.toString());
+      return 0;
+    }
+  }
+
+
+  static Future<int> actualizarDireccion(String campo, String idRestaurante) async {
+    final SupabaseService supabaseService = SupabaseService();
+    SupabaseClient cliente = supabaseService.client;
+    try {
+      await cliente
+          .from('restaurante')
+          .update({'direccion': campo}).match({'id_restaurante': idRestaurante});
+      debugPrint("Correcto, se ha cambiado la dirección del restaurante");
+      return 1;
+    } catch (e) {
+      debugPrint(e.toString());
+      return 0;
+    }
+  }
+
+  static Future<int> actualizarEmail(String campo, String idUsuario) async {
+    final SupabaseService supabaseService = SupabaseService();
+    SupabaseClient cliente = supabaseService.client;
+    try {
+      await cliente
+          .from('usuario')
+          .update({'email': campo}).match({'id_usuario': idUsuario});
+      debugPrint("Correcto, se ha cambiado el correo");
+      return 1;
+    } catch (e) {
+      debugPrint(e.toString());
+      return 0;
+    }
+  }
+
+  static Future<int> actualizarContrasena(String campo, String idUsuario) async {
+    final SupabaseService supabaseService = SupabaseService();
+    SupabaseClient cliente = supabaseService.client;
+    try {
+      await cliente
+          .from('usuario')
+          .update({'contrasenna': campo}).match({'id_usuario': idUsuario});
+      debugPrint("Correcto, se ha cambiado la contraseña");
+      return 1;
+    } catch (e) {
+      debugPrint(e.toString());
+      return 0;
+    }
+  }
+
+  static Future<int> actualizarHoraApertura(campo, String idR) async {
+    final SupabaseService supabaseService = SupabaseService();
+    SupabaseClient cliente = supabaseService.client;
+    try {
+      await cliente
+          .from('restaurante')
+          .update({'hora_apertura': convertTimeSQL(campo)}).match({'id_restaurante': idR});
+      debugPrint("Correcto, se ha cambiado la hora de apertura");
+      return 1;
+    } catch (e) {
+      debugPrint(e.toString());
+      return 0;
+    }
+  }
+
+  static Future<int> actualizarHoraCierre(campo, String idR) async {
+    final SupabaseService supabaseService = SupabaseService();
+    SupabaseClient cliente = supabaseService.client;
+    try {
+      await cliente
+          .from('restaurante')
+          .update({'hora_cierre': convertTimeSQL(campo)}).match({'id_restaurante': idR});
+      debugPrint("Correcto, se ha cambiado la hora de cierre");
+      return 1;
+    } catch (e) {
+      debugPrint(e.toString());
+      return 0;
+    }
+  }
+
 }
+
+
+

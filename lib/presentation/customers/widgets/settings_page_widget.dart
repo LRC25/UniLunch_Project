@@ -1,4 +1,10 @@
 import 'package:flutterflow_ui/flutterflow_ui.dart';
+import 'package:unilunch/presentation/common/widgets/login_page_widget.dart';
+import 'package:unilunch/presentation/customers/email_form.dart';
+import 'package:unilunch/presentation/customers/password_form.dart';
+
+import '../../../logic/Cliente.dart';
+import '../../../alerts.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,7 +13,8 @@ import '../models/settings_page_model.dart';
 export '../models/settings_page_model.dart';
 
 class CustomerSettingsPageWidget extends StatefulWidget {
-  const CustomerSettingsPageWidget({Key? key}) : super(key: key);
+  final Cliente cliente;
+  const CustomerSettingsPageWidget({Key? key, required this.cliente}) : super(key: key);
 
   @override
   _CustomerSettingsPageWidgetState createState() =>
@@ -143,7 +150,7 @@ class _CustomerSettingsPageWidgetState
                                 ),
                                 onPressed: () {
 
-                                  print('IconButton pressed ...');
+                                  updateMessage(context, "Nombre", widget.cliente.nombre,  widget.cliente.idUsuario, widget.cliente.tipoUsuario );
                                 },
                               ),
                             ],
@@ -199,7 +206,60 @@ class _CustomerSettingsPageWidgetState
                                 size: 35,
                               ),
                               onPressed: () {
-                                print('IconButton pressed ...');
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        backgroundColor: Color(0xFFC6E8DA),
+                                        title: const Text(
+                                          "Su correo electrónico es:",
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        content: SingleChildScrollView(
+                                          child: ListBody(
+                                            children: [
+                                              Text(
+                                                widget.cliente.email,
+                                                style: const TextStyle(
+                                                  fontSize: 15,
+                                                  color: Color(0xFF064244),
+
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                height: 20,
+                                              ),
+                                              ExpansionTile(
+                                                leading: const CircleAvatar(
+                                                  backgroundColor: Color(0xFF064244),
+                                                  child: Icon(
+                                                    color: Colors.white,
+                                                    Icons.edit,
+                                                    size: 20,
+                                                  ),
+                                                ),
+                                                title: const Text(
+                                                  "Actualizar correo:",
+                                                  style: TextStyle(
+                                                      fontSize: 15,
+                                                      color: Colors.green,
+                                                      fontWeight: FontWeight.bold),
+                                                ),
+                                                // Contents
+                                                children: [
+                                                  FormEmail(
+                                                    cliente: widget.cliente,
+                                                  )
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    });
                               },
                             ),
                           ],
@@ -238,8 +298,48 @@ class _CustomerSettingsPageWidgetState
                                 color: Color(0xFFFF7A00),
                                 size: 35,
                               ),
-                              onPressed: () {
-                                print('IconButton pressed ...');
+                              onPressed: ()  {
+                                showDialog(
+
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        backgroundColor: Color(0xFFC6E8DA),
+                                        content: SingleChildScrollView(
+                                          child: ListBody(
+                                            children: [
+                                              const SizedBox(
+                                                height: 20,
+                                              ),
+                                              ExpansionTile(
+                                                leading: const CircleAvatar(
+
+                                                  backgroundColor: Color(0xFF064244),
+                                                  child: Icon(
+                                                    color: Colors.white,
+                                                    Icons.edit,
+                                                    size: 20,
+                                                  ),
+                                                ),
+                                                title: const Text(
+                                                  "Cambiar contraseña:",
+                                                  style: TextStyle(
+                                                      fontSize: 15,
+                                                      color: Colors.green,
+                                                      fontWeight: FontWeight.bold),
+                                                ),
+                                                // Contents
+                                                children: [
+                                                  FormPassword(
+                                                    cliente: widget.cliente,
+                                                  )
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    });
                               },
                             ),
                           ],
@@ -253,7 +353,8 @@ class _CustomerSettingsPageWidgetState
                 padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                 child: FFButtonWidget(
                   onPressed: () {
-                    print('Button pressed ...');
+                    Navigator.pushReplacement(context, MaterialPageRoute(
+                        builder:(context) => LoginPageWidget()));
                   },
                   text: 'Cerrar Sesión',
                   options: FFButtonOptions(

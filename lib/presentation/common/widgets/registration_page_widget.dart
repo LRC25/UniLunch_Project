@@ -481,7 +481,19 @@ class _RegistrationPageWidgetState extends State<RegistrationPageWidget>
                               validator: _model.passwordControllerValidator
                                   .asValidator(context),
                             ),
+
                           ),
+
+                        ),
+                        Text(
+                          "La contraseña debe tener entre 5 y 20 caracteres y estar compuesta por letras minúsculas, mayúsculas, números y mínimo un caracter especial (@\$!%*#&?)",
+                          style: TextStyle(
+                            color: Colors.grey.withOpacity(0.9),
+                            fontSize: 12,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
@@ -1010,6 +1022,9 @@ class _RegistrationPageWidgetState extends State<RegistrationPageWidget>
                                   onPressed: () async {
                                     final _openingTime = await showTimePicker(
                                       context: context,
+                                      helpText: "Seleccionar hora de apertura",
+                                      confirmText: "Hecho",
+                                      cancelText: "Cancelar",
                                       initialTime: TimeOfDay.fromDateTime(getCurrentTimestamp),
                                     );
                                     if (_openingTime != null) {
@@ -1055,6 +1070,9 @@ class _RegistrationPageWidgetState extends State<RegistrationPageWidget>
                                   onPressed: () async {
                                     final _closingTime = await showTimePicker(
                                       context: context,
+                                      helpText: "Seleccionar hora de cierre",
+                                      confirmText: "Hecho",
+                                      cancelText: "Cancelar",
                                       initialTime: TimeOfDay.fromDateTime(getCurrentTimestamp),
                                     );
                                     if (_closingTime != null) {

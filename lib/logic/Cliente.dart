@@ -19,14 +19,16 @@ class Cliente extends Usuario {
     required String nombre,
     required String email,
     required String tipoUsuario,
-  }) : super(idUsuario, nombre, email, tipoUsuario);
+    required String contrasenna,
+  }) : super(idUsuario, nombre, email, tipoUsuario, contrasenna);
 
   Cliente.registrar({
     String idUsuario = "",
     required String nombre,
     required String email,
     required String tipoUsuario,
-  }) : super(idUsuario, nombre, email, tipoUsuario);
+    required String contrasenna,
+  }) : super(idUsuario, nombre, email, tipoUsuario, contrasenna);
 
   void setBuscarRestaurante(BuscarRestaurante buscarRestaurante) {
     _buscarRestaurante = buscarRestaurante;
@@ -114,6 +116,51 @@ class Cliente extends Usuario {
     } catch (e) {
       debugPrint(e.toString());
       return reservas;
+    }
+  }
+
+  static Future<int> actualizarNombre(String campo, String idUsuario) async {
+    final SupabaseService supabaseService = SupabaseService();
+    SupabaseClient cliente = supabaseService.client;
+    try {
+      await cliente
+          .from('usuario')
+          .update({'nombre': campo}).match({'id_usuario': idUsuario});
+      debugPrint("Correcto, cambio de nombre realizado");
+      return 1;
+    } catch (e) {
+      debugPrint(e.toString());
+      return 0;
+    }
+  }
+
+  static Future<int> actualizarEmail(String campo, String idUsuario) async {
+    final SupabaseService supabaseService = SupabaseService();
+    SupabaseClient cliente = supabaseService.client;
+    try {
+      await cliente
+          .from('usuario')
+          .update({'email': campo}).match({'id_usuario': idUsuario});
+      debugPrint("Correcto, se ha cambiado el correo");
+      return 1;
+    } catch (e) {
+      debugPrint(e.toString());
+      return 0;
+    }
+  }
+
+  static Future<int> actualizarContrasena(String campo, String idUsuario) async {
+    final SupabaseService supabaseService = SupabaseService();
+    SupabaseClient cliente = supabaseService.client;
+    try {
+      await cliente
+          .from('usuario')
+          .update({'contrasenna': campo}).match({'id_usuario': idUsuario});
+      debugPrint("Correcto, se ha cambiado la contraseña");
+      return 1;
+    } catch (e) {
+      debugPrint(e.toString());
+      return 0;
     }
   }
 

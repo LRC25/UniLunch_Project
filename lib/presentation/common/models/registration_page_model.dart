@@ -102,31 +102,54 @@ class RegistrationPageModel extends FlutterFlowModel<RegistrationPageWidget> {
   /// Action blocks are added here.
 
   void registrarUsuario(BuildContext context) async {
+    RegExp regex_email = RegExp(r"^[a-zA-Z0-9_!#$%&'\*+/=?{|}~^.-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-]+[a-zA-Z0-9_.][a-zA-Z0-9_]+[a-zA-Z0-9_.][a-zA-Z0-9_]+$");
+    RegExp regex_contrasenna = RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#&?])[A-Za-z\d@$!#%*?&]{5,20}$');
     if (isRestaurant == false) {
       if (nameController1.text != "" &&
           emailAddressController.text != "" &&
           passwordController.text != "" &&
           passwordControllerValidator != "") {
-        if (passwordController.text == confirmPasswordController.text) {
+
+        if (!regex_email.hasMatch(emailAddressController.text) && !regex_contrasenna.hasMatch(passwordController.text))
+        { warningMessage(context, "Verificar correo y contraseña");       }
+
+        else if (!regex_email.hasMatch(emailAddressController.text)){
+          warningMessage(context, "Verificar correo");
+        }
+
+        else if (!regex_contrasenna.hasMatch(passwordController.text)){
+          warningMessage(context, "Verificar contraseña");
+        }
+
+        else {
+          if (passwordController.text == confirmPasswordController.text) {
           Cliente cliente = Cliente.registrar(
               nombre: nameController1.text,
+              contrasenna: passwordController.text,
               email: emailAddressController.text,
               tipoUsuario: "Cliente");
+
           String response =
-              await cliente.resgistrarCliente(passwordController.text);
+          await cliente.resgistrarCliente(passwordController.text);
           if (response == "correcto") {
             registrationAcceptMessage(
                 context, "Se ha registrado correctamente");
           } else {
             errorMessage(context, "Ha ocurrido un error, no se pudo registrar");
           }
-        } else {
-          warningMessage(context, "Verificar contraseña");
+          }
+          else {
+            warningMessage(context, "Las contraseñas no coinciden");
+          }
         }
-      } else {
+
+      }
+      else  {
         warningMessage(context, "Por favor llenar todos los campos");
       }
-    } else {
+
+
+    } else { {
       if (nameController1.text != "" &&
           emailAddressController.text != "" &&
           passwordController.text != "" &&
@@ -139,34 +162,57 @@ class RegistrationPageModel extends FlutterFlowModel<RegistrationPageWidget> {
           closingTime != null
           && latitude != null
           && longitude != null) {
-        if (passwordController.text == confirmPasswordController.text) {
-          Restaurante restaurante = Restaurante.registro(
-              nombre: nameController1.text,
-              email: emailAddressController.text,
-              tipoUsuario: "Restaurante",
-              latitud: latitude as double,
-              longitud: longitude as double,
-              nombreRestaurante: nameController2.text,
-              direccion: addressController1.text,
-              descripcion: descriptionController.text,
-              horaApertura: openingTime as DateTime,
-              horaCierre: closingTime as DateTime,
-              imagen: logoController.text);
-          String response =
-              await restaurante.resgistrarRestaurante(passwordController.text);
-          if (response == "correcto") {
-            registrationAcceptMessage(
-                context, "Se ha registrado correctamente");
-          } else {
-            errorMessage(context, "Ha ocurrido un error, no se pudo registrar");
-          }
-        } else {
+
+        if (!regex_email.hasMatch(emailAddressController.text) && !regex_contrasenna.hasMatch(passwordController.text))
+         { warningMessage(context, "Verificar correo y contraseña");       }
+
+
+        else if (!regex_email.hasMatch(emailAddressController.text)){
+          warningMessage(context, "Verificar correo");
+        }
+
+        else if (!regex_contrasenna.hasMatch(passwordController.text)){
           warningMessage(context, "Verificar contraseña");
         }
-      } else {
+
+        else {
+          if (passwordController.text == confirmPasswordController.text) {
+            Restaurante restaurante = Restaurante.registro(
+                nombre: nameController1.text,
+                email: emailAddressController.text,
+                contrasenna: passwordController.text,
+                tipoUsuario: "Restaurante",
+                latitud: latitude as double,
+                longitud: longitude as double,
+                nombreRestaurante: nameController2.text,
+                direccion: addressController1.text,
+                descripcion: descriptionController.text,
+                horaApertura: openingTime as DateTime,
+                horaCierre: closingTime as DateTime,
+                imagen: logoController.text);
+
+            String response =
+            await restaurante.resgistrarRestaurante(passwordController.text);
+            if (response == "correcto") {
+              registrationAcceptMessage(
+                  context, "Se ha registrado correctamente");
+            } else {
+              errorMessage(context, "Ha ocurrido un error, no se pudo registrar");
+            }
+          }
+          else {
+            warningMessage(context, "Las contraseñas no coinciden");
+          }
+        }
+
+      }
+      else  {
         warningMessage(context, "Por favor llenar todos los campos");
       }
-    }
+
+
+    } }
+
   }
 
   List<AutocompletePrediction> placePredictions = [];
