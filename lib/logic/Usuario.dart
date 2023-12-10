@@ -11,19 +11,22 @@ class Usuario {
   String nombre;
   String email;
   String tipoUsuario;
+  String contrasenna;
 
   Usuario (
       this.idUsuario,
       this.nombre,
       this.email,
-      this.tipoUsuario
+      this.tipoUsuario,
+      this.contrasenna
       );
 
   Usuario.vacio():
       idUsuario = '',
       nombre = '',
       email = '',
-      tipoUsuario = ''
+      tipoUsuario = '',
+      contrasenna = ''
   ;
 
   Future<dynamic> login(String email, String contrasenna, ) async {
@@ -32,7 +35,7 @@ class Usuario {
     try {
       final data = await cliente
           .from('usuario')
-          .select('''id_usuario,nombre,email,tipo_usuario''')
+          .select('''id_usuario,nombre,email,tipo_usuario, contrasenna''')
           .eq('email', email)
           .eq('contrasenna', contrasenna);
       if (data.isNotEmpty) {
@@ -42,7 +45,8 @@ class Usuario {
               idUsuario: dato["id_usuario"],
               nombre: dato["nombre"],
               email: dato["email"],
-              tipoUsuario: dato["tipo_usuario"]);
+              tipoUsuario: dato["tipo_usuario"],
+              contrasenna: dato["contrasenna"]);
           return usuario;
         } else if (dato["tipo_usuario"] == "Restaurante") {
           final dataRestaurante = await cliente
@@ -56,6 +60,7 @@ class Usuario {
                 nombre: dato["nombre"],
                 email: dato["email"],
                 tipoUsuario: dato["tipo_usuario"],
+                contrasenna:  dato["contrasenna"],
                 idRestaurante: datoRestarante["id_restaurante"],
                 nombreRestaurante: datoRestarante["nombre_restaurante"],
                 latitud: datoRestarante["latitud"].toDouble(),
