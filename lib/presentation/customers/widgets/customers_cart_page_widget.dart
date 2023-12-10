@@ -213,6 +213,7 @@ class _CustomerCartPageWidgetState extends State<CustomerCartPageWidget> {
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.bold,
                                               ),
+                                          maxLines: 2,
                                         ),
                                       ),
                                     ),

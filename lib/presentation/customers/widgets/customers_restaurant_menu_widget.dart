@@ -217,6 +217,7 @@ class _CustomerRestaurantMenuWidgetState
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.bold,
                                               ),
+                                          maxLines: 2,
                                         ),
                                       ),
                                     ),
