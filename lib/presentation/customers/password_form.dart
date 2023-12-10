@@ -201,7 +201,7 @@ class FormPasswordState extends State<FormPassword> {
                           content: SingleChildScrollView(
                             child: ListBody(
                               children: [
-                                Text("No se pudo crear")
+                                Text("No se pudo actualizar")
                               ],
                             ),
                           ),

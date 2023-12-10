@@ -1010,6 +1010,9 @@ class _RegistrationPageWidgetState extends State<RegistrationPageWidget>
                                   onPressed: () async {
                                     final _openingTime = await showTimePicker(
                                       context: context,
+                                      helpText: "Seleccionar hora de apertura",
+                                      confirmText: "Hecho",
+                                      cancelText: "Cancelar",
                                       initialTime: TimeOfDay.fromDateTime(getCurrentTimestamp),
                                     );
                                     if (_openingTime != null) {
@@ -1055,6 +1058,9 @@ class _RegistrationPageWidgetState extends State<RegistrationPageWidget>
                                   onPressed: () async {
                                     final _closingTime = await showTimePicker(
                                       context: context,
+                                      helpText: "Seleccionar hora de cierre",
+                                      confirmText: "Hecho",
+                                      cancelText: "Cancelar",
                                       initialTime: TimeOfDay.fromDateTime(getCurrentTimestamp),
                                     );
                                     if (_closingTime != null) {

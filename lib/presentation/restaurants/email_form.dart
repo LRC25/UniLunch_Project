@@ -113,7 +113,7 @@ class FormEmailState extends State<FormEmail> {
                           content: SingleChildScrollView(
                             child: ListBody(
                               children: [
-                                Text("No se pudo crear")
+                                Text("No se pudo actualizar")
                               ],
                             ),
                           ),

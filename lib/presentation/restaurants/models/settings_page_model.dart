@@ -10,6 +10,12 @@ class RestaurantSettingsPageModel
 
   final unfocusNode = FocusNode();
 
+
+
+  set openingText(String openingText) {}
+
+  set openingTime(DateTime openingTime) {}
+
   /// Initialization and disposal methods.
 
   void initState(BuildContext context) {}

@@ -306,6 +306,36 @@ static Future<int> actualizarDescripcion(String campo, String idRestaurante) asy
     }
   }
 
+  static Future<int> actualizarHoraApertura(campo, String idR) async {
+    final SupabaseService supabaseService = SupabaseService();
+    SupabaseClient cliente = supabaseService.client;
+    try {
+      await cliente
+          .from('restaurante')
+          .update({'hora_apertura': convertTimeSQL(campo)}).match({'id_restaurante': idR});
+      debugPrint("Correcto, se ha cambiado la hora de apertura");
+      return 1;
+    } catch (e) {
+      debugPrint(e.toString());
+      return 0;
+    }
+  }
+
+  static Future<int> actualizarHoraCierre(campo, String idR) async {
+    final SupabaseService supabaseService = SupabaseService();
+    SupabaseClient cliente = supabaseService.client;
+    try {
+      await cliente
+          .from('restaurante')
+          .update({'hora_cierre': convertTimeSQL(campo)}).match({'id_restaurante': idR});
+      debugPrint("Correcto, se ha cambiado la hora de cierre");
+      return 1;
+    } catch (e) {
+      debugPrint(e.toString());
+      return 0;
+    }
+  }
+
 }
 
 

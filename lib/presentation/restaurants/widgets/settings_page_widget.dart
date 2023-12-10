@@ -32,6 +32,7 @@ class _RestaurantSettingsPageWidgetState
   void initState() {
     super.initState();
     _model = createModel(context, () => RestaurantSettingsPageModel());
+
   }
 
   @override
@@ -200,7 +201,7 @@ class _RestaurantSettingsPageWidgetState
                             ),
                             onPressed: () {
 
-                              updateMessage(context,  "Nombre del restaurante", widget.restaurante.nombre,  widget.restaurante.idRestaurante, widget.restaurante.tipoUsuario);
+                              updateMessage(context,  "Nombre del restaurante", widget.restaurante.nombreRestaurante,  widget.restaurante.idRestaurante, widget.restaurante.tipoUsuario);
 
                             },
                           ),
@@ -328,10 +329,34 @@ class _RestaurantSettingsPageWidgetState
                               color: Color(0xFFFF7A00),
                               size: 35,
                             ),
-                            onPressed: () {
-                              //String hora = '${widget.restaurante.horaApertura.hour.toString().padLeft(2, '0')}:${widget.restaurante.horaApertura.minute.toString().padLeft(2, '0')}';
-                              //updateMessage(context, "Hora de apertura", hora,  widget.restaurante.idRestaurante);
+                            onPressed: () async {
+                              final _openingTime = await showTimePicker(
+                                context: context,
+                                helpText: "Actualizar hora de apertura",
+                                confirmText: "Actualizar",
+                                cancelText: "Cancelar",
+                                initialTime:  TimeOfDay(hour:widget.restaurante.horaApertura.hour, minute:widget.restaurante.horaApertura.minute),
+                              );
+                              if (_openingTime != null) {
+                                var horaApertura = DateTime(0);
+                                safeSetState(() {
+                                  horaApertura = DateTime(
+                                    getCurrentTimestamp.year,
+                                    getCurrentTimestamp.month,
+                                    getCurrentTimestamp.day,
+                                    _openingTime.hour,
+                                    _openingTime.minute,
+                                  );
+
+                                  final formattedTime = '${_openingTime.format(context)}';
+                                  Restaurante.actualizarHoraApertura( horaApertura, widget.restaurante.idRestaurante);
+                                  debugPrint(formattedTime);
+                                  var time = formattedTime;
+                                });
+                              }
                             },
+
+
                           ),
                         ],
                       ),
@@ -370,9 +395,31 @@ class _RestaurantSettingsPageWidgetState
                               color: Color(0xFFFF7A00),
                               size: 35,
                             ),
-                            onPressed: () {
-                              //String hora = '${widget.restaurante.horaCierre.hour}:${widget.restaurante.horaCierre.minute.toString().padLeft(2, '0')}';
-                              //updateMessage(context, "Hora de cierre", hora,  widget.restaurante.idRestaurante);
+                            onPressed:  () async {
+                              final _closingTime = await showTimePicker(
+                                context: context,
+                                helpText: "Actualizar hora de cierre",
+                                confirmText: "Actualizar",
+                                cancelText: "Cancelar",
+                                initialTime:  TimeOfDay(hour:widget.restaurante.horaCierre.hour, minute:widget.restaurante.horaCierre.minute),
+                              );
+                              if (_closingTime != null) {
+                                var horaCierre = DateTime(0);
+                                safeSetState(() {
+                                  horaCierre = DateTime(
+                                    getCurrentTimestamp.year,
+                                    getCurrentTimestamp.month,
+                                    getCurrentTimestamp.day,
+                                    _closingTime.hour,
+                                    _closingTime.minute,
+                                  );
+
+                                  final formattedTime = '${_closingTime.format(context)}';
+                                  Restaurante.actualizarHoraCierre( horaCierre, widget.restaurante.idRestaurante);
+                                  debugPrint(formattedTime);
+                                  var time = formattedTime;
+                                });
+                              }
                             },
                           ),
                         ],
