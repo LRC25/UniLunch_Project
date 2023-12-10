@@ -66,17 +66,20 @@ class CustomerReservationsPageModel extends FlutterFlowModel<CustomerReservation
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Container(
-                    width: MediaQuery.sizeOf(context).width * 0.18,
-                    height: 120,
-                    decoration: BoxDecoration(),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(16),
-                      child: Image.network(
-                        reserva.logoRestaurante,
-                        width: MediaQuery.sizeOf(context).width * 0.108,
-                        height: 120,
-                        fit: BoxFit.cover,
+                  AspectRatio(
+                    aspectRatio: 1,
+                    child: Container(
+                      //width: MediaQuery.sizeOf(context).width * 0.18,
+                      height: 120,
+                      decoration: BoxDecoration(),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(16),
+                        child: Image.network(
+                          reserva.logoRestaurante,
+                          width: MediaQuery.sizeOf(context).width * 0.108,
+                          height: 120,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ),
@@ -84,7 +87,7 @@ class CustomerReservationsPageModel extends FlutterFlowModel<CustomerReservation
                     child: Align(
                       alignment: AlignmentDirectional(0.00, 0.00),
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
+                        padding: EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -175,7 +178,7 @@ class CustomerReservationsPageModel extends FlutterFlowModel<CustomerReservation
     } else {
       if(reserva.estadoCalificacion==true) {
         return Container(
-          width: 100,
+          width: MediaQuery.sizeOf(context).height * 0.1,
           height: 100,
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -203,7 +206,7 @@ class CustomerReservationsPageModel extends FlutterFlowModel<CustomerReservation
         );
       } else {
         return Container(
-          width: 100,
+          width: MediaQuery.sizeOf(context).height * 0.1,
           height: 100,
           decoration: BoxDecoration(
             color: FlutterFlowTheme.of(context).secondaryBackground,
@@ -266,7 +269,7 @@ class CustomerReservationsPageModel extends FlutterFlowModel<CustomerReservation
             children: [
               Flexible(
                 child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 8),
                   child: Text(
                     'Detalles de Reserva',
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -307,7 +310,7 @@ class CustomerReservationsPageModel extends FlutterFlowModel<CustomerReservation
                       child: Align(
                         alignment: AlignmentDirectional(0.00, 0.00),
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
+                          padding: EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -744,7 +747,7 @@ class CustomerReservationsPageModel extends FlutterFlowModel<CustomerReservation
                             child: Align(
                               alignment: AlignmentDirectional(0.00, 0.00),
                               child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
+                                padding: EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
