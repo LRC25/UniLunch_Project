@@ -108,13 +108,16 @@ class RestaurantsPageModel extends FlutterFlowModel<RestaurantsPageWidget> {
                           ),
                         ],
                       ),
-                      Text(
-                        plato.descripcion,
-                        textAlign: TextAlign.start,
-                        maxLines: 2,
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Readex Pro',
-                          color: Color(0xFF064244),
+                      Flexible(
+                        child: Text(
+                          plato.descripcion,
+                          textAlign: TextAlign.start,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Readex Pro',
+                            color: Color(0xFF064244),
+                          ),
                         ),
                       ),
                       Flexible(
@@ -238,101 +241,105 @@ class RestaurantsPageModel extends FlutterFlowModel<RestaurantsPageWidget> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
                 //width: MediaQuery.sizeOf(context).width * 0.5,
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Flexible(
-                      child: Text(
-                        plato.nombre,
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Readex Pro',
-                          color: Color(0xFF064244),
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    Text(
-                      plato.descripcion,
-                      textAlign: TextAlign.start,
-                      maxLines: 2,
-                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                        fontFamily: 'Readex Pro',
-                        color: Color(0xFF064244),
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          currencyFormat.format(plato.precio),
-                          textAlign: TextAlign.start,
+              Flexible(
+                child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Flexible(
+                        child: Text(
+                          plato.nombre,
                           style: FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily: 'Readex Pro',
-                            color: Color(0xFF138D20),
+                            color: Color(0xFF064244),
                             fontSize: 16,
-                            fontWeight: FontWeight.w300,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Text(
-                          ' - Cantidad: ${plato.stock}',
+                      ),
+                      Flexible(
+                        child: Text(
+                          plato.descripcion,
                           textAlign: TextAlign.start,
                           maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                           style: FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily: 'Readex Pro',
                             color: Color(0xFF064244),
                           ),
                         ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-              Flexible(
-                child: Container(
-                  width: MediaQuery.sizeOf(context).width * 0.25,
-                  //height: MediaQuery.sizeOf(context).height * 1,
-                  child: Stack(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(16),
-                        child: Image.network(
-                          plato.imagen,
-                          width: MediaQuery.sizeOf(context).width * 0.25,
-                          height: 200,
-                          fit: BoxFit.cover,
-                        ),
                       ),
-                      Align(
-                        alignment: AlignmentDirectional(1.00, 1.00),
-                        child: FlutterFlowIconButton(
-                          borderColor: Color(0x00FFFFFF),
-                          borderRadius: 15,
-                          buttonSize: 40,
-                          fillColor: Color(0xFFE72828),
-                          icon: Icon(
-                            Icons.delete_forever_rounded,
-                            color:
-                            FlutterFlowTheme.of(context).secondaryBackground,
-                            size: 24,
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            currencyFormat.format(plato.precio),
+                            textAlign: TextAlign.start,
+                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                              fontFamily: 'Readex Pro',
+                              color: Color(0xFF138D20),
+                              fontSize: 16,
+                              fontWeight: FontWeight.w300,
+                            ),
                           ),
-                          onPressed: () async {
-                            String respuesta = await plato.quitarMenu();
-                            if (respuesta == "correcto") {
-                              reload();
-                              accceptMessage(context, "Ha sido quitado del menu con éxito.");
-                            } else {
-                              errorMessage(context, "Ha ocurrido un error");
-                            }
-                          },
-                        ),
-                      ),
+                          Text(
+                            ' - Cantidad: ${plato.stock}',
+                            textAlign: TextAlign.start,
+                            maxLines: 2,
+                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                              fontFamily: 'Readex Pro',
+                              color: Color(0xFF064244),
+                            ),
+                          ),
+                        ],
+                      )
                     ],
                   ),
+                ),
+              ),
+              Container(
+                width: MediaQuery.sizeOf(context).width * 0.25,
+                //height: MediaQuery.sizeOf(context).height * 1,
+                child: Stack(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: Image.network(
+                        plato.imagen,
+                        width: MediaQuery.sizeOf(context).width * 0.25,
+                        height: 200,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    Align(
+                      alignment: AlignmentDirectional(1.00, 1.00),
+                      child: FlutterFlowIconButton(
+                        borderColor: Color(0x00FFFFFF),
+                        borderRadius: 15,
+                        buttonSize: 40,
+                        fillColor: Color(0xFFE72828),
+                        icon: Icon(
+                          Icons.delete_forever_rounded,
+                          color:
+                          FlutterFlowTheme.of(context).secondaryBackground,
+                          size: 24,
+                        ),
+                        onPressed: () async {
+                          String respuesta = await plato.quitarMenu();
+                          if (respuesta == "correcto") {
+                            reload();
+                            accceptMessage(context, "Ha sido quitado del menu con éxito.");
+                          } else {
+                            errorMessage(context, "Ha ocurrido un error");
+                          }
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

@@ -253,19 +253,22 @@ class _CustomerCartPageWidgetState extends State<CustomerCartPageWidget> {
                                 Row(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
-                                    Align(
-                                      alignment:
-                                          AlignmentDirectional(-1.00, 0.00),
-                                      child: Text(
-                                        widget.restaurante.direccion,
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Readex Pro',
-                                              color: Color(0xFF064244),
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w300,
-                                            ),
+                                    Flexible(
+                                      child: Align(
+                                        alignment:
+                                            AlignmentDirectional(-1.00, 0.00),
+                                        child: Text(
+                                          widget.restaurante.direccion,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Readex Pro',
+                                                color: Color(0xFF064244),
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w300,
+                                              ),
+                                        ),
                                       ),
                                     ),
                                   ],
