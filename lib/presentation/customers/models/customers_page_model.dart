@@ -41,10 +41,10 @@ class CustomersPageModel extends FlutterFlowModel<CustomersPageWidget> {
 
   Padding listaRestaurantes(BuildContext context, Restaurante restaurante) {
     return Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+        padding: EdgeInsetsDirectional.fromSTEB(16, 5, 16, 5),
         child: InkWell(
           onTap: () {
-            Navigator.pushReplacement(context, MaterialPageRoute(
+            Navigator.push(context, MaterialPageRoute(
                 builder:(context) => CustomerRestaurantMenuWidget(cliente: widget.cliente,
                   carrito: carrito, restaurante: restaurante,)));
           },
@@ -172,22 +172,25 @@ class CustomersPageModel extends FlutterFlowModel<CustomersPageWidget> {
                             ),
                           ),
                           Row(
-                            mainAxisSize: MainAxisSize.max,
+                            mainAxisSize: MainAxisSize.min,
                             children: [
-                              Align(
-                                alignment: AlignmentDirectional(
-                                    -1.00, 0.00),
-                                child: Text(
-                                  maxLines: 1,
-                                  restaurante.direccion,
-                                  style: FlutterFlowTheme.of(
-                                      context)
-                                      .bodyMedium
-                                      .override(
-                                    fontFamily: 'Readex Pro',
-                                    color: Color(0xFF064244),
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w300,
+                              Flexible(
+                                child: Align(
+                                  alignment: AlignmentDirectional(
+                                      -1.00, 0.00),
+                                  child: Text(
+                                    maxLines: 1,
+                                    restaurante.direccion,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: FlutterFlowTheme.of(
+                                        context)
+                                        .bodyMedium
+                                        .override(
+                                      fontFamily: 'Readex Pro',
+                                      color: Color(0xFF064244),
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w300,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -214,7 +217,7 @@ class CustomersPageModel extends FlutterFlowModel<CustomersPageWidget> {
           title: restaurante.nombreRestaurante,
           snippet: restaurante.direccion,
           onTap: () {
-            Navigator.pushReplacement(context, MaterialPageRoute(builder:(context) =>
+            Navigator.push(context, MaterialPageRoute(builder:(context) =>
             CustomerRestaurantMenuWidget(cliente: widget.cliente, carrito: carrito, restaurante: restaurante)));
           },
         )

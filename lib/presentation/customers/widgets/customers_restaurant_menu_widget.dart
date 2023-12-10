@@ -123,7 +123,7 @@ class _CustomerRestaurantMenuWidgetState
                     size: 24,
                   ),
                   onPressed: () {
-                    Navigator.pushReplacement(context, MaterialPageRoute(
+                    Navigator.push(context, MaterialPageRoute(
                         builder:(context) => CustomerCartPageWidget(cliente: widget.cliente,
                           carrito: _model.actualCarrito, restaurante: widget.restaurante,)));
                   },
@@ -217,6 +217,7 @@ class _CustomerRestaurantMenuWidgetState
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.bold,
                                               ),
+                                          maxLines: 2,
                                         ),
                                       ),
                                     ),
@@ -256,19 +257,22 @@ class _CustomerRestaurantMenuWidgetState
                                 Row(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
-                                    Align(
-                                      alignment:
-                                          AlignmentDirectional(-1.00, 0.00),
-                                      child: Text(
-                                        widget.restaurante.direccion,
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Readex Pro',
-                                              color: Color(0xFF064244),
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w300,
-                                            ),
+                                    Flexible(
+                                      child: Align(
+                                        alignment:
+                                            AlignmentDirectional(-1.00, 0.00),
+                                        child: Text(
+                                          widget.restaurante.direccion,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Readex Pro',
+                                                color: Color(0xFF064244),
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w300,
+                                              ),
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -304,7 +308,7 @@ class _CustomerRestaurantMenuWidgetState
                     children: (menuCargado==false)
                         ? [const Center(child: CircularProgressIndicator(color: Color(0xFF064244)))]
                         : (menu.isEmpty) ? [Center(child: Text(
-                        "No hay restaurantes",
+                        "No hay menú disponible.",
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily: 'Readex Pro',
                           color: Color(0xFF064244),

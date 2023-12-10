@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:unilunch/persistence/SupabaseConnection.dart';
 import 'package:supabase/src/supabase_client.dart';
 import 'package:unilunch/logic/Cliente.dart';
@@ -82,6 +81,50 @@ class Usuario {
       }
     } catch (e) {
       return e.toString();
+    }
+  }
+
+  Future<dynamic> checkIfUserExists(String email) async {
+    final SupabaseService supabaseService = SupabaseService();
+    SupabaseClient supabaseClient = supabaseService.client;
+    //print(email);
+    try {
+      final data = await supabaseClient
+          .from('usuario')
+          .select('''id_usuario,nombre,email, tipo_usuario''')
+          .eq('email', email);
+      
+      if (data.isNotEmpty){
+        //print("Usuario existe");
+        Map<String, dynamic> dato = data[0];
+        Usuario usuario = Usuario.vacio();
+        usuario.idUsuario = dato["id_usuario"];
+        usuario.email = dato["email"];
+        usuario.nombre = dato["nombre"];
+        usuario.tipoUsuario = dato["tipo_usuario"];
+        return usuario;
+      } else {
+        //print("Usuario NO existe");
+        return "El usuario no existe";
+      }
+
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
+  Future<int> updatePasswordFromEmail(String campo, String userEmail) async {
+    final SupabaseService supabaseService = SupabaseService();
+    SupabaseClient cliente = supabaseService.client;
+    try {
+      await cliente
+          .from('usuario')
+          .update({'contrasenna': campo}).match({'email': userEmail});
+      print("Correcto, se ha cambiado la contraseña");
+      return 1;
+    } catch (e) {
+      print(e.toString());
+      return 0;
     }
   }
 

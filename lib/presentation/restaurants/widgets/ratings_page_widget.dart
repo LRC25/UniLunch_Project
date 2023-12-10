@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../../logic/Nota.dart';
 import '../../../logic/Restaurante.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 import '../models/ratings_page_model.dart';
 export '../models/ratings_page_model.dart';
@@ -93,235 +94,245 @@ class _RestaurantRatingsPageWidgetState
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 8),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        '${widget.restaurante.nombreRestaurante} - ',
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Readex Pro',
-                              color: Color(0xFF064244),
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                            ),
-                      ),
-                      Icon(
-                        Icons.star_rounded,
-                        color: Color(0xFFFF7A00),
-                        size: 30,
-                      ),
-                      Text(
-                        '${widget.restaurante.notaPromedio} (${cantidad.toString()})',
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Readex Pro',
+                Container(
+                  decoration: BoxDecoration(),
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 4),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        AutoSizeText(
+                          '${widget.restaurante.nombreRestaurante}',
+                          style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Readex Pro',
+                            color: Color(0xFF064244),
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.star_rounded,
                               color: Color(0xFFFF7A00),
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
+                              size: 30,
                             ),
-                      ),
-                    ],
+                            Text(
+                              '${widget.restaurante.notaPromedio} (${cantidad.toString()})',
+                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                    fontFamily: 'Readex Pro',
+                                    color: Color(0xFFFF7A00),
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
-                  child: Text(
-                    'Así van tus calificaciones:',
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Readex Pro',
-                          color: Color(0xFF064244),
-                          fontSize: 16,
-                          fontWeight: FontWeight.normal,
-                        ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 8),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.star_rounded,
-                              color: Color(0xFFFF7A00),
-                              size: 24,
-                            ),
-                            Text(
-                              '5',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Readex Pro',
-                                    color: Color(0xFFFF7A00),
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                            ),
-                            Text(
-                              ' - 300',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Readex Pro',
-                                    color: Color(0xFF064244),
-                                    fontSize: 16,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.star_rounded,
-                              color: Color(0xFFFF7A00),
-                              size: 24,
-                            ),
-                            Text(
-                              '4',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Readex Pro',
-                                    color: Color(0xFFFF7A00),
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                            ),
-                            Text(
-                              ' - 60',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Readex Pro',
-                                    color: Color(0xFF064244),
-                                    fontSize: 16,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.star_rounded,
-                              color: Color(0xFFFF7A00),
-                              size: 24,
-                            ),
-                            Text(
-                              '3',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Readex Pro',
-                                    color: Color(0xFFFF7A00),
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                            ),
-                            Text(
-                              ' - 20',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Readex Pro',
-                                    color: Color(0xFF064244),
-                                    fontSize: 16,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.star_rounded,
-                              color: Color(0xFFFF7A00),
-                              size: 24,
-                            ),
-                            Text(
-                              '2',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Readex Pro',
-                                    color: Color(0xFFFF7A00),
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                            ),
-                            Text(
-                              ' - 10',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Readex Pro',
-                                    color: Color(0xFF064244),
-                                    fontSize: 16,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.star_rounded,
-                              color: Color(0xFFFF7A00),
-                              size: 24,
-                            ),
-                            Text(
-                              '1',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Readex Pro',
-                                    color: Color(0xFFFF7A00),
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                            ),
-                            Text(
-                              ' - 10',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Readex Pro',
-                                    color: Color(0xFF064244),
-                                    fontSize: 16,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                // Padding(
+                //   padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+                //   child: Text(
+                //     'Así van tus calificaciones:',
+                //     style: FlutterFlowTheme.of(context).bodyMedium.override(
+                //           fontFamily: 'Readex Pro',
+                //           color: Color(0xFF064244),
+                //           fontSize: 16,
+                //           fontWeight: FontWeight.normal,
+                //         ),
+                //   ),
+                // ),
+                // Padding(
+                //   padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 8),
+                //   child: Column(
+                //     mainAxisSize: MainAxisSize.max,
+                //     crossAxisAlignment: CrossAxisAlignment.center,
+                //     children: [
+                //       Padding(
+                //         padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+                //         child: Row(
+                //           mainAxisSize: MainAxisSize.max,
+                //           mainAxisAlignment: MainAxisAlignment.center,
+                //           children: [
+                //             Icon(
+                //               Icons.star_rounded,
+                //               color: Color(0xFFFF7A00),
+                //               size: 24,
+                //             ),
+                //             Text(
+                //               '5',
+                //               style: FlutterFlowTheme.of(context)
+                //                   .bodyMedium
+                //                   .override(
+                //                     fontFamily: 'Readex Pro',
+                //                     color: Color(0xFFFF7A00),
+                //                     fontSize: 16,
+                //                     fontWeight: FontWeight.bold,
+                //                   ),
+                //             ),
+                //             Text(
+                //               ' - 300',
+                //               style: FlutterFlowTheme.of(context)
+                //                   .bodyMedium
+                //                   .override(
+                //                     fontFamily: 'Readex Pro',
+                //                     color: Color(0xFF064244),
+                //                     fontSize: 16,
+                //                   ),
+                //             ),
+                //           ],
+                //         ),
+                //       ),
+                //       Padding(
+                //         padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+                //         child: Row(
+                //           mainAxisSize: MainAxisSize.max,
+                //           mainAxisAlignment: MainAxisAlignment.center,
+                //           children: [
+                //             Icon(
+                //               Icons.star_rounded,
+                //               color: Color(0xFFFF7A00),
+                //               size: 24,
+                //             ),
+                //             Text(
+                //               '4',
+                //               style: FlutterFlowTheme.of(context)
+                //                   .bodyMedium
+                //                   .override(
+                //                     fontFamily: 'Readex Pro',
+                //                     color: Color(0xFFFF7A00),
+                //                     fontSize: 16,
+                //                     fontWeight: FontWeight.bold,
+                //                   ),
+                //             ),
+                //             Text(
+                //               ' - 60',
+                //               style: FlutterFlowTheme.of(context)
+                //                   .bodyMedium
+                //                   .override(
+                //                     fontFamily: 'Readex Pro',
+                //                     color: Color(0xFF064244),
+                //                     fontSize: 16,
+                //                   ),
+                //             ),
+                //           ],
+                //         ),
+                //       ),
+                //       Padding(
+                //         padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+                //         child: Row(
+                //           mainAxisSize: MainAxisSize.max,
+                //           mainAxisAlignment: MainAxisAlignment.center,
+                //           children: [
+                //             Icon(
+                //               Icons.star_rounded,
+                //               color: Color(0xFFFF7A00),
+                //               size: 24,
+                //             ),
+                //             Text(
+                //               '3',
+                //               style: FlutterFlowTheme.of(context)
+                //                   .bodyMedium
+                //                   .override(
+                //                     fontFamily: 'Readex Pro',
+                //                     color: Color(0xFFFF7A00),
+                //                     fontSize: 16,
+                //                     fontWeight: FontWeight.bold,
+                //                   ),
+                //             ),
+                //             Text(
+                //               ' - 20',
+                //               style: FlutterFlowTheme.of(context)
+                //                   .bodyMedium
+                //                   .override(
+                //                     fontFamily: 'Readex Pro',
+                //                     color: Color(0xFF064244),
+                //                     fontSize: 16,
+                //                   ),
+                //             ),
+                //           ],
+                //         ),
+                //       ),
+                //       Padding(
+                //         padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+                //         child: Row(
+                //           mainAxisSize: MainAxisSize.max,
+                //           mainAxisAlignment: MainAxisAlignment.center,
+                //           children: [
+                //             Icon(
+                //               Icons.star_rounded,
+                //               color: Color(0xFFFF7A00),
+                //               size: 24,
+                //             ),
+                //             Text(
+                //               '2',
+                //               style: FlutterFlowTheme.of(context)
+                //                   .bodyMedium
+                //                   .override(
+                //                     fontFamily: 'Readex Pro',
+                //                     color: Color(0xFFFF7A00),
+                //                     fontSize: 16,
+                //                     fontWeight: FontWeight.bold,
+                //                   ),
+                //             ),
+                //             Text(
+                //               ' - 10',
+                //               style: FlutterFlowTheme.of(context)
+                //                   .bodyMedium
+                //                   .override(
+                //                     fontFamily: 'Readex Pro',
+                //                     color: Color(0xFF064244),
+                //                     fontSize: 16,
+                //                   ),
+                //             ),
+                //           ],
+                //         ),
+                //       ),
+                //       Padding(
+                //         padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+                //         child: Row(
+                //           mainAxisSize: MainAxisSize.max,
+                //           mainAxisAlignment: MainAxisAlignment.center,
+                //           children: [
+                //             Icon(
+                //               Icons.star_rounded,
+                //               color: Color(0xFFFF7A00),
+                //               size: 24,
+                //             ),
+                //             Text(
+                //               '1',
+                //               style: FlutterFlowTheme.of(context)
+                //                   .bodyMedium
+                //                   .override(
+                //                     fontFamily: 'Readex Pro',
+                //                     color: Color(0xFFFF7A00),
+                //                     fontSize: 16,
+                //                     fontWeight: FontWeight.bold,
+                //                   ),
+                //             ),
+                //             Text(
+                //               ' - 10',
+                //               style: FlutterFlowTheme.of(context)
+                //                   .bodyMedium
+                //                   .override(
+                //                     fontFamily: 'Readex Pro',
+                //                     color: Color(0xFF064244),
+                //                     fontSize: 16,
+                //                   ),
+                //             ),
+                //           ],
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
                   child: Text(

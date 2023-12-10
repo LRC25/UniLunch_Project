@@ -261,13 +261,14 @@ static Future<int> actualizarDescripcion(String campo, String idRestaurante) asy
   }
 
 
-  static Future<int> actualizarDireccion(String campo, String idRestaurante) async {
+  static Future<int> actualizarDireccion(String direccion, double latitud, double longitud, String idRestaurante) async {
     final SupabaseService supabaseService = SupabaseService();
     SupabaseClient cliente = supabaseService.client;
+
     try {
       await cliente
           .from('restaurante')
-          .update({'direccion': campo}).match({'id_restaurante': idRestaurante});
+          .update({'direccion': direccion, 'latitud': latitud, 'longitud': longitud}).match({'id_restaurante': idRestaurante});
       debugPrint("Correcto, se ha cambiado la dirección del restaurante");
       return 1;
     } catch (e) {
@@ -335,7 +336,6 @@ static Future<int> actualizarDescripcion(String campo, String idRestaurante) asy
       return 0;
     }
   }
-
 }
 
 

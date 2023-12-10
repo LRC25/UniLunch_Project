@@ -133,7 +133,7 @@ class CustomerReservationsPageModel extends FlutterFlowModel<CustomerReservation
                       ),
                     ),
                   ),
-                  botonCalificar(context, reserva, cantidad, cliente)
+                  botonCalificar(context, reserva, cantidad, cliente, reload)
                 ],
               ),
             ),
@@ -165,7 +165,7 @@ class CustomerReservationsPageModel extends FlutterFlowModel<CustomerReservation
     }
   }
 
-  Container botonCalificar(BuildContext context, Reserva reserva, int cantidad, Cliente cliente){
+  Container botonCalificar(BuildContext context, Reserva reserva, int cantidad, Cliente cliente, Function reload){
     if (reserva.estado!="Completado") {
       return Container(
         child: Padding(
@@ -226,7 +226,7 @@ class CustomerReservationsPageModel extends FlutterFlowModel<CustomerReservation
                     size: 24,
                   ),
                   onPressed: () {
-                    calificar(context, reserva, cantidad, cliente);
+                    calificar(context, reserva, cantidad, cliente, reload);
                   },
                 ),
               ),
@@ -706,7 +706,7 @@ class CustomerReservationsPageModel extends FlutterFlowModel<CustomerReservation
     );
   }
 
-  void calificar(BuildContext context, Reserva reserva, int cantidad, Cliente cliente) {
+  void calificar(BuildContext context, Reserva reserva, int cantidad, Cliente cliente, Function reload) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -937,6 +937,7 @@ class CustomerReservationsPageModel extends FlutterFlowModel<CustomerReservation
                               String response = await cliente.calificarRestaurante("", valorActual.toInt(), reserva);
                               if (response=="correcto") {
                                 Navigator.of(context).pop();
+                                reload();
                                 accceptMessage(context, "Se ha calificado corretamente la reserva");
                               } else {
                                 Navigator.of(context).pop();
@@ -946,6 +947,7 @@ class CustomerReservationsPageModel extends FlutterFlowModel<CustomerReservation
                               String response = await cliente.calificarRestaurante(textController.text, valorActual.toInt(), reserva);
                               if (response=="correcto") {
                                 Navigator.of(context).pop();
+                                reload();
                                 accceptMessage(context, "Se ha calificado corretamente la reserva");
                               } else {
                                 Navigator.of(context).pop();

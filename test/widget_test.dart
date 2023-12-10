@@ -5,14 +5,12 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:unilunch/logic/Nota.dart';
 import 'package:unilunch/logic/Plato.dart';
 import 'package:unilunch/logic/Reserva.dart';
 import 'package:unilunch/logic/ReservaPlato.dart';
 
-import 'package:unilunch/main.dart';
 import 'package:unilunch/persistence/SupabaseConnection.dart';
 
 void main() async {

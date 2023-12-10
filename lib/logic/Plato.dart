@@ -38,7 +38,7 @@ class Plato {
     SupabaseClient cliente = supabaseService.client;
     final responseRestaurante = await cliente.from("restaurante").select('''id_restaurante''').eq("id_restaurante", idRestaurante);
     if (responseRestaurante.isNotEmpty) {
-      if(stock > 0) {
+      if(stock >= 0) {
         if(precio > 0) {
           if (imagen != "") {
             try {
