@@ -22,6 +22,7 @@ class _RecoverPasswordPageWidgetState extends State<RecoverPasswordPageWidget> {
 
   bool accountExists = true;
   Timer? _timer;
+  // ignore: unused_field
   String? _userEmail;
   String? _verificationCode;
   DateTime? _codeCreationTime;
@@ -85,6 +86,7 @@ class _RecoverPasswordPageWidgetState extends State<RecoverPasswordPageWidget> {
     ''';
 
     try {
+      // ignore: unused_local_variable
       final sendReport = await send(message, smtpServer);
       print('Código de verificación enviado a $userEmail');
     } catch (e) {
