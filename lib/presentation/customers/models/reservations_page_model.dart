@@ -729,17 +729,20 @@ class CustomerReservationsPageModel extends FlutterFlowModel<CustomerReservation
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Container(
-                            width: MediaQuery.sizeOf(context).width * 0.20,
-                            height: 120,
-                            decoration: BoxDecoration(),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(16),
-                              child: Image.network(
-                                reserva.logoRestaurante,
-                                width: MediaQuery.sizeOf(context).width * 0.108,
-                                height: 120,
-                                fit: BoxFit.cover,
+                          AspectRatio(
+                            aspectRatio: 1,
+                            child: Container(
+                              //width: MediaQuery.sizeOf(context).width * 0.20,
+                              height: 120,
+                              decoration: BoxDecoration(),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(16),
+                                child: Image.network(
+                                  reserva.logoRestaurante,
+                                  width: MediaQuery.sizeOf(context).width * 0.108,
+                                  height: 120,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
                           ),
@@ -755,6 +758,8 @@ class CustomerReservationsPageModel extends FlutterFlowModel<CustomerReservation
                                   children: [
                                     Text(
                                       reserva.nombreRestaurante,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                                         fontFamily: 'Readex Pro',
                                         color: Color(0xFF064244),
@@ -803,10 +808,10 @@ class CustomerReservationsPageModel extends FlutterFlowModel<CustomerReservation
                             ),
                           ),
                           Container(
-                            width: 80,
+                            //width: 50,
                             height: 80,
                             child: Column(
-                              mainAxisSize: MainAxisSize.max,
+                              mainAxisSize: MainAxisSize.min,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Icon(
