@@ -163,22 +163,25 @@ class CustomerCartPageModel extends FlutterFlowModel<CustomerCartPageWidget> {
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(
                         0, 0, 5, 0),
-                    child: Container(
-                      width: MediaQuery.sizeOf(context).width *
-                          0.25,
-                      height:
-                      MediaQuery.sizeOf(context).height * 1,
-                      decoration: BoxDecoration(),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(16),
-                        child: Image.network(
-                          reservaPlato.plato.imagen,
-                          width:
-                          MediaQuery.sizeOf(context).width,
-                          height: MediaQuery.sizeOf(context)
-                              .height *
-                              1,
-                          fit: BoxFit.cover,
+                    child: AspectRatio(
+                      aspectRatio: 1,
+                      child: Container(
+                        width: MediaQuery.sizeOf(context).width *
+                            0.25,
+                        height:
+                        MediaQuery.sizeOf(context).height * 1,
+                        decoration: BoxDecoration(),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(16),
+                          child: Image.network(
+                            reservaPlato.plato.imagen,
+                            width:
+                            MediaQuery.sizeOf(context).width,
+                            height: MediaQuery.sizeOf(context)
+                                .height *
+                                1,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                     ),

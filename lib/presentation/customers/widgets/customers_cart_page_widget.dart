@@ -163,18 +163,21 @@ class _CustomerCartPageWidgetState extends State<CustomerCartPageWidget> {
                         Expanded(
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
-                            child: Container(
-                              width: MediaQuery.sizeOf(context).width * 0.4,
-                              height: MediaQuery.sizeOf(context).height * 1,
-                              decoration: BoxDecoration(),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(16),
-                                child: Image.network(
-                                  widget.restaurante.imagen,
-                                  width:
-                                      MediaQuery.sizeOf(context).width * 0.108,
-                                  height: 200,
-                                  fit: BoxFit.cover,
+                            child: AspectRatio(
+                              aspectRatio: 1,
+                              child: Container(
+                                width: MediaQuery.sizeOf(context).width * 0.4,
+                                height: MediaQuery.sizeOf(context).height * 1,
+                                decoration: BoxDecoration(),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(16),
+                                  child: Image.network(
+                                    widget.restaurante.imagen,
+                                    width:
+                                        MediaQuery.sizeOf(context).width * 0.108,
+                                    height: 200,
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
                             ),
